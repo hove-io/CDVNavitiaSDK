@@ -1,7 +1,7 @@
 {
   "name": "cordova-navitia-sdk",
   "version": "0.1.0",
-"description": "Cordova plugin for NavitiaSDK iOS & Android",
+  "description": "Cordova plugin for NavitiaSDK iOS & Android",
   "cordova": {
     "id": "org-kisio-plugins-navitia-sdk",
     "platforms": [

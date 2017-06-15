@@ -23,7 +23,7 @@
 - (void)endpoint_places:(CDVInvokedUrlCommand*)command
 {
     CDVPluginResult* pluginResult = nil;
-    NSDirectory* params = [command.arguments objectAtIndex:0];
+    NSDictionary* params = [command.arguments objectAtIndex:0];
 
     if (params == nil || [params length] == 0) {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
