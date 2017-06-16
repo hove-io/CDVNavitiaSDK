@@ -12,5 +12,7 @@
         </config-file>
         <header-file src="src/ios/CDVNavitiaSDK.h" />
         <source-file src="src/ios/CDVNavitiaSDK.m" />
+        <pods-config ios-min-version="9.0" use-frameworks="true" />
+        <pod name="NavitiaSDK" version="0.1.0" />
     </platform>
 </plugin>
