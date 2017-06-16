@@ -3,12 +3,12 @@
 
 @implementation CDVNavitiaSDK
 
-- (void)init:(CDVInvokeUrlCommand*)command
+- (void)init:(CDVInvokedUrlCommand*)command
 {
     CDVPluginResult* pluginResult = nil;
     NSString* token = [command.arguments objectAtIndex:0];
 
-    if (token == nil || [msg length] == 0) {
+    if (token == nil || [token length] == 0) {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     } else {
         NavitiaConfiguration *conf = [[NavitiaConfiguration alloc] initWithToken:token];
@@ -22,11 +22,14 @@
 
 - (void)endpoint_places:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
+    
     NSDictionary* params = [command.arguments objectAtIndex:0];
 
-    if (params == nil || [params length] == 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    if (params == nil || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
         EndpointPlaces *places = [[self.sdk endpoints] places];
         EndpointRequestBuilderPlaces *queryBuilder = [places newRequestBuilder];
@@ -42,7 +45,8 @@
         [queryBuilder rawGetWithCallback: ^(NSDictionary *results)
         {
             //RCTLogInfo(@"SDK places with query %@", [queryBuilder getUrl]);
-            resolve(results);
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:results];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
         errorCallback:^(ResourceRequestError *sdkError)
         {
@@ -51,13 +55,10 @@
                 @"NSLocalizedDescriptionKey" : sdkError.message
             };
             NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:sdkError.httpStatusCode userInfo:userInfo];
-            reject([@(sdkError.httpStatusCode) stringValue], sdkError.message, error);
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:sdkError.message];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
-
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
-
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 @end
