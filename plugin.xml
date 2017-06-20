@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="org-kisio-plugins-navitia-sdk" version="0.1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-navitia-sdk" version="0.1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>NavitiaSDK</name>
     <js-module name="NavitiaSDK" src="www/NavitiaSDK.js">
         <clobbers target="NavitiaSDK" />
     </js-module>
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="CDVNavitiaSDK">
+            <feature name="NavitiaSDK">
                 <param name="ios-package" value="CDVNavitiaSDK" />
             </feature>
         </config-file>

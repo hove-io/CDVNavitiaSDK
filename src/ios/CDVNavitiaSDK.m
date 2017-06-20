@@ -7,14 +7,15 @@
 {
     CDVPluginResult* pluginResult = nil;
     NSString* token = [command.arguments objectAtIndex:0];
-
-    if (token == nil || [token length] == 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    
+    if ([token isKindOfClass:[NSNull class]] || [token length] == 0) {
+        NSString* errorMessage = @"No token provided";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
     } else {
         NavitiaConfiguration *conf = [[NavitiaConfiguration alloc] initWithToken:token];
         self.sdk = [[NavitiaSDK alloc] initWithConfiguration:conf];
-
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        NSString* successMessage = @"SDK initialized with token";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"%@ %@", successMessage, token]];
     }
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -22,10 +23,9 @@
 
 - (void)endpoint_places:(CDVInvokedUrlCommand*)command
 {
-    
     NSDictionary* params = [command.arguments objectAtIndex:0];
 
-    if (params == nil || [params count] == 0) {
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
         CDVPluginResult* pluginResult = nil;
         NSString* errorMessage = @"Wrong parameters";
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
@@ -44,13 +44,13 @@
 
         [queryBuilder rawGetWithCallback: ^(NSDictionary *results)
         {
-            //RCTLogInfo(@"SDK places with query %@", [queryBuilder getUrl]);
-            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:results];
+            NSLog(@"SDK places with query %@", [queryBuilder getUrl]);
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:results];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
         errorCallback:^(ResourceRequestError *sdkError)
         {
-            //RCTLogInfo(@"SDK places fail");
+            NSLog(@"SDK places fail");
             NSDictionary *userInfo = @{
                 @"NSLocalizedDescriptionKey" : sdkError.message
             };

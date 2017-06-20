@@ -1,27 +1,25 @@
-import { exec } from 'cordova/exec';
+var exec = require('cordova/exec');
 
-class BaseNavitiaRequestBuilder {
-    constructor() {
-        this.props = {};
-    }
+module.exports = function() {
+    this.props = {};
+};
+
+EndPointRequestBuilderPlaces.prototype.withQ = function(q) {
+    this.props.q = q;
+    return this;
 }
 
-export default class EndpointRequestBuilderPlaces extends BaseNavitiaRequestBuilder {
-    withQ(q) {
-        this.props.q = q;
-        return this;
-    }
+EndPointRequestBuilderPlaces.prototype.withCount = function(count) {
+    this.props.count = count;
+    return this;
+}
 
-    withCount(count) {
-        this.props.count = count;
-        return this;
-    }
-
-    get() {
-        exec((places) => {
-            return places;
-        }), (error) => {
-            //LogInfo error
-        }, 'NavitiaSDK', 'endpoint_places', [this.props]);
-    }
+EndPointRequestBuilderPlaces.prototype.get = function(successCallback, errorCallback) {
+    exec(
+        successCallback,
+        errorCallback,
+        'NavitiaSDK',
+        'endpoint_places',
+        [this.props]
+    );
 }
