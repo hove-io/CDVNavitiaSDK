@@ -15,4 +15,14 @@
         <pods-config ios-min-version="9.0" use-frameworks="true" />
         <pod name="NavitiaSDK" version="0.1.0" />
     </platform>
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="NavitiaSDK">
+                <param name="android-package" value="org.kisio.CDVNavitiaSDK.CDVNavitiaSDK"/>
+            </feature>
+        </config-file>
+        <source-file src="src/android/org/kisio/CDVNavitiaSDK/CDVNavitiaSDK.java" target-dir="src/org/kisio/CDVNavitiaSDK" />
+        <framework src="org.kisio.sdk:navitia-sdk:0.1.0" />
+        <framework src="com.googlecode.json-simple:json-simple:1.1.1" />
+    </platform>
 </plugin>
