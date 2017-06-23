@@ -66,7 +66,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                                 callbackContext.success(result);
                             } catch (JSONException e) {
                                 System.out.println("An exception has occurred");
-                                String errorMessage = String.valueOf(e.hashCode()) + e.getMessage();
+                                String errorMessage = String.valueOf(e.hashCode()) + ": " + e.getMessage();
                                 callbackContext.error(errorMessage);
                             }
                         }
@@ -74,13 +74,13 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         @Override
                         public void callback(ResourceRequestError resourceRequestError) {
                             System.out.println("SDK places fail");
-                            String errorMessage = resourceRequestError.getHttpStatusCode() + resourceRequestError.getMessage();
+                            String errorMessage = resourceRequestError.getHttpStatusCode() + ": " + resourceRequestError.getMessage();
                             callbackContext.error(errorMessage);
                         }
                     });
                 } catch (Exception e) {
                     System.out.println("An exception has occurred");
-                    String errorMessage = String.valueOf(e.hashCode()) + e.getMessage();
+                    String errorMessage = String.valueOf(e.hashCode()) + ": " + e.getMessage();
                     callbackContext.error(errorMessage);
                 }
             }
@@ -89,7 +89,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
 
     private void addParameter(BaseNavitiaRequestBuilder queryBuilder, JSONObject params, String name) {
         try {
-            queryBuilder.addQueryParameter("q", String.valueOf(params.get("q")));
+            queryBuilder.addQueryParameter(name, String.valueOf(params.get(name)));
         } catch (JSONException e) {
             // Case: Parameter not provided
         }
