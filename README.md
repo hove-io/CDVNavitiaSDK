@@ -12,3 +12,14 @@ Cordova plugin for using Navitia SDK iOS &amp; Android
 ### Android
 
     cordova plugin add cordova-navitia-sdk
+
+## Usage
+
+### Example
+
+    NavitiaSDK.init('my-token');
+    NavitiaSDK.placesApi.placesRequestBuilder().withQ('gare').get(function(success) {
+        alert(success.places);
+    }, function(error) {
+        alert("An error has occured");
+    });
