@@ -1,18 +1,20 @@
 {
-  "name": "cordova-navitia-sdk",
-  "version": "0.1.0",
+  "name": "cordova-plugin-navitia-sdk",
+  "version": "0.2.0",
   "description": "Cordova plugin for NavitiaSDK iOS & Android",
   "cordova": {
     "id": "org-kisio-plugins-navitia-sdk",
     "platforms": [
-      "ios"
+      "ios",
+      "android"
     ]
   },
   "keywords": [
     "ecosystem:cordova",
     "cordova-ios",
+    "cordova-android",
     "navitia"
   ],
-  "author": "Thomas Noury",
-  "license": "MIT"
+  "author": "Kisio Digital",
+  "license": "GPL-3.0"
 }

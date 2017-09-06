@@ -82,6 +82,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
         return new BigDecimal(value);
     }
 
+    private Float longToFloat(long value) {
+        return longToBigDecimal(value).floatValue();
+    }
+
     private String stringStraightPass(String value) {
         return value;
     }
@@ -1163,8 +1167,12 @@ public class CDVNavitiaSDK extends CordovaPlugin {
 
     private void init(String token, CallbackContext callbackContext) {
         if (token != null && token.length() > 0) {
-            this.navitiaSdk = new NavitiaSDK(new NavitiaConfiguration(token));
-            callbackContext.success("SDK created with token " + token);
+            try {
+                this.navitiaSdk = new NavitiaSDK(new NavitiaConfiguration(token));
+                callbackContext.success("SDK created with token " + token);
+            } catch (Exception e) {
+                callbackContext.error(e.getMessage());
+            }
         } else {
             callbackContext.error("No token provided");
         }
@@ -7538,19 +7546,19 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
-                        journeysRequestBuilder.withWalkingSpeed(longToBigDecimal(params.getLong("walkingSpeed")));
+                        journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
                     }
                     if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
                         // Param: bikeSpeed, Type: Float
-                        journeysRequestBuilder.withBikeSpeed(longToBigDecimal(params.getLong("bikeSpeed")));
+                        journeysRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
                     }
                     if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
                         // Param: bssSpeed, Type: Float
-                        journeysRequestBuilder.withBssSpeed(longToBigDecimal(params.getLong("bssSpeed")));
+                        journeysRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
                     }
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
-                        journeysRequestBuilder.withCarSpeed(longToBigDecimal(params.getLong("carSpeed")));
+                        journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -7715,19 +7723,19 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
-                        journeysRequestBuilder.withWalkingSpeed(longToBigDecimal(params.getLong("walkingSpeed")));
+                        journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
                     }
                     if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
                         // Param: bikeSpeed, Type: Float
-                        journeysRequestBuilder.withBikeSpeed(longToBigDecimal(params.getLong("bikeSpeed")));
+                        journeysRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
                     }
                     if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
                         // Param: bssSpeed, Type: Float
-                        journeysRequestBuilder.withBssSpeed(longToBigDecimal(params.getLong("bssSpeed")));
+                        journeysRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
                     }
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
-                        journeysRequestBuilder.withCarSpeed(longToBigDecimal(params.getLong("carSpeed")));
+                        journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -7884,19 +7892,19 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
-                        journeysRequestBuilder.withWalkingSpeed(longToBigDecimal(params.getLong("walkingSpeed")));
+                        journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
                     }
                     if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
                         // Param: bikeSpeed, Type: Float
-                        journeysRequestBuilder.withBikeSpeed(longToBigDecimal(params.getLong("bikeSpeed")));
+                        journeysRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
                     }
                     if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
                         // Param: bssSpeed, Type: Float
-                        journeysRequestBuilder.withBssSpeed(longToBigDecimal(params.getLong("bssSpeed")));
+                        journeysRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
                     }
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
-                        journeysRequestBuilder.withCarSpeed(longToBigDecimal(params.getLong("carSpeed")));
+                        journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8057,19 +8065,19 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
-                        journeysRequestBuilder.withWalkingSpeed(longToBigDecimal(params.getLong("walkingSpeed")));
+                        journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
                     }
                     if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
                         // Param: bikeSpeed, Type: Float
-                        journeysRequestBuilder.withBikeSpeed(longToBigDecimal(params.getLong("bikeSpeed")));
+                        journeysRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
                     }
                     if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
                         // Param: bssSpeed, Type: Float
-                        journeysRequestBuilder.withBssSpeed(longToBigDecimal(params.getLong("bssSpeed")));
+                        journeysRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
                     }
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
-                        journeysRequestBuilder.withCarSpeed(longToBigDecimal(params.getLong("carSpeed")));
+                        journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8222,19 +8230,19 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
-                        journeysRequestBuilder.withWalkingSpeed(longToBigDecimal(params.getLong("walkingSpeed")));
+                        journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
                     }
                     if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
                         // Param: bikeSpeed, Type: Float
-                        journeysRequestBuilder.withBikeSpeed(longToBigDecimal(params.getLong("bikeSpeed")));
+                        journeysRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
                     }
                     if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
                         // Param: bssSpeed, Type: Float
-                        journeysRequestBuilder.withBssSpeed(longToBigDecimal(params.getLong("bssSpeed")));
+                        journeysRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
                     }
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
-                        journeysRequestBuilder.withCarSpeed(longToBigDecimal(params.getLong("carSpeed")));
+                        journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
