@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-navitia-sdk" version="0.2.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>NavitiaSDK</name>
+
     <js-module name="NavitiaSDK" src="www/NavitiaSDK.js">
         <clobbers target="NavitiaSDK" />
     </js-module>
+
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="NavitiaSDK">
@@ -15,13 +17,16 @@
         <pods-config ios-min-version="9.0" use-frameworks="true" />
         <pod name="NavitiaSDK" version="0.2.0" />
     </platform>
+
     <platform name="android">
         <config-file target="config.xml" parent="/*">
             <feature name="NavitiaSDK">
                 <param name="android-package" value="org.kisio.CDVNavitiaSDK.CDVNavitiaSDK"/>
             </feature>
         </config-file>
+
+        <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+
         <source-file src="src/android/org/kisio/CDVNavitiaSDK/CDVNavitiaSDK.java" target-dir="src/org/kisio/CDVNavitiaSDK" />
-        <lib-file src="lib/navitia-sdk-0.2.0-jar-with-dependencies.jar" />
     </platform>
 </plugin>

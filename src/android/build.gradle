@@ -1,0 +1,10 @@
+repositories {
+    // mavenLocal()
+    maven {
+        url  "https://dl.bintray.com/navitiasdkteam/NavitiaSDK"
+    }
+}
+
+dependencies {
+    compile 'org.kisio.sdk:navitia-sdk:0.2.0'
+}
