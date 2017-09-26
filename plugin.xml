@@ -2,11 +2,15 @@
 <plugin id="cordova-plugin-navitia-sdk" version="0.2.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>NavitiaSDK</name>
 
+    <dependency id="cordova-plugin-add-swift-support" version="1.6.1" />
+
     <js-module name="NavitiaSDK" src="www/NavitiaSDK.js">
         <clobbers target="NavitiaSDK" />
     </js-module>
 
     <platform name="ios">
+        <hook type="before_plugin_install" src="scripts/ios/carthage.js" />
+
         <config-file target="config.xml" parent="/*">
             <feature name="NavitiaSDK">
                 <param name="ios-package" value="CDVNavitiaSDK" />
@@ -14,8 +18,11 @@
         </config-file>
         <header-file src="src/ios/CDVNavitiaSDK.h" />
         <source-file src="src/ios/CDVNavitiaSDK.m" />
-        <pods-config ios-min-version="9.0" use-frameworks="true" />
-        <pod name="NavitiaSDK" version="0.2.0" />
+
+        <framework src="Carthage/Build/iOS/Alamofire.framework" custom="true" embed="true" />
+        <framework src="Carthage/Build/iOS/AlamofireObjectMapper.framework" custom="true" embed="true" />
+        <framework src="Carthage/Build/iOS/NavitiaSDK.framework" custom="true" embed="true" />
+        <framework src="Carthage/Build/iOS/ObjectMapper.framework" custom="true" embed="true" />
     </platform>
 
     <platform name="android">
