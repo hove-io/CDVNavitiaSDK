@@ -1,12 +1,12 @@
 module.exports = function(ctx) {
-    if (ctx.opts.cordova.platforms.indexOf('ios') == -1) {
+    if (ctx.opts.cordova.platforms.indexOf('ios') === -1) {
         return;
     }
 
     console.log();
-    console.log("*****************************************************");
-    console.log("***         Go stretch your legs (~5min)          ***");
-    console.log("*****************************************************");
+    console.log('*****************************************************');
+    console.log('***         Go stretch your legs (~5min)          ***');
+    console.log('*****************************************************');
     console.log();
 
     const deferral = ctx.requireCordovaModule('q').defer();
@@ -28,7 +28,6 @@ module.exports = function(ctx) {
     child.on('error', function(err) {
         deferral.reject(err);
     });
-
 
     child.on('close', function(code) {
         deferral.resolve();

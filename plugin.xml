@@ -2,7 +2,7 @@
 <plugin id="cordova-plugin-navitia-sdk" version="0.2.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>NavitiaSDK</name>
 
-    <dependency id="cordova-plugin-add-swift-support" version="1.6.1"/>
+    <dependency id="cordova-plugin-add-swift-support" version="1.6.1" />
 
     <js-module name="NavitiaSDK" src="www/NavitiaSDK.js">
         <clobbers target="NavitiaSDK" />
