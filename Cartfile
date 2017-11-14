@@ -1,1 +1,1 @@
-github "CanalTP/NavitiaSDK_ios" "0.3.1"
+github "CanalTP/NavitiaSDK_ios" ~> 0.3

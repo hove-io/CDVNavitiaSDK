@@ -1,4 +1,4 @@
 github "Alamofire/Alamofire" "4.5.1"
-github "CanalTP/NavitiaSDK_ios" "0.3.1"
+github "CanalTP/NavitiaSDK_ios" "0.3.3"
 github "Hearst-DD/ObjectMapper" "2.2.9"
 github "tristanhimmelman/AlamofireObjectMapper" "4.1.0"
