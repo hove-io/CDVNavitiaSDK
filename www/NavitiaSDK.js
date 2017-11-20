@@ -2,6 +2,204 @@ var exec = require('cordova/exec');
 
 var request_builders = {
     
+    CoverageRegionCalendarsRequestBuilder: function () {
+        this.CoverageRegionCalendarsRequestBuilder = function() {
+            this.region = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.startDate = null;
+            this.endDate = null;
+            this.forbiddenId = null;
+            this.forbiddenUris = null;
+            this.distance = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withStartDate = function (startDate) {
+            this.startDate = startDate;
+            return this;
+        };
+        this.withEndDate = function (endDate) {
+            this.endDate = endDate;
+            return this;
+        };
+        this.withForbiddenId = function (forbiddenId) {
+            this.forbiddenId = forbiddenId;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionCalendars', [{
+                region: this.region,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                startDate: this.startDate,
+                endDate: this.endDate,
+                forbiddenId: this.forbiddenId,
+                forbiddenUris: this.forbiddenUris,
+                distance: this.distance
+            }]);
+        };
+    },
+    CoverageRegionCalendarsIdRequestBuilder: function () {
+        this.CoverageRegionCalendarsIdRequestBuilder = function() {
+            this.region = null;
+            this.id = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.startDate = null;
+            this.endDate = null;
+            this.forbiddenId = null;
+            this.forbiddenUris = null;
+            this.distance = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withId = function (id) {
+            this.id = id;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withStartDate = function (startDate) {
+            this.startDate = startDate;
+            return this;
+        };
+        this.withEndDate = function (endDate) {
+            this.endDate = endDate;
+            return this;
+        };
+        this.withForbiddenId = function (forbiddenId) {
+            this.forbiddenId = forbiddenId;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionCalendarsId', [{
+                region: this.region,
+                id: this.id,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                startDate: this.startDate,
+                endDate: this.endDate,
+                forbiddenId: this.forbiddenId,
+                forbiddenUris: this.forbiddenUris,
+                distance: this.distance
+            }]);
+        };
+    },
+    CoverageRegionUriCalendarsRequestBuilder: function () {
+        this.CoverageRegionUriCalendarsRequestBuilder = function() {
+            this.region = null;
+            this.uri = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.startDate = null;
+            this.endDate = null;
+            this.forbiddenId = null;
+            this.forbiddenUris = null;
+            this.distance = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withStartDate = function (startDate) {
+            this.startDate = startDate;
+            return this;
+        };
+        this.withEndDate = function (endDate) {
+            this.endDate = endDate;
+            return this;
+        };
+        this.withForbiddenId = function (forbiddenId) {
+            this.forbiddenId = forbiddenId;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriCalendars', [{
+                region: this.region,
+                uri: this.uri,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                startDate: this.startDate,
+                endDate: this.endDate,
+                forbiddenId: this.forbiddenId,
+                forbiddenUris: this.forbiddenUris,
+                distance: this.distance
+            }]);
+        };
+    },
     CoverageLonLatCommercialModesRequestBuilder: function () {
         this.CoverageLonLatCommercialModesRequestBuilder = function() {
             this.lat = null;
@@ -4270,6 +4468,366 @@ var request_builders = {
             }]);
         };
     },
+    CoverageRegionGeoStatusRequestBuilder: function () {
+        this.CoverageRegionGeoStatusRequestBuilder = function() {
+            this.region = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionGeoStatus', [{
+                region: this.region
+            }]);
+        };
+    },
+    CoverageRegionIsochronesRequestBuilder: function () {
+        this.CoverageRegionIsochronesRequestBuilder = function() {
+            this.region = null;
+            this.from = null;
+            this.to = null;
+            this.datetime = null;
+            this.datetimeRepresents = null;
+            this.maxNbTransfers = null;
+            this.minNbTransfers = null;
+            this.firstSectionMode = null;
+            this.lastSectionMode = null;
+            this.maxDurationToPt = null;
+            this.maxWalkingDurationToPt = null;
+            this.maxBikeDurationToPt = null;
+            this.maxBssDurationToPt = null;
+            this.maxCarDurationToPt = null;
+            this.walkingSpeed = null;
+            this.bikeSpeed = null;
+            this.bssSpeed = null;
+            this.carSpeed = null;
+            this.forbiddenUris = null;
+            this.allowedId = null;
+            this.disruptionActive = null;
+            this.dataFreshness = null;
+            this.maxDuration = null;
+            this.wheelchair = null;
+            this.travelerType = null;
+            this.directPath = null;
+            this.minDuration = null;
+            this.boundaryDuration = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withFrom = function (from) {
+            this.from = from;
+            return this;
+        };
+        this.withTo = function (to) {
+            this.to = to;
+            return this;
+        };
+        this.withDatetime = function (datetime) {
+            this.datetime = datetime;
+            return this;
+        };
+        this.withDatetimeRepresents = function (datetimeRepresents) {
+            this.datetimeRepresents = datetimeRepresents;
+            return this;
+        };
+        this.withMaxNbTransfers = function (maxNbTransfers) {
+            this.maxNbTransfers = maxNbTransfers;
+            return this;
+        };
+        this.withMinNbTransfers = function (minNbTransfers) {
+            this.minNbTransfers = minNbTransfers;
+            return this;
+        };
+        this.withFirstSectionMode = function (firstSectionMode) {
+            this.firstSectionMode = firstSectionMode;
+            return this;
+        };
+        this.withLastSectionMode = function (lastSectionMode) {
+            this.lastSectionMode = lastSectionMode;
+            return this;
+        };
+        this.withMaxDurationToPt = function (maxDurationToPt) {
+            this.maxDurationToPt = maxDurationToPt;
+            return this;
+        };
+        this.withMaxWalkingDurationToPt = function (maxWalkingDurationToPt) {
+            this.maxWalkingDurationToPt = maxWalkingDurationToPt;
+            return this;
+        };
+        this.withMaxBikeDurationToPt = function (maxBikeDurationToPt) {
+            this.maxBikeDurationToPt = maxBikeDurationToPt;
+            return this;
+        };
+        this.withMaxBssDurationToPt = function (maxBssDurationToPt) {
+            this.maxBssDurationToPt = maxBssDurationToPt;
+            return this;
+        };
+        this.withMaxCarDurationToPt = function (maxCarDurationToPt) {
+            this.maxCarDurationToPt = maxCarDurationToPt;
+            return this;
+        };
+        this.withWalkingSpeed = function (walkingSpeed) {
+            this.walkingSpeed = walkingSpeed;
+            return this;
+        };
+        this.withBikeSpeed = function (bikeSpeed) {
+            this.bikeSpeed = bikeSpeed;
+            return this;
+        };
+        this.withBssSpeed = function (bssSpeed) {
+            this.bssSpeed = bssSpeed;
+            return this;
+        };
+        this.withCarSpeed = function (carSpeed) {
+            this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withAllowedId = function (allowedId) {
+            this.allowedId = allowedId;
+            return this;
+        };
+        this.withDisruptionActive = function (disruptionActive) {
+            this.disruptionActive = disruptionActive;
+            return this;
+        };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
+        this.withMaxDuration = function (maxDuration) {
+            this.maxDuration = maxDuration;
+            return this;
+        };
+        this.withWheelchair = function (wheelchair) {
+            this.wheelchair = wheelchair;
+            return this;
+        };
+        this.withTravelerType = function (travelerType) {
+            this.travelerType = travelerType;
+            return this;
+        };
+        this.withDirectPath = function (directPath) {
+            this.directPath = directPath;
+            return this;
+        };
+        this.withMinDuration = function (minDuration) {
+            this.minDuration = minDuration;
+            return this;
+        };
+        this.withBoundaryDuration = function (boundaryDuration) {
+            this.boundaryDuration = boundaryDuration;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionIsochrones', [{
+                region: this.region,
+                from: this.from,
+                to: this.to,
+                datetime: this.datetime,
+                datetimeRepresents: this.datetimeRepresents,
+                maxNbTransfers: this.maxNbTransfers,
+                minNbTransfers: this.minNbTransfers,
+                firstSectionMode: this.firstSectionMode,
+                lastSectionMode: this.lastSectionMode,
+                maxDurationToPt: this.maxDurationToPt,
+                maxWalkingDurationToPt: this.maxWalkingDurationToPt,
+                maxBikeDurationToPt: this.maxBikeDurationToPt,
+                maxBssDurationToPt: this.maxBssDurationToPt,
+                maxCarDurationToPt: this.maxCarDurationToPt,
+                walkingSpeed: this.walkingSpeed,
+                bikeSpeed: this.bikeSpeed,
+                bssSpeed: this.bssSpeed,
+                carSpeed: this.carSpeed,
+                forbiddenUris: this.forbiddenUris,
+                allowedId: this.allowedId,
+                disruptionActive: this.disruptionActive,
+                dataFreshness: this.dataFreshness,
+                maxDuration: this.maxDuration,
+                wheelchair: this.wheelchair,
+                travelerType: this.travelerType,
+                directPath: this.directPath,
+                minDuration: this.minDuration,
+                boundaryDuration: this.boundaryDuration
+            }]);
+        };
+    },
+    CoverageRegionHeatMapsRequestBuilder: function () {
+        this.CoverageRegionHeatMapsRequestBuilder = function() {
+            this.region = null;
+            this.from = null;
+            this.to = null;
+            this.datetime = null;
+            this.datetimeRepresents = null;
+            this.maxNbTransfers = null;
+            this.minNbTransfers = null;
+            this.firstSectionMode = null;
+            this.lastSectionMode = null;
+            this.maxDurationToPt = null;
+            this.maxWalkingDurationToPt = null;
+            this.maxBikeDurationToPt = null;
+            this.maxBssDurationToPt = null;
+            this.maxCarDurationToPt = null;
+            this.walkingSpeed = null;
+            this.bikeSpeed = null;
+            this.bssSpeed = null;
+            this.carSpeed = null;
+            this.forbiddenUris = null;
+            this.allowedId = null;
+            this.disruptionActive = null;
+            this.dataFreshness = null;
+            this.maxDuration = null;
+            this.wheelchair = null;
+            this.travelerType = null;
+            this.directPath = null;
+            this.resolution = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withFrom = function (from) {
+            this.from = from;
+            return this;
+        };
+        this.withTo = function (to) {
+            this.to = to;
+            return this;
+        };
+        this.withDatetime = function (datetime) {
+            this.datetime = datetime;
+            return this;
+        };
+        this.withDatetimeRepresents = function (datetimeRepresents) {
+            this.datetimeRepresents = datetimeRepresents;
+            return this;
+        };
+        this.withMaxNbTransfers = function (maxNbTransfers) {
+            this.maxNbTransfers = maxNbTransfers;
+            return this;
+        };
+        this.withMinNbTransfers = function (minNbTransfers) {
+            this.minNbTransfers = minNbTransfers;
+            return this;
+        };
+        this.withFirstSectionMode = function (firstSectionMode) {
+            this.firstSectionMode = firstSectionMode;
+            return this;
+        };
+        this.withLastSectionMode = function (lastSectionMode) {
+            this.lastSectionMode = lastSectionMode;
+            return this;
+        };
+        this.withMaxDurationToPt = function (maxDurationToPt) {
+            this.maxDurationToPt = maxDurationToPt;
+            return this;
+        };
+        this.withMaxWalkingDurationToPt = function (maxWalkingDurationToPt) {
+            this.maxWalkingDurationToPt = maxWalkingDurationToPt;
+            return this;
+        };
+        this.withMaxBikeDurationToPt = function (maxBikeDurationToPt) {
+            this.maxBikeDurationToPt = maxBikeDurationToPt;
+            return this;
+        };
+        this.withMaxBssDurationToPt = function (maxBssDurationToPt) {
+            this.maxBssDurationToPt = maxBssDurationToPt;
+            return this;
+        };
+        this.withMaxCarDurationToPt = function (maxCarDurationToPt) {
+            this.maxCarDurationToPt = maxCarDurationToPt;
+            return this;
+        };
+        this.withWalkingSpeed = function (walkingSpeed) {
+            this.walkingSpeed = walkingSpeed;
+            return this;
+        };
+        this.withBikeSpeed = function (bikeSpeed) {
+            this.bikeSpeed = bikeSpeed;
+            return this;
+        };
+        this.withBssSpeed = function (bssSpeed) {
+            this.bssSpeed = bssSpeed;
+            return this;
+        };
+        this.withCarSpeed = function (carSpeed) {
+            this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withAllowedId = function (allowedId) {
+            this.allowedId = allowedId;
+            return this;
+        };
+        this.withDisruptionActive = function (disruptionActive) {
+            this.disruptionActive = disruptionActive;
+            return this;
+        };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
+        this.withMaxDuration = function (maxDuration) {
+            this.maxDuration = maxDuration;
+            return this;
+        };
+        this.withWheelchair = function (wheelchair) {
+            this.wheelchair = wheelchair;
+            return this;
+        };
+        this.withTravelerType = function (travelerType) {
+            this.travelerType = travelerType;
+            return this;
+        };
+        this.withDirectPath = function (directPath) {
+            this.directPath = directPath;
+            return this;
+        };
+        this.withResolution = function (resolution) {
+            this.resolution = resolution;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionHeatMaps', [{
+                region: this.region,
+                from: this.from,
+                to: this.to,
+                datetime: this.datetime,
+                datetimeRepresents: this.datetimeRepresents,
+                maxNbTransfers: this.maxNbTransfers,
+                minNbTransfers: this.minNbTransfers,
+                firstSectionMode: this.firstSectionMode,
+                lastSectionMode: this.lastSectionMode,
+                maxDurationToPt: this.maxDurationToPt,
+                maxWalkingDurationToPt: this.maxWalkingDurationToPt,
+                maxBikeDurationToPt: this.maxBikeDurationToPt,
+                maxBssDurationToPt: this.maxBssDurationToPt,
+                maxCarDurationToPt: this.maxCarDurationToPt,
+                walkingSpeed: this.walkingSpeed,
+                bikeSpeed: this.bikeSpeed,
+                bssSpeed: this.bssSpeed,
+                carSpeed: this.carSpeed,
+                forbiddenUris: this.forbiddenUris,
+                allowedId: this.allowedId,
+                disruptionActive: this.disruptionActive,
+                dataFreshness: this.dataFreshness,
+                maxDuration: this.maxDuration,
+                wheelchair: this.wheelchair,
+                travelerType: this.travelerType,
+                directPath: this.directPath,
+                resolution: this.resolution
+            }]);
+        };
+    },
     CoverageLonLatJourneyPatternPointsRequestBuilder: function () {
         this.CoverageLonLatJourneyPatternPointsRequestBuilder = function() {
             this.lat = null;
@@ -5968,6 +6526,7 @@ var request_builders = {
             this.minNbJourneys = null;
             this.maxNbJourneys = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -6095,6 +6654,10 @@ var request_builders = {
         };
         this.withBssStands = function (bssStands) {
             this.bssStands = bssStands;
+            return this;
+        };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -6130,213 +6693,8 @@ var request_builders = {
                 isJourneySchedules: this.isJourneySchedules,
                 minNbJourneys: this.minNbJourneys,
                 maxNbJourneys: this.maxNbJourneys,
-                bssStands: this.bssStands
-            }]);
-        };
-    },
-    CoverageLonLatUriJourneysRequestBuilder: function () {
-        this.CoverageLonLatUriJourneysRequestBuilder = function() {
-            this.lat = null;
-            this.lon = null;
-            this.uri = null;
-            this.from = null;
-            this.to = null;
-            this.datetime = null;
-            this.datetimeRepresents = null;
-            this.maxNbTransfers = null;
-            this.minNbTransfers = null;
-            this.firstSectionMode = null;
-            this.lastSectionMode = null;
-            this.maxDurationToPt = null;
-            this.maxWalkingDurationToPt = null;
-            this.maxBikeDurationToPt = null;
-            this.maxBssDurationToPt = null;
-            this.maxCarDurationToPt = null;
-            this.walkingSpeed = null;
-            this.bikeSpeed = null;
-            this.bssSpeed = null;
-            this.carSpeed = null;
-            this.forbiddenUris = null;
-            this.allowedId = null;
-            this.disruptionActive = null;
-            this.dataFreshness = null;
-            this.maxDuration = null;
-            this.wheelchair = null;
-            this.travelerType = null;
-            this.directPath = null;
-            this.count = null;
-            this.isJourneySchedules = null;
-            this.minNbJourneys = null;
-            this.maxNbJourneys = null;
-            this.bssStands = null;
-        };
-        this.withLat = function (lat) {
-            this.lat = lat;
-            return this;
-        };
-        this.withLon = function (lon) {
-            this.lon = lon;
-            return this;
-        };
-        this.withUri = function (uri) {
-            this.uri = uri;
-            return this;
-        };
-        this.withFrom = function (from) {
-            this.from = from;
-            return this;
-        };
-        this.withTo = function (to) {
-            this.to = to;
-            return this;
-        };
-        this.withDatetime = function (datetime) {
-            this.datetime = datetime;
-            return this;
-        };
-        this.withDatetimeRepresents = function (datetimeRepresents) {
-            this.datetimeRepresents = datetimeRepresents;
-            return this;
-        };
-        this.withMaxNbTransfers = function (maxNbTransfers) {
-            this.maxNbTransfers = maxNbTransfers;
-            return this;
-        };
-        this.withMinNbTransfers = function (minNbTransfers) {
-            this.minNbTransfers = minNbTransfers;
-            return this;
-        };
-        this.withFirstSectionMode = function (firstSectionMode) {
-            this.firstSectionMode = firstSectionMode;
-            return this;
-        };
-        this.withLastSectionMode = function (lastSectionMode) {
-            this.lastSectionMode = lastSectionMode;
-            return this;
-        };
-        this.withMaxDurationToPt = function (maxDurationToPt) {
-            this.maxDurationToPt = maxDurationToPt;
-            return this;
-        };
-        this.withMaxWalkingDurationToPt = function (maxWalkingDurationToPt) {
-            this.maxWalkingDurationToPt = maxWalkingDurationToPt;
-            return this;
-        };
-        this.withMaxBikeDurationToPt = function (maxBikeDurationToPt) {
-            this.maxBikeDurationToPt = maxBikeDurationToPt;
-            return this;
-        };
-        this.withMaxBssDurationToPt = function (maxBssDurationToPt) {
-            this.maxBssDurationToPt = maxBssDurationToPt;
-            return this;
-        };
-        this.withMaxCarDurationToPt = function (maxCarDurationToPt) {
-            this.maxCarDurationToPt = maxCarDurationToPt;
-            return this;
-        };
-        this.withWalkingSpeed = function (walkingSpeed) {
-            this.walkingSpeed = walkingSpeed;
-            return this;
-        };
-        this.withBikeSpeed = function (bikeSpeed) {
-            this.bikeSpeed = bikeSpeed;
-            return this;
-        };
-        this.withBssSpeed = function (bssSpeed) {
-            this.bssSpeed = bssSpeed;
-            return this;
-        };
-        this.withCarSpeed = function (carSpeed) {
-            this.carSpeed = carSpeed;
-            return this;
-        };
-        this.withForbiddenUris = function (forbiddenUris) {
-            this.forbiddenUris = forbiddenUris;
-            return this;
-        };
-        this.withAllowedId = function (allowedId) {
-            this.allowedId = allowedId;
-            return this;
-        };
-        this.withDisruptionActive = function (disruptionActive) {
-            this.disruptionActive = disruptionActive;
-            return this;
-        };
-        this.withDataFreshness = function (dataFreshness) {
-            this.dataFreshness = dataFreshness;
-            return this;
-        };
-        this.withMaxDuration = function (maxDuration) {
-            this.maxDuration = maxDuration;
-            return this;
-        };
-        this.withWheelchair = function (wheelchair) {
-            this.wheelchair = wheelchair;
-            return this;
-        };
-        this.withTravelerType = function (travelerType) {
-            this.travelerType = travelerType;
-            return this;
-        };
-        this.withDirectPath = function (directPath) {
-            this.directPath = directPath;
-            return this;
-        };
-        this.withCount = function (count) {
-            this.count = count;
-            return this;
-        };
-        this.withIsJourneySchedules = function (isJourneySchedules) {
-            this.isJourneySchedules = isJourneySchedules;
-            return this;
-        };
-        this.withMinNbJourneys = function (minNbJourneys) {
-            this.minNbJourneys = minNbJourneys;
-            return this;
-        };
-        this.withMaxNbJourneys = function (maxNbJourneys) {
-            this.maxNbJourneys = maxNbJourneys;
-            return this;
-        };
-        this.withBssStands = function (bssStands) {
-            this.bssStands = bssStands;
-            return this;
-        };
-        this.get = function (successCallback, errorCallback) {
-            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriJourneys', [{
-                lat: this.lat,
-                lon: this.lon,
-                uri: this.uri,
-                from: this.from,
-                to: this.to,
-                datetime: this.datetime,
-                datetimeRepresents: this.datetimeRepresents,
-                maxNbTransfers: this.maxNbTransfers,
-                minNbTransfers: this.minNbTransfers,
-                firstSectionMode: this.firstSectionMode,
-                lastSectionMode: this.lastSectionMode,
-                maxDurationToPt: this.maxDurationToPt,
-                maxWalkingDurationToPt: this.maxWalkingDurationToPt,
-                maxBikeDurationToPt: this.maxBikeDurationToPt,
-                maxBssDurationToPt: this.maxBssDurationToPt,
-                maxCarDurationToPt: this.maxCarDurationToPt,
-                walkingSpeed: this.walkingSpeed,
-                bikeSpeed: this.bikeSpeed,
-                bssSpeed: this.bssSpeed,
-                carSpeed: this.carSpeed,
-                forbiddenUris: this.forbiddenUris,
-                allowedId: this.allowedId,
-                disruptionActive: this.disruptionActive,
-                dataFreshness: this.dataFreshness,
-                maxDuration: this.maxDuration,
-                wheelchair: this.wheelchair,
-                travelerType: this.travelerType,
-                directPath: this.directPath,
-                count: this.count,
-                isJourneySchedules: this.isJourneySchedules,
-                minNbJourneys: this.minNbJourneys,
-                maxNbJourneys: this.maxNbJourneys,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -6373,6 +6731,7 @@ var request_builders = {
             this.minNbJourneys = null;
             this.maxNbJourneys = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -6496,6 +6855,10 @@ var request_builders = {
         };
         this.withBssStands = function (bssStands) {
             this.bssStands = bssStands;
+            return this;
+        };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -6530,207 +6893,8 @@ var request_builders = {
                 isJourneySchedules: this.isJourneySchedules,
                 minNbJourneys: this.minNbJourneys,
                 maxNbJourneys: this.maxNbJourneys,
-                bssStands: this.bssStands
-            }]);
-        };
-    },
-    CoverageRegionUriJourneysRequestBuilder: function () {
-        this.CoverageRegionUriJourneysRequestBuilder = function() {
-            this.region = null;
-            this.uri = null;
-            this.from = null;
-            this.to = null;
-            this.datetime = null;
-            this.datetimeRepresents = null;
-            this.maxNbTransfers = null;
-            this.minNbTransfers = null;
-            this.firstSectionMode = null;
-            this.lastSectionMode = null;
-            this.maxDurationToPt = null;
-            this.maxWalkingDurationToPt = null;
-            this.maxBikeDurationToPt = null;
-            this.maxBssDurationToPt = null;
-            this.maxCarDurationToPt = null;
-            this.walkingSpeed = null;
-            this.bikeSpeed = null;
-            this.bssSpeed = null;
-            this.carSpeed = null;
-            this.forbiddenUris = null;
-            this.allowedId = null;
-            this.disruptionActive = null;
-            this.dataFreshness = null;
-            this.maxDuration = null;
-            this.wheelchair = null;
-            this.travelerType = null;
-            this.directPath = null;
-            this.count = null;
-            this.isJourneySchedules = null;
-            this.minNbJourneys = null;
-            this.maxNbJourneys = null;
-            this.bssStands = null;
-        };
-        this.withRegion = function (region) {
-            this.region = region;
-            return this;
-        };
-        this.withUri = function (uri) {
-            this.uri = uri;
-            return this;
-        };
-        this.withFrom = function (from) {
-            this.from = from;
-            return this;
-        };
-        this.withTo = function (to) {
-            this.to = to;
-            return this;
-        };
-        this.withDatetime = function (datetime) {
-            this.datetime = datetime;
-            return this;
-        };
-        this.withDatetimeRepresents = function (datetimeRepresents) {
-            this.datetimeRepresents = datetimeRepresents;
-            return this;
-        };
-        this.withMaxNbTransfers = function (maxNbTransfers) {
-            this.maxNbTransfers = maxNbTransfers;
-            return this;
-        };
-        this.withMinNbTransfers = function (minNbTransfers) {
-            this.minNbTransfers = minNbTransfers;
-            return this;
-        };
-        this.withFirstSectionMode = function (firstSectionMode) {
-            this.firstSectionMode = firstSectionMode;
-            return this;
-        };
-        this.withLastSectionMode = function (lastSectionMode) {
-            this.lastSectionMode = lastSectionMode;
-            return this;
-        };
-        this.withMaxDurationToPt = function (maxDurationToPt) {
-            this.maxDurationToPt = maxDurationToPt;
-            return this;
-        };
-        this.withMaxWalkingDurationToPt = function (maxWalkingDurationToPt) {
-            this.maxWalkingDurationToPt = maxWalkingDurationToPt;
-            return this;
-        };
-        this.withMaxBikeDurationToPt = function (maxBikeDurationToPt) {
-            this.maxBikeDurationToPt = maxBikeDurationToPt;
-            return this;
-        };
-        this.withMaxBssDurationToPt = function (maxBssDurationToPt) {
-            this.maxBssDurationToPt = maxBssDurationToPt;
-            return this;
-        };
-        this.withMaxCarDurationToPt = function (maxCarDurationToPt) {
-            this.maxCarDurationToPt = maxCarDurationToPt;
-            return this;
-        };
-        this.withWalkingSpeed = function (walkingSpeed) {
-            this.walkingSpeed = walkingSpeed;
-            return this;
-        };
-        this.withBikeSpeed = function (bikeSpeed) {
-            this.bikeSpeed = bikeSpeed;
-            return this;
-        };
-        this.withBssSpeed = function (bssSpeed) {
-            this.bssSpeed = bssSpeed;
-            return this;
-        };
-        this.withCarSpeed = function (carSpeed) {
-            this.carSpeed = carSpeed;
-            return this;
-        };
-        this.withForbiddenUris = function (forbiddenUris) {
-            this.forbiddenUris = forbiddenUris;
-            return this;
-        };
-        this.withAllowedId = function (allowedId) {
-            this.allowedId = allowedId;
-            return this;
-        };
-        this.withDisruptionActive = function (disruptionActive) {
-            this.disruptionActive = disruptionActive;
-            return this;
-        };
-        this.withDataFreshness = function (dataFreshness) {
-            this.dataFreshness = dataFreshness;
-            return this;
-        };
-        this.withMaxDuration = function (maxDuration) {
-            this.maxDuration = maxDuration;
-            return this;
-        };
-        this.withWheelchair = function (wheelchair) {
-            this.wheelchair = wheelchair;
-            return this;
-        };
-        this.withTravelerType = function (travelerType) {
-            this.travelerType = travelerType;
-            return this;
-        };
-        this.withDirectPath = function (directPath) {
-            this.directPath = directPath;
-            return this;
-        };
-        this.withCount = function (count) {
-            this.count = count;
-            return this;
-        };
-        this.withIsJourneySchedules = function (isJourneySchedules) {
-            this.isJourneySchedules = isJourneySchedules;
-            return this;
-        };
-        this.withMinNbJourneys = function (minNbJourneys) {
-            this.minNbJourneys = minNbJourneys;
-            return this;
-        };
-        this.withMaxNbJourneys = function (maxNbJourneys) {
-            this.maxNbJourneys = maxNbJourneys;
-            return this;
-        };
-        this.withBssStands = function (bssStands) {
-            this.bssStands = bssStands;
-            return this;
-        };
-        this.get = function (successCallback, errorCallback) {
-            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriJourneys', [{
-                region: this.region,
-                uri: this.uri,
-                from: this.from,
-                to: this.to,
-                datetime: this.datetime,
-                datetimeRepresents: this.datetimeRepresents,
-                maxNbTransfers: this.maxNbTransfers,
-                minNbTransfers: this.minNbTransfers,
-                firstSectionMode: this.firstSectionMode,
-                lastSectionMode: this.lastSectionMode,
-                maxDurationToPt: this.maxDurationToPt,
-                maxWalkingDurationToPt: this.maxWalkingDurationToPt,
-                maxBikeDurationToPt: this.maxBikeDurationToPt,
-                maxBssDurationToPt: this.maxBssDurationToPt,
-                maxCarDurationToPt: this.maxCarDurationToPt,
-                walkingSpeed: this.walkingSpeed,
-                bikeSpeed: this.bikeSpeed,
-                bssSpeed: this.bssSpeed,
-                carSpeed: this.carSpeed,
-                forbiddenUris: this.forbiddenUris,
-                allowedId: this.allowedId,
-                disruptionActive: this.disruptionActive,
-                dataFreshness: this.dataFreshness,
-                maxDuration: this.maxDuration,
-                wheelchair: this.wheelchair,
-                travelerType: this.travelerType,
-                directPath: this.directPath,
-                count: this.count,
-                isJourneySchedules: this.isJourneySchedules,
-                minNbJourneys: this.minNbJourneys,
-                maxNbJourneys: this.maxNbJourneys,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -6766,6 +6930,7 @@ var request_builders = {
             this.minNbJourneys = null;
             this.maxNbJourneys = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withFrom = function (from) {
             this.from = from;
@@ -6887,6 +7052,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'journeys', [{
                 from: this.from,
@@ -6918,7 +7087,8 @@ var request_builders = {
                 isJourneySchedules: this.isJourneySchedules,
                 minNbJourneys: this.minNbJourneys,
                 maxNbJourneys: this.maxNbJourneys,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -7897,6 +8067,100 @@ var request_builders = {
                 disableGeojson: this.disableGeojson,
                 filter: this.filter,
                 originalId: this.originalId
+            }]);
+        };
+    },
+    CoverageRegionLineReportsRequestBuilder: function () {
+        this.CoverageRegionLineReportsRequestBuilder = function() {
+            this.region = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+            this.disableGeojson = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionLineReports', [{
+                region: this.region,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
+    CoverageRegionUriLineReportsRequestBuilder: function () {
+        this.CoverageRegionUriLineReportsRequestBuilder = function() {
+            this.region = null;
+            this.uri = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+            this.disableGeojson = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriLineReports', [{
+                region: this.region,
+                uri: this.uri,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris,
+                disableGeojson: this.disableGeojson
             }]);
         };
     },
@@ -11802,6 +12066,450 @@ var request_builders = {
             }]);
         };
     },
+    CoordLonLatPlacesNearbyRequestBuilder: function () {
+        this.CoordLonLatPlacesNearbyRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.type = null;
+            this.filter = null;
+            this.distance = null;
+            this.count = null;
+            this.depth = null;
+            this.startPage = null;
+            this.bssStands = null;
+            this.addPoiInfos = null;
+            this.disableGeojson = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withBssStands = function (bssStands) {
+            this.bssStands = bssStands;
+            return this;
+        };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coordLonLatPlacesNearby', [{
+                lat: this.lat,
+                lon: this.lon,
+                type: this.type,
+                filter: this.filter,
+                distance: this.distance,
+                count: this.count,
+                depth: this.depth,
+                startPage: this.startPage,
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
+    CoordsLonLatPlacesNearbyRequestBuilder: function () {
+        this.CoordsLonLatPlacesNearbyRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.type = null;
+            this.filter = null;
+            this.distance = null;
+            this.count = null;
+            this.depth = null;
+            this.startPage = null;
+            this.bssStands = null;
+            this.addPoiInfos = null;
+            this.disableGeojson = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withBssStands = function (bssStands) {
+            this.bssStands = bssStands;
+            return this;
+        };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coordsLonLatPlacesNearby', [{
+                lat: this.lat,
+                lon: this.lon,
+                type: this.type,
+                filter: this.filter,
+                distance: this.distance,
+                count: this.count,
+                depth: this.depth,
+                startPage: this.startPage,
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
+    CoverageLonLatPlacesNearbyRequestBuilder: function () {
+        this.CoverageLonLatPlacesNearbyRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.type = null;
+            this.filter = null;
+            this.distance = null;
+            this.count = null;
+            this.depth = null;
+            this.startPage = null;
+            this.bssStands = null;
+            this.addPoiInfos = null;
+            this.disableGeojson = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withBssStands = function (bssStands) {
+            this.bssStands = bssStands;
+            return this;
+        };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPlacesNearby', [{
+                lat: this.lat,
+                lon: this.lon,
+                type: this.type,
+                filter: this.filter,
+                distance: this.distance,
+                count: this.count,
+                depth: this.depth,
+                startPage: this.startPage,
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
+    CoverageLonLatUriPlacesNearbyRequestBuilder: function () {
+        this.CoverageLonLatUriPlacesNearbyRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.uri = null;
+            this.type = null;
+            this.filter = null;
+            this.distance = null;
+            this.count = null;
+            this.depth = null;
+            this.startPage = null;
+            this.bssStands = null;
+            this.addPoiInfos = null;
+            this.disableGeojson = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withBssStands = function (bssStands) {
+            this.bssStands = bssStands;
+            return this;
+        };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriPlacesNearby', [{
+                lat: this.lat,
+                lon: this.lon,
+                uri: this.uri,
+                type: this.type,
+                filter: this.filter,
+                distance: this.distance,
+                count: this.count,
+                depth: this.depth,
+                startPage: this.startPage,
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
+    CoverageRegionPlacesNearbyRequestBuilder: function () {
+        this.CoverageRegionPlacesNearbyRequestBuilder = function() {
+            this.region = null;
+            this.type = null;
+            this.filter = null;
+            this.distance = null;
+            this.count = null;
+            this.depth = null;
+            this.startPage = null;
+            this.bssStands = null;
+            this.addPoiInfos = null;
+            this.disableGeojson = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withBssStands = function (bssStands) {
+            this.bssStands = bssStands;
+            return this;
+        };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPlacesNearby', [{
+                region: this.region,
+                type: this.type,
+                filter: this.filter,
+                distance: this.distance,
+                count: this.count,
+                depth: this.depth,
+                startPage: this.startPage,
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
+    CoverageRegionUriPlacesNearbyRequestBuilder: function () {
+        this.CoverageRegionUriPlacesNearbyRequestBuilder = function() {
+            this.region = null;
+            this.uri = null;
+            this.type = null;
+            this.filter = null;
+            this.distance = null;
+            this.count = null;
+            this.depth = null;
+            this.startPage = null;
+            this.bssStands = null;
+            this.addPoiInfos = null;
+            this.disableGeojson = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withBssStands = function (bssStands) {
+            this.bssStands = bssStands;
+            return this;
+        };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriPlacesNearby', [{
+                region: this.region,
+                uri: this.uri,
+                type: this.type,
+                filter: this.filter,
+                distance: this.distance,
+                count: this.count,
+                depth: this.depth,
+                startPage: this.startPage,
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
     CoverageLonLatPoiTypesRequestBuilder: function () {
         this.CoverageLonLatPoiTypesRequestBuilder = function() {
             this.lat = null;
@@ -12654,6 +13362,7 @@ var request_builders = {
             this.filter = null;
             this.originalId = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12727,6 +13436,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPois', [{
                 lat: this.lat,
@@ -12746,7 +13459,8 @@ var request_builders = {
                 disableGeojson: this.disableGeojson,
                 filter: this.filter,
                 originalId: this.originalId,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -12770,6 +13484,7 @@ var request_builders = {
             this.disableGeojson = null;
             this.originalId = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12843,6 +13558,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPoisId', [{
                 lat: this.lat,
@@ -12862,7 +13581,8 @@ var request_builders = {
                 until: this.until,
                 disableGeojson: this.disableGeojson,
                 originalId: this.originalId,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -12887,6 +13607,7 @@ var request_builders = {
             this.filter = null;
             this.originalId = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12964,6 +13685,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriPois', [{
                 lat: this.lat,
@@ -12984,7 +13709,8 @@ var request_builders = {
                 disableGeojson: this.disableGeojson,
                 filter: this.filter,
                 originalId: this.originalId,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -13009,6 +13735,7 @@ var request_builders = {
             this.disableGeojson = null;
             this.originalId = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -13086,6 +13813,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriPoisId', [{
                 lat: this.lat,
@@ -13106,7 +13837,8 @@ var request_builders = {
                 until: this.until,
                 disableGeojson: this.disableGeojson,
                 originalId: this.originalId,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -13129,6 +13861,7 @@ var request_builders = {
             this.filter = null;
             this.originalId = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13198,6 +13931,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPois', [{
                 region: this.region,
@@ -13216,7 +13953,8 @@ var request_builders = {
                 disableGeojson: this.disableGeojson,
                 filter: this.filter,
                 originalId: this.originalId,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -13239,6 +13977,7 @@ var request_builders = {
             this.disableGeojson = null;
             this.originalId = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13308,6 +14047,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPoisId', [{
                 region: this.region,
@@ -13326,7 +14069,8 @@ var request_builders = {
                 until: this.until,
                 disableGeojson: this.disableGeojson,
                 originalId: this.originalId,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -13350,6 +14094,7 @@ var request_builders = {
             this.filter = null;
             this.originalId = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13423,6 +14168,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriPois', [{
                 region: this.region,
@@ -13442,7 +14191,8 @@ var request_builders = {
                 disableGeojson: this.disableGeojson,
                 filter: this.filter,
                 originalId: this.originalId,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
             }]);
         };
     },
@@ -13466,6 +14216,7 @@ var request_builders = {
             this.disableGeojson = null;
             this.originalId = null;
             this.bssStands = null;
+            this.addPoiInfos = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13539,6 +14290,10 @@ var request_builders = {
             this.bssStands = bssStands;
             return this;
         };
+        this.withAddPoiInfos = function (addPoiInfos) {
+            this.addPoiInfos = addPoiInfos;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriPoisId', [{
                 region: this.region,
@@ -13558,7 +14313,114 @@ var request_builders = {
                 until: this.until,
                 disableGeojson: this.disableGeojson,
                 originalId: this.originalId,
-                bssStands: this.bssStands
+                bssStands: this.bssStands,
+                addPoiInfos: this.addPoiInfos
+            }]);
+        };
+    },
+    CoverageLonLatPtObjectsRequestBuilder: function () {
+        this.CoverageLonLatPtObjectsRequestBuilder = function() {
+            this.q = null;
+            this.lat = null;
+            this.lon = null;
+            this.type = null;
+            this.count = null;
+            this.adminUri = null;
+            this.depth = null;
+            this.disableGeojson = null;
+        };
+        this.withQ = function (q) {
+            this.q = q;
+            return this;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withAdminUri = function (adminUri) {
+            this.adminUri = adminUri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPtObjects', [{
+                q: this.q,
+                lat: this.lat,
+                lon: this.lon,
+                type: this.type,
+                count: this.count,
+                adminUri: this.adminUri,
+                depth: this.depth,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
+    CoverageRegionPtObjectsRequestBuilder: function () {
+        this.CoverageRegionPtObjectsRequestBuilder = function() {
+            this.q = null;
+            this.region = null;
+            this.type = null;
+            this.count = null;
+            this.adminUri = null;
+            this.depth = null;
+            this.disableGeojson = null;
+        };
+        this.withQ = function (q) {
+            this.q = q;
+            return this;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withAdminUri = function (adminUri) {
+            this.adminUri = adminUri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPtObjects', [{
+                q: this.q,
+                region: this.region,
+                type: this.type,
+                count: this.count,
+                adminUri: this.adminUri,
+                depth: this.depth,
+                disableGeojson: this.disableGeojson
             }]);
         };
     },
@@ -14879,6 +15741,20 @@ var request_builders = {
                 disableGeojson: this.disableGeojson,
                 filter: this.filter,
                 originalId: this.originalId
+            }]);
+        };
+    },
+    CoverageRegionStatusRequestBuilder: function () {
+        this.CoverageRegionStatusRequestBuilder = function() {
+            this.region = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionStatus', [{
+                region: this.region
             }]);
         };
     },
@@ -17180,6 +18056,124 @@ var request_builders = {
             }]);
         };
     },
+    CoverageRegionTrafficReportsRequestBuilder: function () {
+        this.CoverageRegionTrafficReportsRequestBuilder = function() {
+            this.region = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.forbiddenId = null;
+            this.forbiddenUris = null;
+            this.distance = null;
+            this.disableGeojson = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenId = function (forbiddenId) {
+            this.forbiddenId = forbiddenId;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionTrafficReports', [{
+                region: this.region,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                forbiddenId: this.forbiddenId,
+                forbiddenUris: this.forbiddenUris,
+                distance: this.distance,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
+    CoverageRegionUriTrafficReportsRequestBuilder: function () {
+        this.CoverageRegionUriTrafficReportsRequestBuilder = function() {
+            this.region = null;
+            this.uri = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.forbiddenId = null;
+            this.forbiddenUris = null;
+            this.distance = null;
+            this.disableGeojson = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenId = function (forbiddenId) {
+            this.forbiddenId = forbiddenId;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriTrafficReports', [{
+                region: this.region,
+                uri: this.uri,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                forbiddenId: this.forbiddenId,
+                forbiddenUris: this.forbiddenUris,
+                distance: this.distance,
+                disableGeojson: this.disableGeojson
+            }]);
+        };
+    },
     CoverageLonLatTripsRequestBuilder: function () {
         this.CoverageLonLatTripsRequestBuilder = function() {
             this.lat = null;
@@ -18939,6 +19933,17 @@ var request_builders = {
 };
 
 var apis = {
+    calendars: {
+        coverageRegionCalendarsRequestBuilder: function () {
+            return new request_builders.CoverageRegionCalendarsRequestBuilder();
+        },
+        coverageRegionCalendarsIdRequestBuilder: function () {
+            return new request_builders.CoverageRegionCalendarsIdRequestBuilder();
+        },
+        coverageRegionUriCalendarsRequestBuilder: function () {
+            return new request_builders.CoverageRegionUriCalendarsRequestBuilder();
+        }
+    },
     commercialModes: {
         coverageLonLatCommercialModesRequestBuilder: function () {
             return new request_builders.CoverageLonLatCommercialModesRequestBuilder();
@@ -19080,6 +20085,21 @@ var apis = {
             return new request_builders.CoverageRegionUriDisruptionsIdRequestBuilder();
         }
     },
+    geoStatus: {
+        coverageRegionGeoStatusRequestBuilder: function () {
+            return new request_builders.CoverageRegionGeoStatusRequestBuilder();
+        }
+    },
+    graphicalIsochrone: {
+        coverageRegionIsochronesRequestBuilder: function () {
+            return new request_builders.CoverageRegionIsochronesRequestBuilder();
+        }
+    },
+    heatMap: {
+        coverageRegionHeatMapsRequestBuilder: function () {
+            return new request_builders.CoverageRegionHeatMapsRequestBuilder();
+        }
+    },
     journeyPatternPoints: {
         coverageLonLatJourneyPatternPointsRequestBuilder: function () {
             return new request_builders.CoverageLonLatJourneyPatternPointsRequestBuilder();
@@ -19136,14 +20156,8 @@ var apis = {
         coverageLonLatJourneysRequestBuilder: function () {
             return new request_builders.CoverageLonLatJourneysRequestBuilder();
         },
-        coverageLonLatUriJourneysRequestBuilder: function () {
-            return new request_builders.CoverageLonLatUriJourneysRequestBuilder();
-        },
         coverageRegionJourneysRequestBuilder: function () {
             return new request_builders.CoverageRegionJourneysRequestBuilder();
-        },
-        coverageRegionUriJourneysRequestBuilder: function () {
-            return new request_builders.CoverageRegionUriJourneysRequestBuilder();
         },
         journeysRequestBuilder: function () {
             return new request_builders.JourneysRequestBuilder();
@@ -19176,6 +20190,14 @@ var apis = {
         },
         lineGroupsRequestBuilder: function () {
             return new request_builders.LineGroupsRequestBuilder();
+        }
+    },
+    lineReports: {
+        coverageRegionLineReportsRequestBuilder: function () {
+            return new request_builders.CoverageRegionLineReportsRequestBuilder();
+        },
+        coverageRegionUriLineReportsRequestBuilder: function () {
+            return new request_builders.CoverageRegionUriLineReportsRequestBuilder();
         }
     },
     lines: {
@@ -19301,6 +20323,26 @@ var apis = {
             return new request_builders.PlacesRequestBuilder();
         }
     },
+    placesNearby: {
+        coordLonLatPlacesNearbyRequestBuilder: function () {
+            return new request_builders.CoordLonLatPlacesNearbyRequestBuilder();
+        },
+        coordsLonLatPlacesNearbyRequestBuilder: function () {
+            return new request_builders.CoordsLonLatPlacesNearbyRequestBuilder();
+        },
+        coverageLonLatPlacesNearbyRequestBuilder: function () {
+            return new request_builders.CoverageLonLatPlacesNearbyRequestBuilder();
+        },
+        coverageLonLatUriPlacesNearbyRequestBuilder: function () {
+            return new request_builders.CoverageLonLatUriPlacesNearbyRequestBuilder();
+        },
+        coverageRegionPlacesNearbyRequestBuilder: function () {
+            return new request_builders.CoverageRegionPlacesNearbyRequestBuilder();
+        },
+        coverageRegionUriPlacesNearbyRequestBuilder: function () {
+            return new request_builders.CoverageRegionUriPlacesNearbyRequestBuilder();
+        }
+    },
     poiTypes: {
         coverageLonLatPoiTypesRequestBuilder: function () {
             return new request_builders.CoverageLonLatPoiTypesRequestBuilder();
@@ -19353,6 +20395,14 @@ var apis = {
             return new request_builders.CoverageRegionUriPoisIdRequestBuilder();
         }
     },
+    ptobjects: {
+        coverageLonLatPtObjectsRequestBuilder: function () {
+            return new request_builders.CoverageLonLatPtObjectsRequestBuilder();
+        },
+        coverageRegionPtObjectsRequestBuilder: function () {
+            return new request_builders.CoverageRegionPtObjectsRequestBuilder();
+        }
+    },
     routeSchedules: {
         coverageLonLatUriRouteSchedulesRequestBuilder: function () {
             return new request_builders.CoverageLonLatUriRouteSchedulesRequestBuilder();
@@ -19391,6 +20441,11 @@ var apis = {
         },
         routesRequestBuilder: function () {
             return new request_builders.RoutesRequestBuilder();
+        }
+    },
+    status: {
+        coverageRegionStatusRequestBuilder: function () {
+            return new request_builders.CoverageRegionStatusRequestBuilder();
         }
     },
     stopAreas: {
@@ -19462,6 +20517,14 @@ var apis = {
             return new request_builders.StopSchedulesRequestBuilder();
         }
     },
+    trafficReport: {
+        coverageRegionTrafficReportsRequestBuilder: function () {
+            return new request_builders.CoverageRegionTrafficReportsRequestBuilder();
+        },
+        coverageRegionUriTrafficReportsRequestBuilder: function () {
+            return new request_builders.CoverageRegionUriTrafficReportsRequestBuilder();
+        }
+    },
     trips: {
         coverageLonLatTripsRequestBuilder: function () {
             return new request_builders.CoverageLonLatTripsRequestBuilder();
@@ -19529,29 +20592,38 @@ module.exports = {
             [token]
         );
     },
+    calendars: apis.calendars,
     commercialModes: apis.commercialModes,
     companies: apis.companies,
     contributors: apis.contributors,
     coverage: apis.coverage,
     datasets: apis.datasets,
     disruptions: apis.disruptions,
+    geoStatus: apis.geoStatus,
+    graphicalIsochrone: apis.graphicalIsochrone,
+    heatMap: apis.heatMap,
     journeyPatternPoints: apis.journeyPatternPoints,
     journeyPatterns: apis.journeyPatterns,
     journeys: apis.journeys,
     lineGroups: apis.lineGroups,
+    lineReports: apis.lineReports,
     lines: apis.lines,
     networks: apis.networks,
     nextArrivals: apis.nextArrivals,
     nextDepartures: apis.nextDepartures,
     physicalModes: apis.physicalModes,
     places: apis.places,
+    placesNearby: apis.placesNearby,
     poiTypes: apis.poiTypes,
     pois: apis.pois,
+    ptobjects: apis.ptobjects,
     routeSchedules: apis.routeSchedules,
     routes: apis.routes,
+    status: apis.status,
     stopAreas: apis.stopAreas,
     stopPoints: apis.stopPoints,
     stopSchedules: apis.stopSchedules,
+    trafficReport: apis.trafficReport,
     trips: apis.trips,
     vehicleJourneys: apis.vehicleJourneys
 };

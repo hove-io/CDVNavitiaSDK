@@ -21,6 +21,198 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)coverageRegionCalendars:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        CalendarsApi *api = [self.sdk calendarsApi];
+        CoverageRegionCalendarsRequestBuilder *queryBuilder = [api newCoverageRegionCalendarsRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"startDate"]) {
+            [queryBuilder withStartDate:(NSString*)[params objectForKey:@"startDate"]];
+        }
+        if ([params objectForKey:@"endDate"]) {
+            [queryBuilder withEndDate:(NSString*)[params objectForKey:@"endDate"]];
+        }
+        if ([params objectForKey:@"forbiddenId"]) {
+            [queryBuilder withForbiddenId:(NSArray*)[params objectForKey:@"forbiddenId"]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionCalendars with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionCalendars fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionCalendarsId:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        CalendarsApi *api = [self.sdk calendarsApi];
+        CoverageRegionCalendarsIdRequestBuilder *queryBuilder = [api newCoverageRegionCalendarsIdRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"id"]) {
+            [queryBuilder withId:(NSString*)[params objectForKey:@"id"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"startDate"]) {
+            [queryBuilder withStartDate:(NSString*)[params objectForKey:@"startDate"]];
+        }
+        if ([params objectForKey:@"endDate"]) {
+            [queryBuilder withEndDate:(NSString*)[params objectForKey:@"endDate"]];
+        }
+        if ([params objectForKey:@"forbiddenId"]) {
+            [queryBuilder withForbiddenId:(NSArray*)[params objectForKey:@"forbiddenId"]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionCalendarsId with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionCalendarsId fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionUriCalendars:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        CalendarsApi *api = [self.sdk calendarsApi];
+        CoverageRegionUriCalendarsRequestBuilder *queryBuilder = [api newCoverageRegionUriCalendarsRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"uri"]) {
+            [queryBuilder withUri:(NSString*)[params objectForKey:@"uri"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"startDate"]) {
+            [queryBuilder withStartDate:(NSString*)[params objectForKey:@"startDate"]];
+        }
+        if ([params objectForKey:@"endDate"]) {
+            [queryBuilder withEndDate:(NSString*)[params objectForKey:@"endDate"]];
+        }
+        if ([params objectForKey:@"forbiddenId"]) {
+            [queryBuilder withForbiddenId:(NSArray*)[params objectForKey:@"forbiddenId"]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionUriCalendars with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionUriCalendars fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
 - (void)coverageLonLatCommercialModes:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -31,7 +223,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CommercialModesAPI *api = [self.sdk commercialModesApi];
+        CommercialModesApi *api = [self.sdk commercialModesApi];
         CoverageLonLatCommercialModesRequestBuilder *queryBuilder = [api newCoverageLonLatCommercialModesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -114,7 +306,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CommercialModesAPI *api = [self.sdk commercialModesApi];
+        CommercialModesApi *api = [self.sdk commercialModesApi];
         CoverageLonLatCommercialModesIdRequestBuilder *queryBuilder = [api newCoverageLonLatCommercialModesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -197,7 +389,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CommercialModesAPI *api = [self.sdk commercialModesApi];
+        CommercialModesApi *api = [self.sdk commercialModesApi];
         CoverageLonLatUriCommercialModesRequestBuilder *queryBuilder = [api newCoverageLonLatUriCommercialModesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -283,7 +475,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CommercialModesAPI *api = [self.sdk commercialModesApi];
+        CommercialModesApi *api = [self.sdk commercialModesApi];
         CoverageLonLatUriCommercialModesIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriCommercialModesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -369,7 +561,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CommercialModesAPI *api = [self.sdk commercialModesApi];
+        CommercialModesApi *api = [self.sdk commercialModesApi];
         CoverageRegionCommercialModesRequestBuilder *queryBuilder = [api newCoverageRegionCommercialModesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -449,7 +641,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CommercialModesAPI *api = [self.sdk commercialModesApi];
+        CommercialModesApi *api = [self.sdk commercialModesApi];
         CoverageRegionCommercialModesIdRequestBuilder *queryBuilder = [api newCoverageRegionCommercialModesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -529,7 +721,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CommercialModesAPI *api = [self.sdk commercialModesApi];
+        CommercialModesApi *api = [self.sdk commercialModesApi];
         CoverageRegionUriCommercialModesRequestBuilder *queryBuilder = [api newCoverageRegionUriCommercialModesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -612,7 +804,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CommercialModesAPI *api = [self.sdk commercialModesApi];
+        CommercialModesApi *api = [self.sdk commercialModesApi];
         CoverageRegionUriCommercialModesIdRequestBuilder *queryBuilder = [api newCoverageRegionUriCommercialModesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -695,7 +887,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CompaniesAPI *api = [self.sdk companiesApi];
+        CompaniesApi *api = [self.sdk companiesApi];
         CoverageLonLatCompaniesRequestBuilder *queryBuilder = [api newCoverageLonLatCompaniesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -778,7 +970,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CompaniesAPI *api = [self.sdk companiesApi];
+        CompaniesApi *api = [self.sdk companiesApi];
         CoverageLonLatCompaniesIdRequestBuilder *queryBuilder = [api newCoverageLonLatCompaniesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -861,7 +1053,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CompaniesAPI *api = [self.sdk companiesApi];
+        CompaniesApi *api = [self.sdk companiesApi];
         CoverageLonLatUriCompaniesRequestBuilder *queryBuilder = [api newCoverageLonLatUriCompaniesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -947,7 +1139,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CompaniesAPI *api = [self.sdk companiesApi];
+        CompaniesApi *api = [self.sdk companiesApi];
         CoverageLonLatUriCompaniesIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriCompaniesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -1033,7 +1225,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CompaniesAPI *api = [self.sdk companiesApi];
+        CompaniesApi *api = [self.sdk companiesApi];
         CoverageRegionCompaniesRequestBuilder *queryBuilder = [api newCoverageRegionCompaniesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -1113,7 +1305,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CompaniesAPI *api = [self.sdk companiesApi];
+        CompaniesApi *api = [self.sdk companiesApi];
         CoverageRegionCompaniesIdRequestBuilder *queryBuilder = [api newCoverageRegionCompaniesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -1193,7 +1385,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CompaniesAPI *api = [self.sdk companiesApi];
+        CompaniesApi *api = [self.sdk companiesApi];
         CoverageRegionUriCompaniesRequestBuilder *queryBuilder = [api newCoverageRegionUriCompaniesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -1276,7 +1468,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CompaniesAPI *api = [self.sdk companiesApi];
+        CompaniesApi *api = [self.sdk companiesApi];
         CoverageRegionUriCompaniesIdRequestBuilder *queryBuilder = [api newCoverageRegionUriCompaniesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -1359,7 +1551,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        ContributorsAPI *api = [self.sdk contributorsApi];
+        ContributorsApi *api = [self.sdk contributorsApi];
         CoverageLonLatContributorsRequestBuilder *queryBuilder = [api newCoverageLonLatContributorsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -1442,7 +1634,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        ContributorsAPI *api = [self.sdk contributorsApi];
+        ContributorsApi *api = [self.sdk contributorsApi];
         CoverageLonLatContributorsIdRequestBuilder *queryBuilder = [api newCoverageLonLatContributorsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -1525,7 +1717,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        ContributorsAPI *api = [self.sdk contributorsApi];
+        ContributorsApi *api = [self.sdk contributorsApi];
         CoverageLonLatUriContributorsRequestBuilder *queryBuilder = [api newCoverageLonLatUriContributorsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -1611,7 +1803,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        ContributorsAPI *api = [self.sdk contributorsApi];
+        ContributorsApi *api = [self.sdk contributorsApi];
         CoverageLonLatUriContributorsIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriContributorsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -1697,7 +1889,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        ContributorsAPI *api = [self.sdk contributorsApi];
+        ContributorsApi *api = [self.sdk contributorsApi];
         CoverageRegionContributorsRequestBuilder *queryBuilder = [api newCoverageRegionContributorsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -1777,7 +1969,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        ContributorsAPI *api = [self.sdk contributorsApi];
+        ContributorsApi *api = [self.sdk contributorsApi];
         CoverageRegionContributorsIdRequestBuilder *queryBuilder = [api newCoverageRegionContributorsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -1857,7 +2049,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        ContributorsAPI *api = [self.sdk contributorsApi];
+        ContributorsApi *api = [self.sdk contributorsApi];
         CoverageRegionUriContributorsRequestBuilder *queryBuilder = [api newCoverageRegionUriContributorsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -1940,7 +2132,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        ContributorsAPI *api = [self.sdk contributorsApi];
+        ContributorsApi *api = [self.sdk contributorsApi];
         CoverageRegionUriContributorsIdRequestBuilder *queryBuilder = [api newCoverageRegionUriContributorsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -2023,7 +2215,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CoverageAPI *api = [self.sdk coverageApi];
+        CoverageApi *api = [self.sdk coverageApi];
         CoverageRequestBuilder *queryBuilder = [api newCoverageRequestBuilder];
 
         if ([params objectForKey:@"disableGeojson"]) {
@@ -2061,7 +2253,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CoverageAPI *api = [self.sdk coverageApi];
+        CoverageApi *api = [self.sdk coverageApi];
         CoverageLonLatRequestBuilder *queryBuilder = [api newCoverageLonLatRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -2105,7 +2297,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        CoverageAPI *api = [self.sdk coverageApi];
+        CoverageApi *api = [self.sdk coverageApi];
         CoverageRegionRequestBuilder *queryBuilder = [api newCoverageRegionRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -2146,7 +2338,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DatasetsAPI *api = [self.sdk datasetsApi];
+        DatasetsApi *api = [self.sdk datasetsApi];
         CoverageLonLatDatasetsRequestBuilder *queryBuilder = [api newCoverageLonLatDatasetsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -2229,7 +2421,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DatasetsAPI *api = [self.sdk datasetsApi];
+        DatasetsApi *api = [self.sdk datasetsApi];
         CoverageLonLatDatasetsIdRequestBuilder *queryBuilder = [api newCoverageLonLatDatasetsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -2312,7 +2504,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DatasetsAPI *api = [self.sdk datasetsApi];
+        DatasetsApi *api = [self.sdk datasetsApi];
         CoverageLonLatUriDatasetsRequestBuilder *queryBuilder = [api newCoverageLonLatUriDatasetsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -2398,7 +2590,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DatasetsAPI *api = [self.sdk datasetsApi];
+        DatasetsApi *api = [self.sdk datasetsApi];
         CoverageLonLatUriDatasetsIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriDatasetsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -2484,7 +2676,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DatasetsAPI *api = [self.sdk datasetsApi];
+        DatasetsApi *api = [self.sdk datasetsApi];
         CoverageRegionDatasetsRequestBuilder *queryBuilder = [api newCoverageRegionDatasetsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -2564,7 +2756,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DatasetsAPI *api = [self.sdk datasetsApi];
+        DatasetsApi *api = [self.sdk datasetsApi];
         CoverageRegionDatasetsIdRequestBuilder *queryBuilder = [api newCoverageRegionDatasetsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -2644,7 +2836,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DatasetsAPI *api = [self.sdk datasetsApi];
+        DatasetsApi *api = [self.sdk datasetsApi];
         CoverageRegionUriDatasetsRequestBuilder *queryBuilder = [api newCoverageRegionUriDatasetsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -2727,7 +2919,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DatasetsAPI *api = [self.sdk datasetsApi];
+        DatasetsApi *api = [self.sdk datasetsApi];
         CoverageRegionUriDatasetsIdRequestBuilder *queryBuilder = [api newCoverageRegionUriDatasetsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -2810,7 +3002,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DisruptionsAPI *api = [self.sdk disruptionsApi];
+        DisruptionsApi *api = [self.sdk disruptionsApi];
         CoverageLonLatDisruptionsRequestBuilder *queryBuilder = [api newCoverageLonLatDisruptionsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -2896,7 +3088,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DisruptionsAPI *api = [self.sdk disruptionsApi];
+        DisruptionsApi *api = [self.sdk disruptionsApi];
         CoverageLonLatDisruptionsIdRequestBuilder *queryBuilder = [api newCoverageLonLatDisruptionsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -2982,7 +3174,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DisruptionsAPI *api = [self.sdk disruptionsApi];
+        DisruptionsApi *api = [self.sdk disruptionsApi];
         CoverageLonLatUriDisruptionsRequestBuilder *queryBuilder = [api newCoverageLonLatUriDisruptionsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -3071,7 +3263,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DisruptionsAPI *api = [self.sdk disruptionsApi];
+        DisruptionsApi *api = [self.sdk disruptionsApi];
         CoverageLonLatUriDisruptionsIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriDisruptionsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -3160,7 +3352,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DisruptionsAPI *api = [self.sdk disruptionsApi];
+        DisruptionsApi *api = [self.sdk disruptionsApi];
         CoverageRegionDisruptionsRequestBuilder *queryBuilder = [api newCoverageRegionDisruptionsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -3243,7 +3435,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DisruptionsAPI *api = [self.sdk disruptionsApi];
+        DisruptionsApi *api = [self.sdk disruptionsApi];
         CoverageRegionDisruptionsIdRequestBuilder *queryBuilder = [api newCoverageRegionDisruptionsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -3326,7 +3518,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DisruptionsAPI *api = [self.sdk disruptionsApi];
+        DisruptionsApi *api = [self.sdk disruptionsApi];
         CoverageRegionUriDisruptionsRequestBuilder *queryBuilder = [api newCoverageRegionUriDisruptionsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -3412,7 +3604,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        DisruptionsAPI *api = [self.sdk disruptionsApi];
+        DisruptionsApi *api = [self.sdk disruptionsApi];
         CoverageRegionUriDisruptionsIdRequestBuilder *queryBuilder = [api newCoverageRegionUriDisruptionsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -3488,6 +3680,279 @@
         }];
     }
 }
+- (void)coverageRegionGeoStatus:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        GeoStatusApi *api = [self.sdk geoStatusApi];
+        CoverageRegionGeoStatusRequestBuilder *queryBuilder = [api newCoverageRegionGeoStatusRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionGeoStatus with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionGeoStatus fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionIsochrones:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        GraphicalIsochroneApi *api = [self.sdk graphicalIsochroneApi];
+        CoverageRegionIsochronesRequestBuilder *queryBuilder = [api newCoverageRegionIsochronesRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"from"]) {
+            [queryBuilder withFrom:(NSString*)[params objectForKey:@"from"]];
+        }
+        if ([params objectForKey:@"to"]) {
+            [queryBuilder withTo:(NSString*)[params objectForKey:@"to"]];
+        }
+        if ([params objectForKey:@"datetime"]) {
+            [queryBuilder withDatetime:(NSString*)[params objectForKey:@"datetime"]];
+        }
+        if ([params objectForKey:@"datetimeRepresents"]) {
+            [queryBuilder withDatetimeRepresents:(NSString*)[params objectForKey:@"datetimeRepresents"]];
+        }
+        if ([params objectForKey:@"maxNbTransfers"]) {
+            [queryBuilder withMaxNbTransfers:[[params objectForKey:@"maxNbTransfers"] integerValue]];
+        }
+        if ([params objectForKey:@"minNbTransfers"]) {
+            [queryBuilder withMinNbTransfers:[[params objectForKey:@"minNbTransfers"] integerValue]];
+        }
+        if ([params objectForKey:@"firstSectionMode"]) {
+            [queryBuilder withFirstSectionMode:(NSArray*)[params objectForKey:@"firstSectionMode"]];
+        }
+        if ([params objectForKey:@"lastSectionMode"]) {
+            [queryBuilder withLastSectionMode:(NSArray*)[params objectForKey:@"lastSectionMode"]];
+        }
+        if ([params objectForKey:@"maxDurationToPt"]) {
+            [queryBuilder withMaxDurationToPt:[[params objectForKey:@"maxDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"maxWalkingDurationToPt"]) {
+            [queryBuilder withMaxWalkingDurationToPt:[[params objectForKey:@"maxWalkingDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"maxBikeDurationToPt"]) {
+            [queryBuilder withMaxBikeDurationToPt:[[params objectForKey:@"maxBikeDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"maxBssDurationToPt"]) {
+            [queryBuilder withMaxBssDurationToPt:[[params objectForKey:@"maxBssDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"maxCarDurationToPt"]) {
+            [queryBuilder withMaxCarDurationToPt:[[params objectForKey:@"maxCarDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"walkingSpeed"]) {
+            [queryBuilder withWalkingSpeed:[[params objectForKey:@"walkingSpeed"] doubleValue]];
+        }
+        if ([params objectForKey:@"bikeSpeed"]) {
+            [queryBuilder withBikeSpeed:[[params objectForKey:@"bikeSpeed"] doubleValue]];
+        }
+        if ([params objectForKey:@"bssSpeed"]) {
+            [queryBuilder withBssSpeed:[[params objectForKey:@"bssSpeed"] doubleValue]];
+        }
+        if ([params objectForKey:@"carSpeed"]) {
+            [queryBuilder withCarSpeed:[[params objectForKey:@"carSpeed"] doubleValue]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"allowedId"]) {
+            [queryBuilder withAllowedId:(NSArray*)[params objectForKey:@"allowedId"]];
+        }
+        if ([params objectForKey:@"disruptionActive"]) {
+            [queryBuilder withDisruptionActive:(NSNumber*)[params objectForKey:@"disruptionActive"]];
+        }
+        if ([params objectForKey:@"dataFreshness"]) {
+            [queryBuilder withDataFreshness:(NSString*)[params objectForKey:@"dataFreshness"]];
+        }
+        if ([params objectForKey:@"maxDuration"]) {
+            [queryBuilder withMaxDuration:[[params objectForKey:@"maxDuration"] integerValue]];
+        }
+        if ([params objectForKey:@"wheelchair"]) {
+            [queryBuilder withWheelchair:(NSNumber*)[params objectForKey:@"wheelchair"]];
+        }
+        if ([params objectForKey:@"travelerType"]) {
+            [queryBuilder withTravelerType:(NSString*)[params objectForKey:@"travelerType"]];
+        }
+        if ([params objectForKey:@"directPath"]) {
+            [queryBuilder withDirectPath:(NSString*)[params objectForKey:@"directPath"]];
+        }
+        if ([params objectForKey:@"minDuration"]) {
+            [queryBuilder withMinDuration:[[params objectForKey:@"minDuration"] integerValue]];
+        }
+        if ([params objectForKey:@"boundaryDuration"]) {
+            [queryBuilder withBoundaryDuration:(NSArray*)[params objectForKey:@"boundaryDuration"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionIsochrones with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionIsochrones fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionHeatMaps:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        HeatMapApi *api = [self.sdk heatMapApi];
+        CoverageRegionHeatMapsRequestBuilder *queryBuilder = [api newCoverageRegionHeatMapsRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"from"]) {
+            [queryBuilder withFrom:(NSString*)[params objectForKey:@"from"]];
+        }
+        if ([params objectForKey:@"to"]) {
+            [queryBuilder withTo:(NSString*)[params objectForKey:@"to"]];
+        }
+        if ([params objectForKey:@"datetime"]) {
+            [queryBuilder withDatetime:(NSString*)[params objectForKey:@"datetime"]];
+        }
+        if ([params objectForKey:@"datetimeRepresents"]) {
+            [queryBuilder withDatetimeRepresents:(NSString*)[params objectForKey:@"datetimeRepresents"]];
+        }
+        if ([params objectForKey:@"maxNbTransfers"]) {
+            [queryBuilder withMaxNbTransfers:[[params objectForKey:@"maxNbTransfers"] integerValue]];
+        }
+        if ([params objectForKey:@"minNbTransfers"]) {
+            [queryBuilder withMinNbTransfers:[[params objectForKey:@"minNbTransfers"] integerValue]];
+        }
+        if ([params objectForKey:@"firstSectionMode"]) {
+            [queryBuilder withFirstSectionMode:(NSArray*)[params objectForKey:@"firstSectionMode"]];
+        }
+        if ([params objectForKey:@"lastSectionMode"]) {
+            [queryBuilder withLastSectionMode:(NSArray*)[params objectForKey:@"lastSectionMode"]];
+        }
+        if ([params objectForKey:@"maxDurationToPt"]) {
+            [queryBuilder withMaxDurationToPt:[[params objectForKey:@"maxDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"maxWalkingDurationToPt"]) {
+            [queryBuilder withMaxWalkingDurationToPt:[[params objectForKey:@"maxWalkingDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"maxBikeDurationToPt"]) {
+            [queryBuilder withMaxBikeDurationToPt:[[params objectForKey:@"maxBikeDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"maxBssDurationToPt"]) {
+            [queryBuilder withMaxBssDurationToPt:[[params objectForKey:@"maxBssDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"maxCarDurationToPt"]) {
+            [queryBuilder withMaxCarDurationToPt:[[params objectForKey:@"maxCarDurationToPt"] integerValue]];
+        }
+        if ([params objectForKey:@"walkingSpeed"]) {
+            [queryBuilder withWalkingSpeed:[[params objectForKey:@"walkingSpeed"] doubleValue]];
+        }
+        if ([params objectForKey:@"bikeSpeed"]) {
+            [queryBuilder withBikeSpeed:[[params objectForKey:@"bikeSpeed"] doubleValue]];
+        }
+        if ([params objectForKey:@"bssSpeed"]) {
+            [queryBuilder withBssSpeed:[[params objectForKey:@"bssSpeed"] doubleValue]];
+        }
+        if ([params objectForKey:@"carSpeed"]) {
+            [queryBuilder withCarSpeed:[[params objectForKey:@"carSpeed"] doubleValue]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"allowedId"]) {
+            [queryBuilder withAllowedId:(NSArray*)[params objectForKey:@"allowedId"]];
+        }
+        if ([params objectForKey:@"disruptionActive"]) {
+            [queryBuilder withDisruptionActive:(NSNumber*)[params objectForKey:@"disruptionActive"]];
+        }
+        if ([params objectForKey:@"dataFreshness"]) {
+            [queryBuilder withDataFreshness:(NSString*)[params objectForKey:@"dataFreshness"]];
+        }
+        if ([params objectForKey:@"maxDuration"]) {
+            [queryBuilder withMaxDuration:[[params objectForKey:@"maxDuration"] integerValue]];
+        }
+        if ([params objectForKey:@"wheelchair"]) {
+            [queryBuilder withWheelchair:(NSNumber*)[params objectForKey:@"wheelchair"]];
+        }
+        if ([params objectForKey:@"travelerType"]) {
+            [queryBuilder withTravelerType:(NSString*)[params objectForKey:@"travelerType"]];
+        }
+        if ([params objectForKey:@"directPath"]) {
+            [queryBuilder withDirectPath:(NSString*)[params objectForKey:@"directPath"]];
+        }
+        if ([params objectForKey:@"resolution"]) {
+            [queryBuilder withResolution:[[params objectForKey:@"resolution"] integerValue]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionHeatMaps with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionHeatMaps fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
 - (void)coverageLonLatJourneyPatternPoints:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -3498,7 +3963,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternPointsAPI *api = [self.sdk journeyPatternPointsApi];
+        JourneyPatternPointsApi *api = [self.sdk journeyPatternPointsApi];
         CoverageLonLatJourneyPatternPointsRequestBuilder *queryBuilder = [api newCoverageLonLatJourneyPatternPointsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -3581,7 +4046,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternPointsAPI *api = [self.sdk journeyPatternPointsApi];
+        JourneyPatternPointsApi *api = [self.sdk journeyPatternPointsApi];
         CoverageLonLatJourneyPatternPointsIdRequestBuilder *queryBuilder = [api newCoverageLonLatJourneyPatternPointsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -3664,7 +4129,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternPointsAPI *api = [self.sdk journeyPatternPointsApi];
+        JourneyPatternPointsApi *api = [self.sdk journeyPatternPointsApi];
         CoverageLonLatUriJourneyPatternPointsRequestBuilder *queryBuilder = [api newCoverageLonLatUriJourneyPatternPointsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -3750,7 +4215,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternPointsAPI *api = [self.sdk journeyPatternPointsApi];
+        JourneyPatternPointsApi *api = [self.sdk journeyPatternPointsApi];
         CoverageLonLatUriJourneyPatternPointsIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriJourneyPatternPointsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -3836,7 +4301,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternPointsAPI *api = [self.sdk journeyPatternPointsApi];
+        JourneyPatternPointsApi *api = [self.sdk journeyPatternPointsApi];
         CoverageRegionJourneyPatternPointsRequestBuilder *queryBuilder = [api newCoverageRegionJourneyPatternPointsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -3916,7 +4381,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternPointsAPI *api = [self.sdk journeyPatternPointsApi];
+        JourneyPatternPointsApi *api = [self.sdk journeyPatternPointsApi];
         CoverageRegionJourneyPatternPointsIdRequestBuilder *queryBuilder = [api newCoverageRegionJourneyPatternPointsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -3996,7 +4461,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternPointsAPI *api = [self.sdk journeyPatternPointsApi];
+        JourneyPatternPointsApi *api = [self.sdk journeyPatternPointsApi];
         CoverageRegionUriJourneyPatternPointsRequestBuilder *queryBuilder = [api newCoverageRegionUriJourneyPatternPointsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -4079,7 +4544,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternPointsAPI *api = [self.sdk journeyPatternPointsApi];
+        JourneyPatternPointsApi *api = [self.sdk journeyPatternPointsApi];
         CoverageRegionUriJourneyPatternPointsIdRequestBuilder *queryBuilder = [api newCoverageRegionUriJourneyPatternPointsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -4162,7 +4627,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternsAPI *api = [self.sdk journeyPatternsApi];
+        JourneyPatternsApi *api = [self.sdk journeyPatternsApi];
         CoverageLonLatJourneyPatternsRequestBuilder *queryBuilder = [api newCoverageLonLatJourneyPatternsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -4245,7 +4710,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternsAPI *api = [self.sdk journeyPatternsApi];
+        JourneyPatternsApi *api = [self.sdk journeyPatternsApi];
         CoverageLonLatJourneyPatternsIdRequestBuilder *queryBuilder = [api newCoverageLonLatJourneyPatternsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -4328,7 +4793,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternsAPI *api = [self.sdk journeyPatternsApi];
+        JourneyPatternsApi *api = [self.sdk journeyPatternsApi];
         CoverageLonLatUriJourneyPatternsRequestBuilder *queryBuilder = [api newCoverageLonLatUriJourneyPatternsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -4414,7 +4879,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternsAPI *api = [self.sdk journeyPatternsApi];
+        JourneyPatternsApi *api = [self.sdk journeyPatternsApi];
         CoverageLonLatUriJourneyPatternsIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriJourneyPatternsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -4500,7 +4965,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternsAPI *api = [self.sdk journeyPatternsApi];
+        JourneyPatternsApi *api = [self.sdk journeyPatternsApi];
         CoverageRegionJourneyPatternsRequestBuilder *queryBuilder = [api newCoverageRegionJourneyPatternsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -4580,7 +5045,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternsAPI *api = [self.sdk journeyPatternsApi];
+        JourneyPatternsApi *api = [self.sdk journeyPatternsApi];
         CoverageRegionJourneyPatternsIdRequestBuilder *queryBuilder = [api newCoverageRegionJourneyPatternsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -4660,7 +5125,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternsAPI *api = [self.sdk journeyPatternsApi];
+        JourneyPatternsApi *api = [self.sdk journeyPatternsApi];
         CoverageRegionUriJourneyPatternsRequestBuilder *queryBuilder = [api newCoverageRegionUriJourneyPatternsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -4743,7 +5208,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneyPatternsAPI *api = [self.sdk journeyPatternsApi];
+        JourneyPatternsApi *api = [self.sdk journeyPatternsApi];
         CoverageRegionUriJourneyPatternsIdRequestBuilder *queryBuilder = [api newCoverageRegionUriJourneyPatternsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -4826,7 +5291,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneysAPI *api = [self.sdk journeysApi];
+        JourneysApi *api = [self.sdk journeysApi];
         CoverageLonLatJourneysRequestBuilder *queryBuilder = [api newCoverageLonLatJourneysRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -4925,6 +5390,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -4947,140 +5415,6 @@
         }];
     }
 }
-- (void)coverageLonLatUriJourneys:(CDVInvokedUrlCommand*)command
-{
-    NSDictionary* params = [command.arguments objectAtIndex:0];
-
-    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
-        CDVPluginResult* pluginResult = nil;
-        NSString* errorMessage = @"Wrong parameters";
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    } else {
-        JourneysAPI *api = [self.sdk journeysApi];
-        CoverageLonLatUriJourneysRequestBuilder *queryBuilder = [api newCoverageLonLatUriJourneysRequestBuilder];
-
-        if ([params objectForKey:@"lat"]) {
-            [queryBuilder withLat:[[params objectForKey:@"lat"] doubleValue]];
-        }
-        if ([params objectForKey:@"lon"]) {
-            [queryBuilder withLon:[[params objectForKey:@"lon"] doubleValue]];
-        }
-        if ([params objectForKey:@"uri"]) {
-            [queryBuilder withUri:(NSString*)[params objectForKey:@"uri"]];
-        }
-        if ([params objectForKey:@"from"]) {
-            [queryBuilder withFrom:(NSString*)[params objectForKey:@"from"]];
-        }
-        if ([params objectForKey:@"to"]) {
-            [queryBuilder withTo:(NSString*)[params objectForKey:@"to"]];
-        }
-        if ([params objectForKey:@"datetime"]) {
-            [queryBuilder withDatetime:(NSString*)[params objectForKey:@"datetime"]];
-        }
-        if ([params objectForKey:@"datetimeRepresents"]) {
-            [queryBuilder withDatetimeRepresents:(NSString*)[params objectForKey:@"datetimeRepresents"]];
-        }
-        if ([params objectForKey:@"maxNbTransfers"]) {
-            [queryBuilder withMaxNbTransfers:[[params objectForKey:@"maxNbTransfers"] integerValue]];
-        }
-        if ([params objectForKey:@"minNbTransfers"]) {
-            [queryBuilder withMinNbTransfers:[[params objectForKey:@"minNbTransfers"] integerValue]];
-        }
-        if ([params objectForKey:@"firstSectionMode"]) {
-            [queryBuilder withFirstSectionMode:(NSArray*)[params objectForKey:@"firstSectionMode"]];
-        }
-        if ([params objectForKey:@"lastSectionMode"]) {
-            [queryBuilder withLastSectionMode:(NSArray*)[params objectForKey:@"lastSectionMode"]];
-        }
-        if ([params objectForKey:@"maxDurationToPt"]) {
-            [queryBuilder withMaxDurationToPt:[[params objectForKey:@"maxDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"maxWalkingDurationToPt"]) {
-            [queryBuilder withMaxWalkingDurationToPt:[[params objectForKey:@"maxWalkingDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"maxBikeDurationToPt"]) {
-            [queryBuilder withMaxBikeDurationToPt:[[params objectForKey:@"maxBikeDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"maxBssDurationToPt"]) {
-            [queryBuilder withMaxBssDurationToPt:[[params objectForKey:@"maxBssDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"maxCarDurationToPt"]) {
-            [queryBuilder withMaxCarDurationToPt:[[params objectForKey:@"maxCarDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"walkingSpeed"]) {
-            [queryBuilder withWalkingSpeed:[[params objectForKey:@"walkingSpeed"] doubleValue]];
-        }
-        if ([params objectForKey:@"bikeSpeed"]) {
-            [queryBuilder withBikeSpeed:[[params objectForKey:@"bikeSpeed"] doubleValue]];
-        }
-        if ([params objectForKey:@"bssSpeed"]) {
-            [queryBuilder withBssSpeed:[[params objectForKey:@"bssSpeed"] doubleValue]];
-        }
-        if ([params objectForKey:@"carSpeed"]) {
-            [queryBuilder withCarSpeed:[[params objectForKey:@"carSpeed"] doubleValue]];
-        }
-        if ([params objectForKey:@"forbiddenUris"]) {
-            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
-        }
-        if ([params objectForKey:@"allowedId"]) {
-            [queryBuilder withAllowedId:(NSArray*)[params objectForKey:@"allowedId"]];
-        }
-        if ([params objectForKey:@"disruptionActive"]) {
-            [queryBuilder withDisruptionActive:(NSNumber*)[params objectForKey:@"disruptionActive"]];
-        }
-        if ([params objectForKey:@"dataFreshness"]) {
-            [queryBuilder withDataFreshness:(NSString*)[params objectForKey:@"dataFreshness"]];
-        }
-        if ([params objectForKey:@"maxDuration"]) {
-            [queryBuilder withMaxDuration:[[params objectForKey:@"maxDuration"] integerValue]];
-        }
-        if ([params objectForKey:@"wheelchair"]) {
-            [queryBuilder withWheelchair:(NSNumber*)[params objectForKey:@"wheelchair"]];
-        }
-        if ([params objectForKey:@"travelerType"]) {
-            [queryBuilder withTravelerType:(NSString*)[params objectForKey:@"travelerType"]];
-        }
-        if ([params objectForKey:@"directPath"]) {
-            [queryBuilder withDirectPath:(NSString*)[params objectForKey:@"directPath"]];
-        }
-        if ([params objectForKey:@"count"]) {
-            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
-        }
-        if ([params objectForKey:@"isJourneySchedules"]) {
-            [queryBuilder withIsJourneySchedules:(NSNumber*)[params objectForKey:@"isJourneySchedules"]];
-        }
-        if ([params objectForKey:@"minNbJourneys"]) {
-            [queryBuilder withMinNbJourneys:[[params objectForKey:@"minNbJourneys"] integerValue]];
-        }
-        if ([params objectForKey:@"maxNbJourneys"]) {
-            [queryBuilder withMaxNbJourneys:[[params objectForKey:@"maxNbJourneys"] integerValue]];
-        }
-        if ([params objectForKey:@"bssStands"]) {
-            [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
-        }
-
-        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
-            if (error == nil) {
-                NSLog(@"SDK coverageLonLatUriJourneys with query %@", [queryBuilder makeUrl]);
-                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
-                if (jsonData != nil) {
-                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
-                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-                }
-            } else {
-                NSLog(@"SDK coverageLonLatUriJourneys fail with query %@", [queryBuilder makeUrl]);
-                NSDictionary *userInfo = @{
-                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
-                };
-                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
-                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
-                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-            }
-        }];
-    }
-}
 - (void)coverageRegionJourneys:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -5091,7 +5425,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneysAPI *api = [self.sdk journeysApi];
+        JourneysApi *api = [self.sdk journeysApi];
         CoverageRegionJourneysRequestBuilder *queryBuilder = [api newCoverageRegionJourneysRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -5187,6 +5521,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -5209,137 +5546,6 @@
         }];
     }
 }
-- (void)coverageRegionUriJourneys:(CDVInvokedUrlCommand*)command
-{
-    NSDictionary* params = [command.arguments objectAtIndex:0];
-
-    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
-        CDVPluginResult* pluginResult = nil;
-        NSString* errorMessage = @"Wrong parameters";
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    } else {
-        JourneysAPI *api = [self.sdk journeysApi];
-        CoverageRegionUriJourneysRequestBuilder *queryBuilder = [api newCoverageRegionUriJourneysRequestBuilder];
-
-        if ([params objectForKey:@"region"]) {
-            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
-        }
-        if ([params objectForKey:@"uri"]) {
-            [queryBuilder withUri:(NSString*)[params objectForKey:@"uri"]];
-        }
-        if ([params objectForKey:@"from"]) {
-            [queryBuilder withFrom:(NSString*)[params objectForKey:@"from"]];
-        }
-        if ([params objectForKey:@"to"]) {
-            [queryBuilder withTo:(NSString*)[params objectForKey:@"to"]];
-        }
-        if ([params objectForKey:@"datetime"]) {
-            [queryBuilder withDatetime:(NSString*)[params objectForKey:@"datetime"]];
-        }
-        if ([params objectForKey:@"datetimeRepresents"]) {
-            [queryBuilder withDatetimeRepresents:(NSString*)[params objectForKey:@"datetimeRepresents"]];
-        }
-        if ([params objectForKey:@"maxNbTransfers"]) {
-            [queryBuilder withMaxNbTransfers:[[params objectForKey:@"maxNbTransfers"] integerValue]];
-        }
-        if ([params objectForKey:@"minNbTransfers"]) {
-            [queryBuilder withMinNbTransfers:[[params objectForKey:@"minNbTransfers"] integerValue]];
-        }
-        if ([params objectForKey:@"firstSectionMode"]) {
-            [queryBuilder withFirstSectionMode:(NSArray*)[params objectForKey:@"firstSectionMode"]];
-        }
-        if ([params objectForKey:@"lastSectionMode"]) {
-            [queryBuilder withLastSectionMode:(NSArray*)[params objectForKey:@"lastSectionMode"]];
-        }
-        if ([params objectForKey:@"maxDurationToPt"]) {
-            [queryBuilder withMaxDurationToPt:[[params objectForKey:@"maxDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"maxWalkingDurationToPt"]) {
-            [queryBuilder withMaxWalkingDurationToPt:[[params objectForKey:@"maxWalkingDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"maxBikeDurationToPt"]) {
-            [queryBuilder withMaxBikeDurationToPt:[[params objectForKey:@"maxBikeDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"maxBssDurationToPt"]) {
-            [queryBuilder withMaxBssDurationToPt:[[params objectForKey:@"maxBssDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"maxCarDurationToPt"]) {
-            [queryBuilder withMaxCarDurationToPt:[[params objectForKey:@"maxCarDurationToPt"] integerValue]];
-        }
-        if ([params objectForKey:@"walkingSpeed"]) {
-            [queryBuilder withWalkingSpeed:[[params objectForKey:@"walkingSpeed"] doubleValue]];
-        }
-        if ([params objectForKey:@"bikeSpeed"]) {
-            [queryBuilder withBikeSpeed:[[params objectForKey:@"bikeSpeed"] doubleValue]];
-        }
-        if ([params objectForKey:@"bssSpeed"]) {
-            [queryBuilder withBssSpeed:[[params objectForKey:@"bssSpeed"] doubleValue]];
-        }
-        if ([params objectForKey:@"carSpeed"]) {
-            [queryBuilder withCarSpeed:[[params objectForKey:@"carSpeed"] doubleValue]];
-        }
-        if ([params objectForKey:@"forbiddenUris"]) {
-            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
-        }
-        if ([params objectForKey:@"allowedId"]) {
-            [queryBuilder withAllowedId:(NSArray*)[params objectForKey:@"allowedId"]];
-        }
-        if ([params objectForKey:@"disruptionActive"]) {
-            [queryBuilder withDisruptionActive:(NSNumber*)[params objectForKey:@"disruptionActive"]];
-        }
-        if ([params objectForKey:@"dataFreshness"]) {
-            [queryBuilder withDataFreshness:(NSString*)[params objectForKey:@"dataFreshness"]];
-        }
-        if ([params objectForKey:@"maxDuration"]) {
-            [queryBuilder withMaxDuration:[[params objectForKey:@"maxDuration"] integerValue]];
-        }
-        if ([params objectForKey:@"wheelchair"]) {
-            [queryBuilder withWheelchair:(NSNumber*)[params objectForKey:@"wheelchair"]];
-        }
-        if ([params objectForKey:@"travelerType"]) {
-            [queryBuilder withTravelerType:(NSString*)[params objectForKey:@"travelerType"]];
-        }
-        if ([params objectForKey:@"directPath"]) {
-            [queryBuilder withDirectPath:(NSString*)[params objectForKey:@"directPath"]];
-        }
-        if ([params objectForKey:@"count"]) {
-            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
-        }
-        if ([params objectForKey:@"isJourneySchedules"]) {
-            [queryBuilder withIsJourneySchedules:(NSNumber*)[params objectForKey:@"isJourneySchedules"]];
-        }
-        if ([params objectForKey:@"minNbJourneys"]) {
-            [queryBuilder withMinNbJourneys:[[params objectForKey:@"minNbJourneys"] integerValue]];
-        }
-        if ([params objectForKey:@"maxNbJourneys"]) {
-            [queryBuilder withMaxNbJourneys:[[params objectForKey:@"maxNbJourneys"] integerValue]];
-        }
-        if ([params objectForKey:@"bssStands"]) {
-            [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
-        }
-
-        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
-            if (error == nil) {
-                NSLog(@"SDK coverageRegionUriJourneys with query %@", [queryBuilder makeUrl]);
-                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
-                if (jsonData != nil) {
-                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
-                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-                }
-            } else {
-                NSLog(@"SDK coverageRegionUriJourneys fail with query %@", [queryBuilder makeUrl]);
-                NSDictionary *userInfo = @{
-                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
-                };
-                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
-                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
-                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-            }
-        }];
-    }
-}
 - (void)journeys:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -5350,7 +5556,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        JourneysAPI *api = [self.sdk journeysApi];
+        JourneysApi *api = [self.sdk journeysApi];
         JourneysRequestBuilder *queryBuilder = [api newJourneysRequestBuilder];
 
         if ([params objectForKey:@"from"]) {
@@ -5443,6 +5649,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -5475,7 +5684,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         CoverageLonLatLineGroupsRequestBuilder *queryBuilder = [api newCoverageLonLatLineGroupsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -5561,7 +5770,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         CoverageLonLatLineGroupsIdRequestBuilder *queryBuilder = [api newCoverageLonLatLineGroupsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -5647,7 +5856,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         CoverageLonLatUriLineGroupsRequestBuilder *queryBuilder = [api newCoverageLonLatUriLineGroupsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -5736,7 +5945,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         CoverageLonLatUriLineGroupsIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriLineGroupsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -5825,7 +6034,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         CoverageRegionLineGroupsRequestBuilder *queryBuilder = [api newCoverageRegionLineGroupsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -5908,7 +6117,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         CoverageRegionLineGroupsIdRequestBuilder *queryBuilder = [api newCoverageRegionLineGroupsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -5991,7 +6200,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         CoverageRegionUriLineGroupsRequestBuilder *queryBuilder = [api newCoverageRegionUriLineGroupsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -6077,7 +6286,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         CoverageRegionUriLineGroupsIdRequestBuilder *queryBuilder = [api newCoverageRegionUriLineGroupsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -6163,7 +6372,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LineGroupsAPI *api = [self.sdk lineGroupsApi];
+        LineGroupsApi *api = [self.sdk lineGroupsApi];
         LineGroupsRequestBuilder *queryBuilder = [api newLineGroupsRequestBuilder];
 
         if ([params objectForKey:@"externalCode"]) {
@@ -6233,6 +6442,115 @@
         }];
     }
 }
+- (void)coverageRegionLineReports:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        LineReportsApi *api = [self.sdk lineReportsApi];
+        CoverageRegionLineReportsRequestBuilder *queryBuilder = [api newCoverageRegionLineReportsRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionLineReports with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionLineReports fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionUriLineReports:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        LineReportsApi *api = [self.sdk lineReportsApi];
+        CoverageRegionUriLineReportsRequestBuilder *queryBuilder = [api newCoverageRegionUriLineReportsRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"uri"]) {
+            [queryBuilder withUri:(NSString*)[params objectForKey:@"uri"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionUriLineReports with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionUriLineReports fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
 - (void)coverageLonLatLines:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -6243,7 +6561,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         CoverageLonLatLinesRequestBuilder *queryBuilder = [api newCoverageLonLatLinesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -6329,7 +6647,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         CoverageLonLatLinesIdRequestBuilder *queryBuilder = [api newCoverageLonLatLinesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -6415,7 +6733,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         CoverageLonLatUriLinesRequestBuilder *queryBuilder = [api newCoverageLonLatUriLinesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -6504,7 +6822,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         CoverageLonLatUriLinesIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriLinesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -6593,7 +6911,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         CoverageRegionLinesRequestBuilder *queryBuilder = [api newCoverageRegionLinesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -6676,7 +6994,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         CoverageRegionLinesIdRequestBuilder *queryBuilder = [api newCoverageRegionLinesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -6759,7 +7077,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         CoverageRegionUriLinesRequestBuilder *queryBuilder = [api newCoverageRegionUriLinesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -6845,7 +7163,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         CoverageRegionUriLinesIdRequestBuilder *queryBuilder = [api newCoverageRegionUriLinesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -6931,7 +7249,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        LinesAPI *api = [self.sdk linesApi];
+        LinesApi *api = [self.sdk linesApi];
         LinesRequestBuilder *queryBuilder = [api newLinesRequestBuilder];
 
         if ([params objectForKey:@"externalCode"]) {
@@ -7011,7 +7329,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         CoverageLonLatNetworksRequestBuilder *queryBuilder = [api newCoverageLonLatNetworksRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -7097,7 +7415,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         CoverageLonLatNetworksIdRequestBuilder *queryBuilder = [api newCoverageLonLatNetworksIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -7183,7 +7501,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         CoverageLonLatUriNetworksRequestBuilder *queryBuilder = [api newCoverageLonLatUriNetworksRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -7272,7 +7590,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         CoverageLonLatUriNetworksIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriNetworksIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -7361,7 +7679,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         CoverageRegionNetworksRequestBuilder *queryBuilder = [api newCoverageRegionNetworksRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -7444,7 +7762,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         CoverageRegionNetworksIdRequestBuilder *queryBuilder = [api newCoverageRegionNetworksIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -7527,7 +7845,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         CoverageRegionUriNetworksRequestBuilder *queryBuilder = [api newCoverageRegionUriNetworksRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -7613,7 +7931,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         CoverageRegionUriNetworksIdRequestBuilder *queryBuilder = [api newCoverageRegionUriNetworksIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -7699,7 +8017,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NetworksAPI *api = [self.sdk networksApi];
+        NetworksApi *api = [self.sdk networksApi];
         NetworksRequestBuilder *queryBuilder = [api newNetworksRequestBuilder];
 
         if ([params objectForKey:@"externalCode"]) {
@@ -7779,7 +8097,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NextArrivalsAPI *api = [self.sdk nextArrivalsApi];
+        NextArrivalsApi *api = [self.sdk nextArrivalsApi];
         CoverageLonLatArrivalsRequestBuilder *queryBuilder = [api newCoverageLonLatArrivalsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -7868,7 +8186,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NextArrivalsAPI *api = [self.sdk nextArrivalsApi];
+        NextArrivalsApi *api = [self.sdk nextArrivalsApi];
         CoverageLonLatUriArrivalsRequestBuilder *queryBuilder = [api newCoverageLonLatUriArrivalsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -7960,7 +8278,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NextArrivalsAPI *api = [self.sdk nextArrivalsApi];
+        NextArrivalsApi *api = [self.sdk nextArrivalsApi];
         CoverageRegionArrivalsRequestBuilder *queryBuilder = [api newCoverageRegionArrivalsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -8046,7 +8364,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NextArrivalsAPI *api = [self.sdk nextArrivalsApi];
+        NextArrivalsApi *api = [self.sdk nextArrivalsApi];
         CoverageRegionUriArrivalsRequestBuilder *queryBuilder = [api newCoverageRegionUriArrivalsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -8135,7 +8453,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NextDeparturesAPI *api = [self.sdk nextDeparturesApi];
+        NextDeparturesApi *api = [self.sdk nextDeparturesApi];
         CoverageLonLatDeparturesRequestBuilder *queryBuilder = [api newCoverageLonLatDeparturesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -8224,7 +8542,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NextDeparturesAPI *api = [self.sdk nextDeparturesApi];
+        NextDeparturesApi *api = [self.sdk nextDeparturesApi];
         CoverageLonLatUriDeparturesRequestBuilder *queryBuilder = [api newCoverageLonLatUriDeparturesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -8316,7 +8634,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NextDeparturesAPI *api = [self.sdk nextDeparturesApi];
+        NextDeparturesApi *api = [self.sdk nextDeparturesApi];
         CoverageRegionDeparturesRequestBuilder *queryBuilder = [api newCoverageRegionDeparturesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -8402,7 +8720,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        NextDeparturesAPI *api = [self.sdk nextDeparturesApi];
+        NextDeparturesApi *api = [self.sdk nextDeparturesApi];
         CoverageRegionUriDeparturesRequestBuilder *queryBuilder = [api newCoverageRegionUriDeparturesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -8491,7 +8809,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PhysicalModesAPI *api = [self.sdk physicalModesApi];
+        PhysicalModesApi *api = [self.sdk physicalModesApi];
         CoverageLonLatPhysicalModesRequestBuilder *queryBuilder = [api newCoverageLonLatPhysicalModesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -8574,7 +8892,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PhysicalModesAPI *api = [self.sdk physicalModesApi];
+        PhysicalModesApi *api = [self.sdk physicalModesApi];
         CoverageLonLatPhysicalModesIdRequestBuilder *queryBuilder = [api newCoverageLonLatPhysicalModesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -8657,7 +8975,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PhysicalModesAPI *api = [self.sdk physicalModesApi];
+        PhysicalModesApi *api = [self.sdk physicalModesApi];
         CoverageLonLatUriPhysicalModesRequestBuilder *queryBuilder = [api newCoverageLonLatUriPhysicalModesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -8743,7 +9061,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PhysicalModesAPI *api = [self.sdk physicalModesApi];
+        PhysicalModesApi *api = [self.sdk physicalModesApi];
         CoverageLonLatUriPhysicalModesIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriPhysicalModesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -8829,7 +9147,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PhysicalModesAPI *api = [self.sdk physicalModesApi];
+        PhysicalModesApi *api = [self.sdk physicalModesApi];
         CoverageRegionPhysicalModesRequestBuilder *queryBuilder = [api newCoverageRegionPhysicalModesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -8909,7 +9227,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PhysicalModesAPI *api = [self.sdk physicalModesApi];
+        PhysicalModesApi *api = [self.sdk physicalModesApi];
         CoverageRegionPhysicalModesIdRequestBuilder *queryBuilder = [api newCoverageRegionPhysicalModesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -8989,7 +9307,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PhysicalModesAPI *api = [self.sdk physicalModesApi];
+        PhysicalModesApi *api = [self.sdk physicalModesApi];
         CoverageRegionUriPhysicalModesRequestBuilder *queryBuilder = [api newCoverageRegionUriPhysicalModesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -9072,7 +9390,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PhysicalModesAPI *api = [self.sdk physicalModesApi];
+        PhysicalModesApi *api = [self.sdk physicalModesApi];
         CoverageRegionUriPhysicalModesIdRequestBuilder *queryBuilder = [api newCoverageRegionUriPhysicalModesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -9155,7 +9473,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PlacesAPI *api = [self.sdk placesApi];
+        PlacesApi *api = [self.sdk placesApi];
         CoverageLonLatPlacesRequestBuilder *queryBuilder = [api newCoverageLonLatPlacesRequestBuilder];
 
         if ([params objectForKey:@"q"]) {
@@ -9220,7 +9538,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PlacesAPI *api = [self.sdk placesApi];
+        PlacesApi *api = [self.sdk placesApi];
         CoverageRegionPlacesRequestBuilder *queryBuilder = [api newCoverageRegionPlacesRequestBuilder];
 
         if ([params objectForKey:@"q"]) {
@@ -9282,7 +9600,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PlacesAPI *api = [self.sdk placesApi];
+        PlacesApi *api = [self.sdk placesApi];
         PlacesRequestBuilder *queryBuilder = [api newPlacesRequestBuilder];
 
         if ([params objectForKey:@"q"]) {
@@ -9331,6 +9649,414 @@
         }];
     }
 }
+- (void)coordLonLatPlacesNearby:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        PlacesNearbyApi *api = [self.sdk placesNearbyApi];
+        CoordLonLatPlacesNearbyRequestBuilder *queryBuilder = [api newCoordLonLatPlacesNearbyRequestBuilder];
+
+        if ([params objectForKey:@"lat"]) {
+            [queryBuilder withLat:[[params objectForKey:@"lat"] doubleValue]];
+        }
+        if ([params objectForKey:@"lon"]) {
+            [queryBuilder withLon:[[params objectForKey:@"lon"] doubleValue]];
+        }
+        if ([params objectForKey:@"type"]) {
+            [queryBuilder withType:(NSArray*)[params objectForKey:@"type"]];
+        }
+        if ([params objectForKey:@"filter"]) {
+            [queryBuilder withFilter:(NSString*)[params objectForKey:@"filter"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"bssStands"]) {
+            [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
+        }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coordLonLatPlacesNearby with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coordLonLatPlacesNearby fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coordsLonLatPlacesNearby:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        PlacesNearbyApi *api = [self.sdk placesNearbyApi];
+        CoordsLonLatPlacesNearbyRequestBuilder *queryBuilder = [api newCoordsLonLatPlacesNearbyRequestBuilder];
+
+        if ([params objectForKey:@"lat"]) {
+            [queryBuilder withLat:[[params objectForKey:@"lat"] doubleValue]];
+        }
+        if ([params objectForKey:@"lon"]) {
+            [queryBuilder withLon:[[params objectForKey:@"lon"] doubleValue]];
+        }
+        if ([params objectForKey:@"type"]) {
+            [queryBuilder withType:(NSArray*)[params objectForKey:@"type"]];
+        }
+        if ([params objectForKey:@"filter"]) {
+            [queryBuilder withFilter:(NSString*)[params objectForKey:@"filter"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"bssStands"]) {
+            [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
+        }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coordsLonLatPlacesNearby with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coordsLonLatPlacesNearby fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageLonLatPlacesNearby:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        PlacesNearbyApi *api = [self.sdk placesNearbyApi];
+        CoverageLonLatPlacesNearbyRequestBuilder *queryBuilder = [api newCoverageLonLatPlacesNearbyRequestBuilder];
+
+        if ([params objectForKey:@"lat"]) {
+            [queryBuilder withLat:[[params objectForKey:@"lat"] doubleValue]];
+        }
+        if ([params objectForKey:@"lon"]) {
+            [queryBuilder withLon:[[params objectForKey:@"lon"] doubleValue]];
+        }
+        if ([params objectForKey:@"type"]) {
+            [queryBuilder withType:(NSArray*)[params objectForKey:@"type"]];
+        }
+        if ([params objectForKey:@"filter"]) {
+            [queryBuilder withFilter:(NSString*)[params objectForKey:@"filter"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"bssStands"]) {
+            [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
+        }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageLonLatPlacesNearby with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageLonLatPlacesNearby fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageLonLatUriPlacesNearby:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        PlacesNearbyApi *api = [self.sdk placesNearbyApi];
+        CoverageLonLatUriPlacesNearbyRequestBuilder *queryBuilder = [api newCoverageLonLatUriPlacesNearbyRequestBuilder];
+
+        if ([params objectForKey:@"lat"]) {
+            [queryBuilder withLat:[[params objectForKey:@"lat"] doubleValue]];
+        }
+        if ([params objectForKey:@"lon"]) {
+            [queryBuilder withLon:[[params objectForKey:@"lon"] doubleValue]];
+        }
+        if ([params objectForKey:@"uri"]) {
+            [queryBuilder withUri:(NSString*)[params objectForKey:@"uri"]];
+        }
+        if ([params objectForKey:@"type"]) {
+            [queryBuilder withType:(NSArray*)[params objectForKey:@"type"]];
+        }
+        if ([params objectForKey:@"filter"]) {
+            [queryBuilder withFilter:(NSString*)[params objectForKey:@"filter"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"bssStands"]) {
+            [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
+        }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageLonLatUriPlacesNearby with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageLonLatUriPlacesNearby fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionPlacesNearby:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        PlacesNearbyApi *api = [self.sdk placesNearbyApi];
+        CoverageRegionPlacesNearbyRequestBuilder *queryBuilder = [api newCoverageRegionPlacesNearbyRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"type"]) {
+            [queryBuilder withType:(NSArray*)[params objectForKey:@"type"]];
+        }
+        if ([params objectForKey:@"filter"]) {
+            [queryBuilder withFilter:(NSString*)[params objectForKey:@"filter"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"bssStands"]) {
+            [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
+        }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionPlacesNearby with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionPlacesNearby fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionUriPlacesNearby:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        PlacesNearbyApi *api = [self.sdk placesNearbyApi];
+        CoverageRegionUriPlacesNearbyRequestBuilder *queryBuilder = [api newCoverageRegionUriPlacesNearbyRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"uri"]) {
+            [queryBuilder withUri:(NSString*)[params objectForKey:@"uri"]];
+        }
+        if ([params objectForKey:@"type"]) {
+            [queryBuilder withType:(NSArray*)[params objectForKey:@"type"]];
+        }
+        if ([params objectForKey:@"filter"]) {
+            [queryBuilder withFilter:(NSString*)[params objectForKey:@"filter"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"bssStands"]) {
+            [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
+        }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionUriPlacesNearby with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionUriPlacesNearby fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
 - (void)coverageLonLatPoiTypes:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -9341,7 +10067,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoiTypesAPI *api = [self.sdk poiTypesApi];
+        PoiTypesApi *api = [self.sdk poiTypesApi];
         CoverageLonLatPoiTypesRequestBuilder *queryBuilder = [api newCoverageLonLatPoiTypesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -9424,7 +10150,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoiTypesAPI *api = [self.sdk poiTypesApi];
+        PoiTypesApi *api = [self.sdk poiTypesApi];
         CoverageLonLatPoiTypesIdRequestBuilder *queryBuilder = [api newCoverageLonLatPoiTypesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -9507,7 +10233,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoiTypesAPI *api = [self.sdk poiTypesApi];
+        PoiTypesApi *api = [self.sdk poiTypesApi];
         CoverageLonLatUriPoiTypesRequestBuilder *queryBuilder = [api newCoverageLonLatUriPoiTypesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -9593,7 +10319,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoiTypesAPI *api = [self.sdk poiTypesApi];
+        PoiTypesApi *api = [self.sdk poiTypesApi];
         CoverageLonLatUriPoiTypesIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriPoiTypesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -9679,7 +10405,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoiTypesAPI *api = [self.sdk poiTypesApi];
+        PoiTypesApi *api = [self.sdk poiTypesApi];
         CoverageRegionPoiTypesRequestBuilder *queryBuilder = [api newCoverageRegionPoiTypesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -9759,7 +10485,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoiTypesAPI *api = [self.sdk poiTypesApi];
+        PoiTypesApi *api = [self.sdk poiTypesApi];
         CoverageRegionPoiTypesIdRequestBuilder *queryBuilder = [api newCoverageRegionPoiTypesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -9839,7 +10565,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoiTypesAPI *api = [self.sdk poiTypesApi];
+        PoiTypesApi *api = [self.sdk poiTypesApi];
         CoverageRegionUriPoiTypesRequestBuilder *queryBuilder = [api newCoverageRegionUriPoiTypesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -9922,7 +10648,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoiTypesAPI *api = [self.sdk poiTypesApi];
+        PoiTypesApi *api = [self.sdk poiTypesApi];
         CoverageRegionUriPoiTypesIdRequestBuilder *queryBuilder = [api newCoverageRegionUriPoiTypesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -10005,7 +10731,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoisAPI *api = [self.sdk poisApi];
+        PoisApi *api = [self.sdk poisApi];
         CoverageLonLatPoisRequestBuilder *queryBuilder = [api newCoverageLonLatPoisRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -10062,6 +10788,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -10094,7 +10823,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoisAPI *api = [self.sdk poisApi];
+        PoisApi *api = [self.sdk poisApi];
         CoverageLonLatPoisIdRequestBuilder *queryBuilder = [api newCoverageLonLatPoisIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -10151,6 +10880,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -10183,7 +10915,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoisAPI *api = [self.sdk poisApi];
+        PoisApi *api = [self.sdk poisApi];
         CoverageLonLatUriPoisRequestBuilder *queryBuilder = [api newCoverageLonLatUriPoisRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -10243,6 +10975,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -10275,7 +11010,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoisAPI *api = [self.sdk poisApi];
+        PoisApi *api = [self.sdk poisApi];
         CoverageLonLatUriPoisIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriPoisIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -10335,6 +11070,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -10367,7 +11105,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoisAPI *api = [self.sdk poisApi];
+        PoisApi *api = [self.sdk poisApi];
         CoverageRegionPoisRequestBuilder *queryBuilder = [api newCoverageRegionPoisRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -10421,6 +11159,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -10453,7 +11194,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoisAPI *api = [self.sdk poisApi];
+        PoisApi *api = [self.sdk poisApi];
         CoverageRegionPoisIdRequestBuilder *queryBuilder = [api newCoverageRegionPoisIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -10507,6 +11248,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -10539,7 +11283,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoisAPI *api = [self.sdk poisApi];
+        PoisApi *api = [self.sdk poisApi];
         CoverageRegionUriPoisRequestBuilder *queryBuilder = [api newCoverageRegionUriPoisRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -10596,6 +11340,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -10628,7 +11375,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        PoisAPI *api = [self.sdk poisApi];
+        PoisApi *api = [self.sdk poisApi];
         CoverageRegionUriPoisIdRequestBuilder *queryBuilder = [api newCoverageRegionUriPoisIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -10685,6 +11432,9 @@
         if ([params objectForKey:@"bssStands"]) {
             [queryBuilder withBssStands:(NSNumber*)[params objectForKey:@"bssStands"]];
         }
+        if ([params objectForKey:@"addPoiInfos"]) {
+            [queryBuilder withAddPoiInfos:(NSArray*)[params objectForKey:@"addPoiInfos"]];
+        }
 
         [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
             if (error == nil) {
@@ -10707,6 +11457,121 @@
         }];
     }
 }
+- (void)coverageLonLatPtObjects:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        PtobjectsApi *api = [self.sdk ptobjectsApi];
+        CoverageLonLatPtObjectsRequestBuilder *queryBuilder = [api newCoverageLonLatPtObjectsRequestBuilder];
+
+        if ([params objectForKey:@"q"]) {
+            [queryBuilder withQ:(NSString*)[params objectForKey:@"q"]];
+        }
+        if ([params objectForKey:@"lat"]) {
+            [queryBuilder withLat:[[params objectForKey:@"lat"] doubleValue]];
+        }
+        if ([params objectForKey:@"lon"]) {
+            [queryBuilder withLon:[[params objectForKey:@"lon"] doubleValue]];
+        }
+        if ([params objectForKey:@"type"]) {
+            [queryBuilder withType:(NSArray*)[params objectForKey:@"type"]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"adminUri"]) {
+            [queryBuilder withAdminUri:(NSArray*)[params objectForKey:@"adminUri"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageLonLatPtObjects with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageLonLatPtObjects fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionPtObjects:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        PtobjectsApi *api = [self.sdk ptobjectsApi];
+        CoverageRegionPtObjectsRequestBuilder *queryBuilder = [api newCoverageRegionPtObjectsRequestBuilder];
+
+        if ([params objectForKey:@"q"]) {
+            [queryBuilder withQ:(NSString*)[params objectForKey:@"q"]];
+        }
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"type"]) {
+            [queryBuilder withType:(NSArray*)[params objectForKey:@"type"]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"adminUri"]) {
+            [queryBuilder withAdminUri:(NSArray*)[params objectForKey:@"adminUri"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionPtObjects with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionPtObjects fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
 - (void)coverageLonLatUriRouteSchedules:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -10717,7 +11582,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RouteSchedulesAPI *api = [self.sdk routeSchedulesApi];
+        RouteSchedulesApi *api = [self.sdk routeSchedulesApi];
         CoverageLonLatUriRouteSchedulesRequestBuilder *queryBuilder = [api newCoverageLonLatUriRouteSchedulesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -10809,7 +11674,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RouteSchedulesAPI *api = [self.sdk routeSchedulesApi];
+        RouteSchedulesApi *api = [self.sdk routeSchedulesApi];
         CoverageRegionUriRouteSchedulesRequestBuilder *queryBuilder = [api newCoverageRegionUriRouteSchedulesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -10898,7 +11763,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RouteSchedulesAPI *api = [self.sdk routeSchedulesApi];
+        RouteSchedulesApi *api = [self.sdk routeSchedulesApi];
         RouteSchedulesRequestBuilder *queryBuilder = [api newRouteSchedulesRequestBuilder];
 
         if ([params objectForKey:@"filter"]) {
@@ -10981,7 +11846,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         CoverageLonLatRoutesRequestBuilder *queryBuilder = [api newCoverageLonLatRoutesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -11067,7 +11932,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         CoverageLonLatRoutesIdRequestBuilder *queryBuilder = [api newCoverageLonLatRoutesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -11153,7 +12018,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         CoverageLonLatUriRoutesRequestBuilder *queryBuilder = [api newCoverageLonLatUriRoutesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -11242,7 +12107,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         CoverageLonLatUriRoutesIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriRoutesIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -11331,7 +12196,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         CoverageRegionRoutesRequestBuilder *queryBuilder = [api newCoverageRegionRoutesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -11414,7 +12279,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         CoverageRegionRoutesIdRequestBuilder *queryBuilder = [api newCoverageRegionRoutesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -11497,7 +12362,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         CoverageRegionUriRoutesRequestBuilder *queryBuilder = [api newCoverageRegionUriRoutesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -11583,7 +12448,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         CoverageRegionUriRoutesIdRequestBuilder *queryBuilder = [api newCoverageRegionUriRoutesIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -11669,7 +12534,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        RoutesAPI *api = [self.sdk routesApi];
+        RoutesApi *api = [self.sdk routesApi];
         RoutesRequestBuilder *queryBuilder = [api newRoutesRequestBuilder];
 
         if ([params objectForKey:@"externalCode"]) {
@@ -11739,6 +12604,44 @@
         }];
     }
 }
+- (void)coverageRegionStatus:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        StatusApi *api = [self.sdk statusApi];
+        CoverageRegionStatusRequestBuilder *queryBuilder = [api newCoverageRegionStatusRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionStatus with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionStatus fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
 - (void)coverageLonLatStopAreas:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -11749,7 +12652,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         CoverageLonLatStopAreasRequestBuilder *queryBuilder = [api newCoverageLonLatStopAreasRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -11835,7 +12738,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         CoverageLonLatStopAreasIdRequestBuilder *queryBuilder = [api newCoverageLonLatStopAreasIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -11921,7 +12824,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         CoverageLonLatUriStopAreasRequestBuilder *queryBuilder = [api newCoverageLonLatUriStopAreasRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -12010,7 +12913,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         CoverageLonLatUriStopAreasIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriStopAreasIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -12099,7 +13002,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         CoverageRegionStopAreasRequestBuilder *queryBuilder = [api newCoverageRegionStopAreasRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -12182,7 +13085,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         CoverageRegionStopAreasIdRequestBuilder *queryBuilder = [api newCoverageRegionStopAreasIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -12265,7 +13168,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         CoverageRegionUriStopAreasRequestBuilder *queryBuilder = [api newCoverageRegionUriStopAreasRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -12351,7 +13254,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         CoverageRegionUriStopAreasIdRequestBuilder *queryBuilder = [api newCoverageRegionUriStopAreasIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -12437,7 +13340,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopAreasAPI *api = [self.sdk stopAreasApi];
+        StopAreasApi *api = [self.sdk stopAreasApi];
         StopAreasRequestBuilder *queryBuilder = [api newStopAreasRequestBuilder];
 
         if ([params objectForKey:@"externalCode"]) {
@@ -12517,7 +13420,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         CoverageLonLatStopPointsRequestBuilder *queryBuilder = [api newCoverageLonLatStopPointsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -12603,7 +13506,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         CoverageLonLatStopPointsIdRequestBuilder *queryBuilder = [api newCoverageLonLatStopPointsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -12689,7 +13592,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         CoverageLonLatUriStopPointsRequestBuilder *queryBuilder = [api newCoverageLonLatUriStopPointsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -12778,7 +13681,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         CoverageLonLatUriStopPointsIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriStopPointsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -12867,7 +13770,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         CoverageRegionStopPointsRequestBuilder *queryBuilder = [api newCoverageRegionStopPointsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -12950,7 +13853,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         CoverageRegionStopPointsIdRequestBuilder *queryBuilder = [api newCoverageRegionStopPointsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -13033,7 +13936,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         CoverageRegionUriStopPointsRequestBuilder *queryBuilder = [api newCoverageRegionUriStopPointsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -13119,7 +14022,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         CoverageRegionUriStopPointsIdRequestBuilder *queryBuilder = [api newCoverageRegionUriStopPointsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -13205,7 +14108,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopPointsAPI *api = [self.sdk stopPointsApi];
+        StopPointsApi *api = [self.sdk stopPointsApi];
         StopPointsRequestBuilder *queryBuilder = [api newStopPointsRequestBuilder];
 
         if ([params objectForKey:@"externalCode"]) {
@@ -13285,7 +14188,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopSchedulesAPI *api = [self.sdk stopSchedulesApi];
+        StopSchedulesApi *api = [self.sdk stopSchedulesApi];
         CoverageLonLatUriStopSchedulesRequestBuilder *queryBuilder = [api newCoverageLonLatUriStopSchedulesRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -13377,7 +14280,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopSchedulesAPI *api = [self.sdk stopSchedulesApi];
+        StopSchedulesApi *api = [self.sdk stopSchedulesApi];
         CoverageRegionUriStopSchedulesRequestBuilder *queryBuilder = [api newCoverageRegionUriStopSchedulesRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -13466,7 +14369,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        StopSchedulesAPI *api = [self.sdk stopSchedulesApi];
+        StopSchedulesApi *api = [self.sdk stopSchedulesApi];
         StopSchedulesRequestBuilder *queryBuilder = [api newStopSchedulesRequestBuilder];
 
         if ([params objectForKey:@"filter"]) {
@@ -13539,6 +14442,127 @@
         }];
     }
 }
+- (void)coverageRegionTrafficReports:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        TrafficReportApi *api = [self.sdk trafficReportApi];
+        CoverageRegionTrafficReportsRequestBuilder *queryBuilder = [api newCoverageRegionTrafficReportsRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"forbiddenId"]) {
+            [queryBuilder withForbiddenId:(NSArray*)[params objectForKey:@"forbiddenId"]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionTrafficReports with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionTrafficReports fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
+- (void)coverageRegionUriTrafficReports:(CDVInvokedUrlCommand*)command
+{
+    NSDictionary* params = [command.arguments objectAtIndex:0];
+
+    if ([params isKindOfClass:[NSNull class]] || [params count] == 0) {
+        CDVPluginResult* pluginResult = nil;
+        NSString* errorMessage = @"Wrong parameters";
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    } else {
+        TrafficReportApi *api = [self.sdk trafficReportApi];
+        CoverageRegionUriTrafficReportsRequestBuilder *queryBuilder = [api newCoverageRegionUriTrafficReportsRequestBuilder];
+
+        if ([params objectForKey:@"region"]) {
+            [queryBuilder withRegion:(NSString*)[params objectForKey:@"region"]];
+        }
+        if ([params objectForKey:@"uri"]) {
+            [queryBuilder withUri:(NSString*)[params objectForKey:@"uri"]];
+        }
+        if ([params objectForKey:@"depth"]) {
+            [queryBuilder withDepth:[[params objectForKey:@"depth"] integerValue]];
+        }
+        if ([params objectForKey:@"count"]) {
+            [queryBuilder withCount:[[params objectForKey:@"count"] integerValue]];
+        }
+        if ([params objectForKey:@"startPage"]) {
+            [queryBuilder withStartPage:[[params objectForKey:@"startPage"] integerValue]];
+        }
+        if ([params objectForKey:@"forbiddenId"]) {
+            [queryBuilder withForbiddenId:(NSArray*)[params objectForKey:@"forbiddenId"]];
+        }
+        if ([params objectForKey:@"forbiddenUris"]) {
+            [queryBuilder withForbiddenUris:(NSArray*)[params objectForKey:@"forbiddenUris"]];
+        }
+        if ([params objectForKey:@"distance"]) {
+            [queryBuilder withDistance:[[params objectForKey:@"distance"] integerValue]];
+        }
+        if ([params objectForKey:@"disableGeojson"]) {
+            [queryBuilder withDisableGeojson:(NSNumber*)[params objectForKey:@"disableGeojson"]];
+        }
+
+        [queryBuilder rawGetWithCompletion:^(NSString *results, NSError *error) {
+            if (error == nil) {
+                NSLog(@"SDK coverageRegionUriTrafficReports with query %@", [queryBuilder makeUrl]);
+                NSData *jsonData = [results dataUsingEncoding:NSUTF8StringEncoding];
+                if (jsonData != nil) {
+                    NSDictionary *jsonResults = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsonResults];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                }
+            } else {
+                NSLog(@"SDK coverageRegionUriTrafficReports fail with query %@", [queryBuilder makeUrl]);
+                NSDictionary *userInfo = @{
+                    @"NSLocalizedDescriptionKey" : [error localizedDescription]
+                };
+                NSError *error = [NSError errorWithDomain:@"NavitiaSDK" code:[error code] userInfo:userInfo];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            }
+        }];
+    }
+}
 - (void)coverageLonLatTrips:(CDVInvokedUrlCommand*)command
 {
     NSDictionary* params = [command.arguments objectAtIndex:0];
@@ -13549,7 +14573,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        TripsAPI *api = [self.sdk tripsApi];
+        TripsApi *api = [self.sdk tripsApi];
         CoverageLonLatTripsRequestBuilder *queryBuilder = [api newCoverageLonLatTripsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -13632,7 +14656,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        TripsAPI *api = [self.sdk tripsApi];
+        TripsApi *api = [self.sdk tripsApi];
         CoverageLonLatTripsIdRequestBuilder *queryBuilder = [api newCoverageLonLatTripsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -13715,7 +14739,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        TripsAPI *api = [self.sdk tripsApi];
+        TripsApi *api = [self.sdk tripsApi];
         CoverageLonLatUriTripsRequestBuilder *queryBuilder = [api newCoverageLonLatUriTripsRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -13801,7 +14825,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        TripsAPI *api = [self.sdk tripsApi];
+        TripsApi *api = [self.sdk tripsApi];
         CoverageLonLatUriTripsIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriTripsIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -13887,7 +14911,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        TripsAPI *api = [self.sdk tripsApi];
+        TripsApi *api = [self.sdk tripsApi];
         CoverageRegionTripsRequestBuilder *queryBuilder = [api newCoverageRegionTripsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -13967,7 +14991,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        TripsAPI *api = [self.sdk tripsApi];
+        TripsApi *api = [self.sdk tripsApi];
         CoverageRegionTripsIdRequestBuilder *queryBuilder = [api newCoverageRegionTripsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -14047,7 +15071,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        TripsAPI *api = [self.sdk tripsApi];
+        TripsApi *api = [self.sdk tripsApi];
         CoverageRegionUriTripsRequestBuilder *queryBuilder = [api newCoverageRegionUriTripsRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -14130,7 +15154,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        TripsAPI *api = [self.sdk tripsApi];
+        TripsApi *api = [self.sdk tripsApi];
         CoverageRegionUriTripsIdRequestBuilder *queryBuilder = [api newCoverageRegionUriTripsIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -14213,7 +15237,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         CoverageLonLatUriVehicleJourneysRequestBuilder *queryBuilder = [api newCoverageLonLatUriVehicleJourneysRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -14299,7 +15323,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         CoverageLonLatUriVehicleJourneysIdRequestBuilder *queryBuilder = [api newCoverageLonLatUriVehicleJourneysIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -14385,7 +15409,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         CoverageLonLatVehicleJourneysRequestBuilder *queryBuilder = [api newCoverageLonLatVehicleJourneysRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -14468,7 +15492,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         CoverageLonLatVehicleJourneysIdRequestBuilder *queryBuilder = [api newCoverageLonLatVehicleJourneysIdRequestBuilder];
 
         if ([params objectForKey:@"lat"]) {
@@ -14551,7 +15575,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         CoverageRegionUriVehicleJourneysRequestBuilder *queryBuilder = [api newCoverageRegionUriVehicleJourneysRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -14634,7 +15658,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         CoverageRegionUriVehicleJourneysIdRequestBuilder *queryBuilder = [api newCoverageRegionUriVehicleJourneysIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -14717,7 +15741,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         CoverageRegionVehicleJourneysRequestBuilder *queryBuilder = [api newCoverageRegionVehicleJourneysRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -14797,7 +15821,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         CoverageRegionVehicleJourneysIdRequestBuilder *queryBuilder = [api newCoverageRegionVehicleJourneysIdRequestBuilder];
 
         if ([params objectForKey:@"region"]) {
@@ -14877,7 +15901,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorMessage];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     } else {
-        VehicleJourneysAPI *api = [self.sdk vehicleJourneysApi];
+        VehicleJourneysApi *api = [self.sdk vehicleJourneysApi];
         VehicleJourneysRequestBuilder *queryBuilder = [api newVehicleJourneysRequestBuilder];
 
         if ([params objectForKey:@"externalCode"]) {

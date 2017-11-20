@@ -9,6 +9,9 @@
 @property (nonatomic, strong) NavitiaSDK *sdk;
 
 - (void)init:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionCalendars:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionCalendarsId:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionUriCalendars:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatCommercialModes:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatCommercialModesId:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatUriCommercialModes:(CDVInvokedUrlCommand*)command;
@@ -52,6 +55,9 @@
 - (void)coverageRegionDisruptionsId:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriDisruptions:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriDisruptionsId:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionGeoStatus:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionIsochrones:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionHeatMaps:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatJourneyPatternPoints:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatJourneyPatternPointsId:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatUriJourneyPatternPoints:(CDVInvokedUrlCommand*)command;
@@ -69,9 +75,7 @@
 - (void)coverageRegionUriJourneyPatterns:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriJourneyPatternsId:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatJourneys:(CDVInvokedUrlCommand*)command;
-- (void)coverageLonLatUriJourneys:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionJourneys:(CDVInvokedUrlCommand*)command;
-- (void)coverageRegionUriJourneys:(CDVInvokedUrlCommand*)command;
 - (void)journeys:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatLineGroups:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatLineGroupsId:(CDVInvokedUrlCommand*)command;
@@ -82,6 +86,8 @@
 - (void)coverageRegionUriLineGroups:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriLineGroupsId:(CDVInvokedUrlCommand*)command;
 - (void)lineGroups:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionLineReports:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionUriLineReports:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatLines:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatLinesId:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatUriLines:(CDVInvokedUrlCommand*)command;
@@ -119,6 +125,12 @@
 - (void)coverageLonLatPlaces:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionPlaces:(CDVInvokedUrlCommand*)command;
 - (void)places:(CDVInvokedUrlCommand*)command;
+- (void)coordLonLatPlacesNearby:(CDVInvokedUrlCommand*)command;
+- (void)coordsLonLatPlacesNearby:(CDVInvokedUrlCommand*)command;
+- (void)coverageLonLatPlacesNearby:(CDVInvokedUrlCommand*)command;
+- (void)coverageLonLatUriPlacesNearby:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionPlacesNearby:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionUriPlacesNearby:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatPoiTypes:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatPoiTypesId:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatUriPoiTypes:(CDVInvokedUrlCommand*)command;
@@ -135,6 +147,8 @@
 - (void)coverageRegionPoisId:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriPois:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriPoisId:(CDVInvokedUrlCommand*)command;
+- (void)coverageLonLatPtObjects:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionPtObjects:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatUriRouteSchedules:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriRouteSchedules:(CDVInvokedUrlCommand*)command;
 - (void)routeSchedules:(CDVInvokedUrlCommand*)command;
@@ -147,6 +161,7 @@
 - (void)coverageRegionUriRoutes:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriRoutesId:(CDVInvokedUrlCommand*)command;
 - (void)routes:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionStatus:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatStopAreas:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatStopAreasId:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatUriStopAreas:(CDVInvokedUrlCommand*)command;
@@ -168,6 +183,8 @@
 - (void)coverageLonLatUriStopSchedules:(CDVInvokedUrlCommand*)command;
 - (void)coverageRegionUriStopSchedules:(CDVInvokedUrlCommand*)command;
 - (void)stopSchedules:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionTrafficReports:(CDVInvokedUrlCommand*)command;
+- (void)coverageRegionUriTrafficReports:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatTrips:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatTripsId:(CDVInvokedUrlCommand*)command;
 - (void)coverageLonLatUriTrips:(CDVInvokedUrlCommand*)command;

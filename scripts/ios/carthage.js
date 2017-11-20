@@ -5,7 +5,7 @@ module.exports = function(ctx) {
 
     console.log();
     console.log('*****************************************************');
-    console.log('***         Go stretch your legs (~5min)          ***');
+    console.log('***         Go stretch your legs (~2min)          ***');
     console.log('*****************************************************');
     console.log();
 

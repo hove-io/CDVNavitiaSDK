@@ -9,29 +9,38 @@ import org.json.JSONException;
 
 import org.kisio.NavitiaSDK.NavitiaSDK;
 import org.kisio.NavitiaSDK.NavitiaConfiguration;
+import org.kisio.NavitiaSDK.apis.CalendarsApi;
 import org.kisio.NavitiaSDK.apis.CommercialModesApi;
 import org.kisio.NavitiaSDK.apis.CompaniesApi;
 import org.kisio.NavitiaSDK.apis.ContributorsApi;
 import org.kisio.NavitiaSDK.apis.CoverageApi;
 import org.kisio.NavitiaSDK.apis.DatasetsApi;
 import org.kisio.NavitiaSDK.apis.DisruptionsApi;
+import org.kisio.NavitiaSDK.apis.GeoStatusApi;
+import org.kisio.NavitiaSDK.apis.GraphicalIsochroneApi;
+import org.kisio.NavitiaSDK.apis.HeatMapApi;
 import org.kisio.NavitiaSDK.apis.JourneyPatternPointsApi;
 import org.kisio.NavitiaSDK.apis.JourneyPatternsApi;
 import org.kisio.NavitiaSDK.apis.JourneysApi;
 import org.kisio.NavitiaSDK.apis.LineGroupsApi;
+import org.kisio.NavitiaSDK.apis.LineReportsApi;
 import org.kisio.NavitiaSDK.apis.LinesApi;
 import org.kisio.NavitiaSDK.apis.NetworksApi;
 import org.kisio.NavitiaSDK.apis.NextArrivalsApi;
 import org.kisio.NavitiaSDK.apis.NextDeparturesApi;
 import org.kisio.NavitiaSDK.apis.PhysicalModesApi;
 import org.kisio.NavitiaSDK.apis.PlacesApi;
+import org.kisio.NavitiaSDK.apis.PlacesNearbyApi;
 import org.kisio.NavitiaSDK.apis.PoiTypesApi;
 import org.kisio.NavitiaSDK.apis.PoisApi;
+import org.kisio.NavitiaSDK.apis.PtobjectsApi;
 import org.kisio.NavitiaSDK.apis.RouteSchedulesApi;
 import org.kisio.NavitiaSDK.apis.RoutesApi;
+import org.kisio.NavitiaSDK.apis.StatusApi;
 import org.kisio.NavitiaSDK.apis.StopAreasApi;
 import org.kisio.NavitiaSDK.apis.StopPointsApi;
 import org.kisio.NavitiaSDK.apis.StopSchedulesApi;
+import org.kisio.NavitiaSDK.apis.TrafficReportApi;
 import org.kisio.NavitiaSDK.apis.TripsApi;
 import org.kisio.NavitiaSDK.apis.VehicleJourneysApi;
 import org.kisio.NavitiaSDK.invokers.ApiCallback;
@@ -91,6 +100,24 @@ public class CDVNavitiaSDK extends CordovaPlugin {
     }
 
     public CDVNavitiaSDK() {
+        actions.put("coverageRegionCalendars", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionCalendars(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionCalendarsId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionCalendarsId(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriCalendars", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriCalendars(params, callbackContext);
+            }
+        });
         actions.put("coverageLonLatCommercialModes", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -349,6 +376,24 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 coverageRegionUriDisruptionsId(params, callbackContext);
             }
         });
+        actions.put("coverageRegionGeoStatus", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionGeoStatus(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionIsochrones", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionIsochrones(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionHeatMaps", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionHeatMaps(params, callbackContext);
+            }
+        });
         actions.put("coverageLonLatJourneyPatternPoints", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -451,22 +496,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 coverageLonLatJourneys(params, callbackContext);
             }
         });
-        actions.put("coverageLonLatUriJourneys", new Action() {
-            @Override
-            public void doAction(JSONObject params, CallbackContext callbackContext) {
-                coverageLonLatUriJourneys(params, callbackContext);
-            }
-        });
         actions.put("coverageRegionJourneys", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 coverageRegionJourneys(params, callbackContext);
-            }
-        });
-        actions.put("coverageRegionUriJourneys", new Action() {
-            @Override
-            public void doAction(JSONObject params, CallbackContext callbackContext) {
-                coverageRegionUriJourneys(params, callbackContext);
             }
         });
         actions.put("journeys", new Action() {
@@ -527,6 +560,18 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 lineGroups(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionLineReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionLineReports(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriLineReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriLineReports(params, callbackContext);
             }
         });
         actions.put("coverageLonLatLines", new Action() {
@@ -751,6 +796,42 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 places(params, callbackContext);
             }
         });
+        actions.put("coordLonLatPlacesNearby", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coordLonLatPlacesNearby(params, callbackContext);
+            }
+        });
+        actions.put("coordsLonLatPlacesNearby", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coordsLonLatPlacesNearby(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatPlacesNearby", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatPlacesNearby(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriPlacesNearby", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriPlacesNearby(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionPlacesNearby", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionPlacesNearby(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriPlacesNearby", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriPlacesNearby(params, callbackContext);
+            }
+        });
         actions.put("coverageLonLatPoiTypes", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -847,6 +928,18 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 coverageRegionUriPoisId(params, callbackContext);
             }
         });
+        actions.put("coverageLonLatPtObjects", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatPtObjects(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionPtObjects", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionPtObjects(params, callbackContext);
+            }
+        });
         actions.put("coverageLonLatUriRouteSchedules", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -917,6 +1010,12 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 routes(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionStatus", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionStatus(params, callbackContext);
             }
         });
         actions.put("coverageLonLatStopAreas", new Action() {
@@ -1043,6 +1142,18 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 stopSchedules(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionTrafficReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionTrafficReports(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriTrafficReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriTrafficReports(params, callbackContext);
             }
         });
         actions.put("coverageLonLatTrips", new Action() {
@@ -1178,6 +1289,257 @@ public class CDVNavitiaSDK extends CordovaPlugin {
         }
     }
 
+    final private void coverageRegionCalendars(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CalendarsApi.CoverageRegionCalendarsRequestBuilder calendarsRequestBuilder = this.navitiaSdk.calendarsApi.newCoverageRegionCalendarsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        calendarsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        calendarsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        calendarsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        calendarsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("startDate") && (params.getString("startDate") != null) && (!params.getString("startDate").isEmpty()) ) {
+                        // Param: startDate, Type: String
+                        calendarsRequestBuilder.withStartDate(stringStraightPass(params.getString("startDate")));
+                    }
+                    if (params.has("endDate") && (params.getString("endDate") != null) && (!params.getString("endDate").isEmpty()) ) {
+                        // Param: endDate, Type: String
+                        calendarsRequestBuilder.withEndDate(stringStraightPass(params.getString("endDate")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        calendarsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    
+                    calendarsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionCalendarsId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CalendarsApi.CoverageRegionCalendarsIdRequestBuilder calendarsRequestBuilder = this.navitiaSdk.calendarsApi.newCoverageRegionCalendarsIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        calendarsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        calendarsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        calendarsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        calendarsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        calendarsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("startDate") && (params.getString("startDate") != null) && (!params.getString("startDate").isEmpty()) ) {
+                        // Param: startDate, Type: String
+                        calendarsRequestBuilder.withStartDate(stringStraightPass(params.getString("startDate")));
+                    }
+                    if (params.has("endDate") && (params.getString("endDate") != null) && (!params.getString("endDate").isEmpty()) ) {
+                        // Param: endDate, Type: String
+                        calendarsRequestBuilder.withEndDate(stringStraightPass(params.getString("endDate")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        calendarsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    
+                    calendarsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriCalendars(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CalendarsApi.CoverageRegionUriCalendarsRequestBuilder calendarsRequestBuilder = this.navitiaSdk.calendarsApi.newCoverageRegionUriCalendarsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        calendarsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        calendarsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        calendarsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        calendarsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        calendarsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("startDate") && (params.getString("startDate") != null) && (!params.getString("startDate").isEmpty()) ) {
+                        // Param: startDate, Type: String
+                        calendarsRequestBuilder.withStartDate(stringStraightPass(params.getString("startDate")));
+                    }
+                    if (params.has("endDate") && (params.getString("endDate") != null) && (!params.getString("endDate").isEmpty()) ) {
+                        // Param: endDate, Type: String
+                        calendarsRequestBuilder.withEndDate(stringStraightPass(params.getString("endDate")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        calendarsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    
+                    calendarsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
     final private void coverageLonLatCommercialModes(final JSONObject params, final CallbackContext callbackContext) {
         if (this.navitiaSdk == null) {
             callbackContext.error("NavitiaSDK is not instanciated");
@@ -1238,11 +1600,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -1351,11 +1713,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -1460,11 +1822,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -1577,11 +1939,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -1678,11 +2040,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -1787,11 +2149,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -1892,11 +2254,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2005,11 +2367,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2110,11 +2472,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2223,11 +2585,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2332,11 +2694,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2449,11 +2811,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2550,11 +2912,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2659,11 +3021,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2764,11 +3126,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2877,11 +3239,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -2982,11 +3344,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -3095,11 +3457,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -3204,11 +3566,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -3321,11 +3683,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -3422,11 +3784,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -3531,11 +3893,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -3636,11 +3998,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -3749,11 +4111,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4013,11 +4375,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4126,11 +4488,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4235,11 +4597,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4352,11 +4714,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4453,11 +4815,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4562,11 +4924,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4667,11 +5029,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4780,11 +5142,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -4885,11 +5247,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5002,11 +5364,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5115,11 +5477,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5236,11 +5598,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5341,11 +5703,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5454,11 +5816,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5563,11 +5925,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5680,11 +6042,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5697,6 +6059,365 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     
                     disruptionsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionGeoStatus(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final GeoStatusApi.CoverageRegionGeoStatusRequestBuilder geoStatusRequestBuilder = this.navitiaSdk.geoStatusApi.newCoverageRegionGeoStatusRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        geoStatusRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    
+                    geoStatusRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionIsochrones(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final GraphicalIsochroneApi.CoverageRegionIsochronesRequestBuilder graphicalIsochroneRequestBuilder = this.navitiaSdk.graphicalIsochroneApi.newCoverageRegionIsochronesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        graphicalIsochroneRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("from") && (params.getString("from") != null) && (!params.getString("from").isEmpty()) ) {
+                        // Param: from, Type: String
+                        graphicalIsochroneRequestBuilder.withFrom(stringStraightPass(params.getString("from")));
+                    }
+                    if (params.has("to") && (params.getString("to") != null) && (!params.getString("to").isEmpty()) ) {
+                        // Param: to, Type: String
+                        graphicalIsochroneRequestBuilder.withTo(stringStraightPass(params.getString("to")));
+                    }
+                    if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
+                        // Param: datetime, Type: Date
+                        graphicalIsochroneRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
+                    }
+                    if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
+                        // Param: datetimeRepresents, Type: String
+                        graphicalIsochroneRequestBuilder.withDatetimeRepresents(stringStraightPass(params.getString("datetimeRepresents")));
+                    }
+                    if (params.has("maxNbTransfers") && (params.getString("maxNbTransfers") != null) && (!params.getString("maxNbTransfers").isEmpty()) ) {
+                        // Param: maxNbTransfers, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxNbTransfers(integerStraightPass(params.getInt("maxNbTransfers")));
+                    }
+                    if (params.has("minNbTransfers") && (params.getString("minNbTransfers") != null) && (!params.getString("minNbTransfers").isEmpty()) ) {
+                        // Param: minNbTransfers, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMinNbTransfers(integerStraightPass(params.getInt("minNbTransfers")));
+                    }
+                    if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
+                        // Param: firstSectionMode, Type: List
+                        graphicalIsochroneRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
+                    }
+                    if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
+                        // Param: lastSectionMode, Type: List
+                        graphicalIsochroneRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
+                    }
+                    if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
+                        // Param: maxDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxDurationToPt(integerStraightPass(params.getInt("maxDurationToPt")));
+                    }
+                    if (params.has("maxWalkingDurationToPt") && (params.getString("maxWalkingDurationToPt") != null) && (!params.getString("maxWalkingDurationToPt").isEmpty()) ) {
+                        // Param: maxWalkingDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxWalkingDurationToPt(integerStraightPass(params.getInt("maxWalkingDurationToPt")));
+                    }
+                    if (params.has("maxBikeDurationToPt") && (params.getString("maxBikeDurationToPt") != null) && (!params.getString("maxBikeDurationToPt").isEmpty()) ) {
+                        // Param: maxBikeDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxBikeDurationToPt(integerStraightPass(params.getInt("maxBikeDurationToPt")));
+                    }
+                    if (params.has("maxBssDurationToPt") && (params.getString("maxBssDurationToPt") != null) && (!params.getString("maxBssDurationToPt").isEmpty()) ) {
+                        // Param: maxBssDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxBssDurationToPt(integerStraightPass(params.getInt("maxBssDurationToPt")));
+                    }
+                    if (params.has("maxCarDurationToPt") && (params.getString("maxCarDurationToPt") != null) && (!params.getString("maxCarDurationToPt").isEmpty()) ) {
+                        // Param: maxCarDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
+                    }
+                    if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
+                        // Param: walkingSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
+                    }
+                    if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
+                        // Param: bikeSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
+                    }
+                    if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
+                        // Param: bssSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
+                    }
+                    if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
+                        // Param: carSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        graphicalIsochroneRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
+                        // Param: allowedId, Type: List
+                        graphicalIsochroneRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
+                    }
+                    if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
+                        // Param: disruptionActive, Type: Boolean
+                        graphicalIsochroneRequestBuilder.withDisruptionActive(booleanStraightPass(params.getBoolean("disruptionActive")));
+                    }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        graphicalIsochroneRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
+                    if (params.has("maxDuration") && (params.getString("maxDuration") != null) && (!params.getString("maxDuration").isEmpty()) ) {
+                        // Param: maxDuration, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxDuration(integerStraightPass(params.getInt("maxDuration")));
+                    }
+                    if (params.has("wheelchair") && (params.getString("wheelchair") != null) && (!params.getString("wheelchair").isEmpty()) ) {
+                        // Param: wheelchair, Type: Boolean
+                        graphicalIsochroneRequestBuilder.withWheelchair(booleanStraightPass(params.getBoolean("wheelchair")));
+                    }
+                    if (params.has("travelerType") && (params.getString("travelerType") != null) && (!params.getString("travelerType").isEmpty()) ) {
+                        // Param: travelerType, Type: String
+                        graphicalIsochroneRequestBuilder.withTravelerType(stringStraightPass(params.getString("travelerType")));
+                    }
+                    if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
+                        // Param: directPath, Type: String
+                        graphicalIsochroneRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
+                    }
+                    if (params.has("minDuration") && (params.getString("minDuration") != null) && (!params.getString("minDuration").isEmpty()) ) {
+                        // Param: minDuration, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMinDuration(integerStraightPass(params.getInt("minDuration")));
+                    }
+                    if (params.has("boundaryDuration") && (params.getString("boundaryDuration") != null) && (!params.getString("boundaryDuration").isEmpty()) ) {
+                        // Param: boundaryDuration, Type: List
+                        graphicalIsochroneRequestBuilder.withBoundaryDuration(jsonArrayToList(params.getJSONArray("boundaryDuration")));
+                    }
+                    
+                    graphicalIsochroneRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionHeatMaps(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final HeatMapApi.CoverageRegionHeatMapsRequestBuilder heatMapRequestBuilder = this.navitiaSdk.heatMapApi.newCoverageRegionHeatMapsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        heatMapRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("from") && (params.getString("from") != null) && (!params.getString("from").isEmpty()) ) {
+                        // Param: from, Type: String
+                        heatMapRequestBuilder.withFrom(stringStraightPass(params.getString("from")));
+                    }
+                    if (params.has("to") && (params.getString("to") != null) && (!params.getString("to").isEmpty()) ) {
+                        // Param: to, Type: String
+                        heatMapRequestBuilder.withTo(stringStraightPass(params.getString("to")));
+                    }
+                    if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
+                        // Param: datetime, Type: Date
+                        heatMapRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
+                    }
+                    if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
+                        // Param: datetimeRepresents, Type: String
+                        heatMapRequestBuilder.withDatetimeRepresents(stringStraightPass(params.getString("datetimeRepresents")));
+                    }
+                    if (params.has("maxNbTransfers") && (params.getString("maxNbTransfers") != null) && (!params.getString("maxNbTransfers").isEmpty()) ) {
+                        // Param: maxNbTransfers, Type: Integer
+                        heatMapRequestBuilder.withMaxNbTransfers(integerStraightPass(params.getInt("maxNbTransfers")));
+                    }
+                    if (params.has("minNbTransfers") && (params.getString("minNbTransfers") != null) && (!params.getString("minNbTransfers").isEmpty()) ) {
+                        // Param: minNbTransfers, Type: Integer
+                        heatMapRequestBuilder.withMinNbTransfers(integerStraightPass(params.getInt("minNbTransfers")));
+                    }
+                    if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
+                        // Param: firstSectionMode, Type: List
+                        heatMapRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
+                    }
+                    if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
+                        // Param: lastSectionMode, Type: List
+                        heatMapRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
+                    }
+                    if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
+                        // Param: maxDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxDurationToPt(integerStraightPass(params.getInt("maxDurationToPt")));
+                    }
+                    if (params.has("maxWalkingDurationToPt") && (params.getString("maxWalkingDurationToPt") != null) && (!params.getString("maxWalkingDurationToPt").isEmpty()) ) {
+                        // Param: maxWalkingDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxWalkingDurationToPt(integerStraightPass(params.getInt("maxWalkingDurationToPt")));
+                    }
+                    if (params.has("maxBikeDurationToPt") && (params.getString("maxBikeDurationToPt") != null) && (!params.getString("maxBikeDurationToPt").isEmpty()) ) {
+                        // Param: maxBikeDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxBikeDurationToPt(integerStraightPass(params.getInt("maxBikeDurationToPt")));
+                    }
+                    if (params.has("maxBssDurationToPt") && (params.getString("maxBssDurationToPt") != null) && (!params.getString("maxBssDurationToPt").isEmpty()) ) {
+                        // Param: maxBssDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxBssDurationToPt(integerStraightPass(params.getInt("maxBssDurationToPt")));
+                    }
+                    if (params.has("maxCarDurationToPt") && (params.getString("maxCarDurationToPt") != null) && (!params.getString("maxCarDurationToPt").isEmpty()) ) {
+                        // Param: maxCarDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
+                    }
+                    if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
+                        // Param: walkingSpeed, Type: Float
+                        heatMapRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
+                    }
+                    if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
+                        // Param: bikeSpeed, Type: Float
+                        heatMapRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
+                    }
+                    if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
+                        // Param: bssSpeed, Type: Float
+                        heatMapRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
+                    }
+                    if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
+                        // Param: carSpeed, Type: Float
+                        heatMapRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        heatMapRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
+                        // Param: allowedId, Type: List
+                        heatMapRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
+                    }
+                    if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
+                        // Param: disruptionActive, Type: Boolean
+                        heatMapRequestBuilder.withDisruptionActive(booleanStraightPass(params.getBoolean("disruptionActive")));
+                    }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        heatMapRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
+                    if (params.has("maxDuration") && (params.getString("maxDuration") != null) && (!params.getString("maxDuration").isEmpty()) ) {
+                        // Param: maxDuration, Type: Integer
+                        heatMapRequestBuilder.withMaxDuration(integerStraightPass(params.getInt("maxDuration")));
+                    }
+                    if (params.has("wheelchair") && (params.getString("wheelchair") != null) && (!params.getString("wheelchair").isEmpty()) ) {
+                        // Param: wheelchair, Type: Boolean
+                        heatMapRequestBuilder.withWheelchair(booleanStraightPass(params.getBoolean("wheelchair")));
+                    }
+                    if (params.has("travelerType") && (params.getString("travelerType") != null) && (!params.getString("travelerType").isEmpty()) ) {
+                        // Param: travelerType, Type: String
+                        heatMapRequestBuilder.withTravelerType(stringStraightPass(params.getString("travelerType")));
+                    }
+                    if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
+                        // Param: directPath, Type: String
+                        heatMapRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
+                    }
+                    if (params.has("resolution") && (params.getString("resolution") != null) && (!params.getString("resolution").isEmpty()) ) {
+                        // Param: resolution, Type: Integer
+                        heatMapRequestBuilder.withResolution(integerStraightPass(params.getInt("resolution")));
+                    }
+                    
+                    heatMapRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -5789,11 +6510,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -5902,11 +6623,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6011,11 +6732,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6128,11 +6849,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6229,11 +6950,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6338,11 +7059,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6443,11 +7164,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6556,11 +7277,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6661,11 +7382,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6774,11 +7495,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -6883,11 +7604,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -7000,11 +7721,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -7101,11 +7822,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -7210,11 +7931,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -7315,11 +8036,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -7428,11 +8149,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -7501,7 +8222,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeysRequestBuilder.withTo(stringStraightPass(params.getString("to")));
                     }
                     if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
-                        // Param: datetime, Type: String
+                        // Param: datetime, Type: Date
                         journeysRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
                     }
                     if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
@@ -7612,182 +8333,9 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: bssStands, Type: Boolean
                         journeysRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
                     }
-                    
-                    journeysRequestBuilder.rawGet(new ApiCallback<String>() {
-                        @Override
-                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
-                            callbackContext.error("Problem during request call | " + e.getMessage());
-                        }
-
-                        @Override
-                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(result);
-                                callbackContext.success(jsonObject);
-                            } catch (Exception e) {
-                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
-                                callbackContext.error(errorMessage);
-                            }
-                        }
-
-                        @Override
-                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-                        }
-
-                        @Override
-                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-                        }
-                    });
-                } catch (Exception e) {
-                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
-                    callbackContext.error(errorMessage);
-                }
-            }
-        });
-    }
-    final private void coverageLonLatUriJourneys(final JSONObject params, final CallbackContext callbackContext) {
-        if (this.navitiaSdk == null) {
-            callbackContext.error("NavitiaSDK is not instanciated");
-            return;
-        }
-
-        final JourneysApi.CoverageLonLatUriJourneysRequestBuilder journeysRequestBuilder = this.navitiaSdk.journeysApi.newCoverageLonLatUriJourneysRequestBuilder();
-        cordova.getThreadPool().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
-                        // Param: lat, Type: BigDecimal
-                        journeysRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
-                    }
-                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
-                        // Param: lon, Type: BigDecimal
-                        journeysRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
-                    }
-                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
-                        // Param: uri, Type: String
-                        journeysRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
-                    }
-                    if (params.has("from") && (params.getString("from") != null) && (!params.getString("from").isEmpty()) ) {
-                        // Param: from, Type: String
-                        journeysRequestBuilder.withFrom(stringStraightPass(params.getString("from")));
-                    }
-                    if (params.has("to") && (params.getString("to") != null) && (!params.getString("to").isEmpty()) ) {
-                        // Param: to, Type: String
-                        journeysRequestBuilder.withTo(stringStraightPass(params.getString("to")));
-                    }
-                    if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
-                        // Param: datetime, Type: String
-                        journeysRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
-                    }
-                    if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
-                        // Param: datetimeRepresents, Type: String
-                        journeysRequestBuilder.withDatetimeRepresents(stringStraightPass(params.getString("datetimeRepresents")));
-                    }
-                    if (params.has("maxNbTransfers") && (params.getString("maxNbTransfers") != null) && (!params.getString("maxNbTransfers").isEmpty()) ) {
-                        // Param: maxNbTransfers, Type: Integer
-                        journeysRequestBuilder.withMaxNbTransfers(integerStraightPass(params.getInt("maxNbTransfers")));
-                    }
-                    if (params.has("minNbTransfers") && (params.getString("minNbTransfers") != null) && (!params.getString("minNbTransfers").isEmpty()) ) {
-                        // Param: minNbTransfers, Type: Integer
-                        journeysRequestBuilder.withMinNbTransfers(integerStraightPass(params.getInt("minNbTransfers")));
-                    }
-                    if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
-                        // Param: firstSectionMode, Type: List
-                        journeysRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
-                    }
-                    if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
-                        // Param: lastSectionMode, Type: List
-                        journeysRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
-                    }
-                    if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
-                        // Param: maxDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxDurationToPt(integerStraightPass(params.getInt("maxDurationToPt")));
-                    }
-                    if (params.has("maxWalkingDurationToPt") && (params.getString("maxWalkingDurationToPt") != null) && (!params.getString("maxWalkingDurationToPt").isEmpty()) ) {
-                        // Param: maxWalkingDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxWalkingDurationToPt(integerStraightPass(params.getInt("maxWalkingDurationToPt")));
-                    }
-                    if (params.has("maxBikeDurationToPt") && (params.getString("maxBikeDurationToPt") != null) && (!params.getString("maxBikeDurationToPt").isEmpty()) ) {
-                        // Param: maxBikeDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxBikeDurationToPt(integerStraightPass(params.getInt("maxBikeDurationToPt")));
-                    }
-                    if (params.has("maxBssDurationToPt") && (params.getString("maxBssDurationToPt") != null) && (!params.getString("maxBssDurationToPt").isEmpty()) ) {
-                        // Param: maxBssDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxBssDurationToPt(integerStraightPass(params.getInt("maxBssDurationToPt")));
-                    }
-                    if (params.has("maxCarDurationToPt") && (params.getString("maxCarDurationToPt") != null) && (!params.getString("maxCarDurationToPt").isEmpty()) ) {
-                        // Param: maxCarDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
-                    }
-                    if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
-                        // Param: walkingSpeed, Type: Float
-                        journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
-                    }
-                    if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
-                        // Param: bikeSpeed, Type: Float
-                        journeysRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
-                    }
-                    if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
-                        // Param: bssSpeed, Type: Float
-                        journeysRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
-                    }
-                    if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
-                        // Param: carSpeed, Type: Float
-                        journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
-                    }
-                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
-                        // Param: forbiddenUris, Type: List
-                        journeysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
-                    }
-                    if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
-                        // Param: allowedId, Type: List
-                        journeysRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
-                    }
-                    if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
-                        // Param: disruptionActive, Type: Boolean
-                        journeysRequestBuilder.withDisruptionActive(booleanStraightPass(params.getBoolean("disruptionActive")));
-                    }
-                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
-                        // Param: dataFreshness, Type: String
-                        journeysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
-                    }
-                    if (params.has("maxDuration") && (params.getString("maxDuration") != null) && (!params.getString("maxDuration").isEmpty()) ) {
-                        // Param: maxDuration, Type: Integer
-                        journeysRequestBuilder.withMaxDuration(integerStraightPass(params.getInt("maxDuration")));
-                    }
-                    if (params.has("wheelchair") && (params.getString("wheelchair") != null) && (!params.getString("wheelchair").isEmpty()) ) {
-                        // Param: wheelchair, Type: Boolean
-                        journeysRequestBuilder.withWheelchair(booleanStraightPass(params.getBoolean("wheelchair")));
-                    }
-                    if (params.has("travelerType") && (params.getString("travelerType") != null) && (!params.getString("travelerType").isEmpty()) ) {
-                        // Param: travelerType, Type: String
-                        journeysRequestBuilder.withTravelerType(stringStraightPass(params.getString("travelerType")));
-                    }
-                    if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
-                        // Param: directPath, Type: String
-                        journeysRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
-                    }
-                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
-                        // Param: count, Type: Integer
-                        journeysRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
-                    }
-                    if (params.has("isJourneySchedules") && (params.getString("isJourneySchedules") != null) && (!params.getString("isJourneySchedules").isEmpty()) ) {
-                        // Param: isJourneySchedules, Type: Boolean
-                        journeysRequestBuilder.withIsJourneySchedules(booleanStraightPass(params.getBoolean("isJourneySchedules")));
-                    }
-                    if (params.has("minNbJourneys") && (params.getString("minNbJourneys") != null) && (!params.getString("minNbJourneys").isEmpty()) ) {
-                        // Param: minNbJourneys, Type: Integer
-                        journeysRequestBuilder.withMinNbJourneys(integerStraightPass(params.getInt("minNbJourneys")));
-                    }
-                    if (params.has("maxNbJourneys") && (params.getString("maxNbJourneys") != null) && (!params.getString("maxNbJourneys").isEmpty()) ) {
-                        // Param: maxNbJourneys, Type: Integer
-                        journeysRequestBuilder.withMaxNbJourneys(integerStraightPass(params.getInt("maxNbJourneys")));
-                    }
-                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
-                        // Param: bssStands, Type: Boolean
-                        journeysRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -7847,7 +8395,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeysRequestBuilder.withTo(stringStraightPass(params.getString("to")));
                     }
                     if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
-                        // Param: datetime, Type: String
+                        // Param: datetime, Type: Date
                         journeysRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
                     }
                     if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
@@ -7958,178 +8506,9 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: bssStands, Type: Boolean
                         journeysRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
                     }
-                    
-                    journeysRequestBuilder.rawGet(new ApiCallback<String>() {
-                        @Override
-                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
-                            callbackContext.error("Problem during request call | " + e.getMessage());
-                        }
-
-                        @Override
-                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(result);
-                                callbackContext.success(jsonObject);
-                            } catch (Exception e) {
-                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
-                                callbackContext.error(errorMessage);
-                            }
-                        }
-
-                        @Override
-                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-                        }
-
-                        @Override
-                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-                        }
-                    });
-                } catch (Exception e) {
-                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
-                    callbackContext.error(errorMessage);
-                }
-            }
-        });
-    }
-    final private void coverageRegionUriJourneys(final JSONObject params, final CallbackContext callbackContext) {
-        if (this.navitiaSdk == null) {
-            callbackContext.error("NavitiaSDK is not instanciated");
-            return;
-        }
-
-        final JourneysApi.CoverageRegionUriJourneysRequestBuilder journeysRequestBuilder = this.navitiaSdk.journeysApi.newCoverageRegionUriJourneysRequestBuilder();
-        cordova.getThreadPool().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
-                        // Param: region, Type: String
-                        journeysRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
-                    }
-                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
-                        // Param: uri, Type: String
-                        journeysRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
-                    }
-                    if (params.has("from") && (params.getString("from") != null) && (!params.getString("from").isEmpty()) ) {
-                        // Param: from, Type: String
-                        journeysRequestBuilder.withFrom(stringStraightPass(params.getString("from")));
-                    }
-                    if (params.has("to") && (params.getString("to") != null) && (!params.getString("to").isEmpty()) ) {
-                        // Param: to, Type: String
-                        journeysRequestBuilder.withTo(stringStraightPass(params.getString("to")));
-                    }
-                    if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
-                        // Param: datetime, Type: String
-                        journeysRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
-                    }
-                    if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
-                        // Param: datetimeRepresents, Type: String
-                        journeysRequestBuilder.withDatetimeRepresents(stringStraightPass(params.getString("datetimeRepresents")));
-                    }
-                    if (params.has("maxNbTransfers") && (params.getString("maxNbTransfers") != null) && (!params.getString("maxNbTransfers").isEmpty()) ) {
-                        // Param: maxNbTransfers, Type: Integer
-                        journeysRequestBuilder.withMaxNbTransfers(integerStraightPass(params.getInt("maxNbTransfers")));
-                    }
-                    if (params.has("minNbTransfers") && (params.getString("minNbTransfers") != null) && (!params.getString("minNbTransfers").isEmpty()) ) {
-                        // Param: minNbTransfers, Type: Integer
-                        journeysRequestBuilder.withMinNbTransfers(integerStraightPass(params.getInt("minNbTransfers")));
-                    }
-                    if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
-                        // Param: firstSectionMode, Type: List
-                        journeysRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
-                    }
-                    if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
-                        // Param: lastSectionMode, Type: List
-                        journeysRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
-                    }
-                    if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
-                        // Param: maxDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxDurationToPt(integerStraightPass(params.getInt("maxDurationToPt")));
-                    }
-                    if (params.has("maxWalkingDurationToPt") && (params.getString("maxWalkingDurationToPt") != null) && (!params.getString("maxWalkingDurationToPt").isEmpty()) ) {
-                        // Param: maxWalkingDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxWalkingDurationToPt(integerStraightPass(params.getInt("maxWalkingDurationToPt")));
-                    }
-                    if (params.has("maxBikeDurationToPt") && (params.getString("maxBikeDurationToPt") != null) && (!params.getString("maxBikeDurationToPt").isEmpty()) ) {
-                        // Param: maxBikeDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxBikeDurationToPt(integerStraightPass(params.getInt("maxBikeDurationToPt")));
-                    }
-                    if (params.has("maxBssDurationToPt") && (params.getString("maxBssDurationToPt") != null) && (!params.getString("maxBssDurationToPt").isEmpty()) ) {
-                        // Param: maxBssDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxBssDurationToPt(integerStraightPass(params.getInt("maxBssDurationToPt")));
-                    }
-                    if (params.has("maxCarDurationToPt") && (params.getString("maxCarDurationToPt") != null) && (!params.getString("maxCarDurationToPt").isEmpty()) ) {
-                        // Param: maxCarDurationToPt, Type: Integer
-                        journeysRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
-                    }
-                    if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
-                        // Param: walkingSpeed, Type: Float
-                        journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
-                    }
-                    if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
-                        // Param: bikeSpeed, Type: Float
-                        journeysRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
-                    }
-                    if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
-                        // Param: bssSpeed, Type: Float
-                        journeysRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
-                    }
-                    if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
-                        // Param: carSpeed, Type: Float
-                        journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
-                    }
-                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
-                        // Param: forbiddenUris, Type: List
-                        journeysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
-                    }
-                    if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
-                        // Param: allowedId, Type: List
-                        journeysRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
-                    }
-                    if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
-                        // Param: disruptionActive, Type: Boolean
-                        journeysRequestBuilder.withDisruptionActive(booleanStraightPass(params.getBoolean("disruptionActive")));
-                    }
-                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
-                        // Param: dataFreshness, Type: String
-                        journeysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
-                    }
-                    if (params.has("maxDuration") && (params.getString("maxDuration") != null) && (!params.getString("maxDuration").isEmpty()) ) {
-                        // Param: maxDuration, Type: Integer
-                        journeysRequestBuilder.withMaxDuration(integerStraightPass(params.getInt("maxDuration")));
-                    }
-                    if (params.has("wheelchair") && (params.getString("wheelchair") != null) && (!params.getString("wheelchair").isEmpty()) ) {
-                        // Param: wheelchair, Type: Boolean
-                        journeysRequestBuilder.withWheelchair(booleanStraightPass(params.getBoolean("wheelchair")));
-                    }
-                    if (params.has("travelerType") && (params.getString("travelerType") != null) && (!params.getString("travelerType").isEmpty()) ) {
-                        // Param: travelerType, Type: String
-                        journeysRequestBuilder.withTravelerType(stringStraightPass(params.getString("travelerType")));
-                    }
-                    if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
-                        // Param: directPath, Type: String
-                        journeysRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
-                    }
-                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
-                        // Param: count, Type: Integer
-                        journeysRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
-                    }
-                    if (params.has("isJourneySchedules") && (params.getString("isJourneySchedules") != null) && (!params.getString("isJourneySchedules").isEmpty()) ) {
-                        // Param: isJourneySchedules, Type: Boolean
-                        journeysRequestBuilder.withIsJourneySchedules(booleanStraightPass(params.getBoolean("isJourneySchedules")));
-                    }
-                    if (params.has("minNbJourneys") && (params.getString("minNbJourneys") != null) && (!params.getString("minNbJourneys").isEmpty()) ) {
-                        // Param: minNbJourneys, Type: Integer
-                        journeysRequestBuilder.withMinNbJourneys(integerStraightPass(params.getInt("minNbJourneys")));
-                    }
-                    if (params.has("maxNbJourneys") && (params.getString("maxNbJourneys") != null) && (!params.getString("maxNbJourneys").isEmpty()) ) {
-                        // Param: maxNbJourneys, Type: Integer
-                        journeysRequestBuilder.withMaxNbJourneys(integerStraightPass(params.getInt("maxNbJourneys")));
-                    }
-                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
-                        // Param: bssStands, Type: Boolean
-                        journeysRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -8185,7 +8564,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         journeysRequestBuilder.withTo(stringStraightPass(params.getString("to")));
                     }
                     if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
-                        // Param: datetime, Type: String
+                        // Param: datetime, Type: Date
                         journeysRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
                     }
                     if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
@@ -8295,6 +8674,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
                         // Param: bssStands, Type: Boolean
                         journeysRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -8390,11 +8773,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -8507,11 +8890,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -8620,11 +9003,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -8741,11 +9124,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -8846,11 +9229,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -8959,11 +9342,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9068,11 +9451,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9185,11 +9568,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9286,11 +9669,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9307,6 +9690,148 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     
                     lineGroupsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionLineReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final LineReportsApi.CoverageRegionLineReportsRequestBuilder lineReportsRequestBuilder = this.navitiaSdk.lineReportsApi.newCoverageRegionLineReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        lineReportsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        lineReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        lineReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        lineReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        lineReportsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        lineReportsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    lineReportsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriLineReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final LineReportsApi.CoverageRegionUriLineReportsRequestBuilder lineReportsRequestBuilder = this.navitiaSdk.lineReportsApi.newCoverageRegionUriLineReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        lineReportsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        lineReportsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        lineReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        lineReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        lineReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        lineReportsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        lineReportsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    lineReportsRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -9399,11 +9924,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9516,11 +10041,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9629,11 +10154,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9750,11 +10275,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9855,11 +10380,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -9968,11 +10493,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10077,11 +10602,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10194,11 +10719,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10295,11 +10820,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10408,11 +10933,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10525,11 +11050,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10638,11 +11163,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10759,11 +11284,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10864,11 +11389,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -10977,11 +11502,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -11086,11 +11611,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -11203,11 +11728,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -11304,11 +11829,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -11381,11 +11906,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         nextArrivalsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         nextArrivalsRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         nextArrivalsRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -11502,11 +12027,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         nextArrivalsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         nextArrivalsRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         nextArrivalsRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -11615,11 +12140,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         nextArrivalsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         nextArrivalsRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         nextArrivalsRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -11732,11 +12257,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         nextArrivalsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         nextArrivalsRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         nextArrivalsRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -11849,11 +12374,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         nextDeparturesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         nextDeparturesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         nextDeparturesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -11970,11 +12495,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         nextDeparturesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         nextDeparturesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         nextDeparturesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -12083,11 +12608,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         nextDeparturesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         nextDeparturesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         nextDeparturesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -12200,11 +12725,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         nextDeparturesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         nextDeparturesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         nextDeparturesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -12353,11 +12878,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -12466,11 +12991,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -12575,11 +13100,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -12692,11 +13217,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -12793,11 +13318,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -12902,11 +13427,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -13007,11 +13532,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -13120,11 +13645,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -13408,6 +13933,540 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             }
         });
     }
+    final private void coordLonLatPlacesNearby(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlacesNearbyApi.CoordLonLatPlacesNearbyRequestBuilder placesNearbyRequestBuilder = this.navitiaSdk.placesNearbyApi.newCoordLonLatPlacesNearbyRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        placesNearbyRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        placesNearbyRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
+                        // Param: type, Type: List
+                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        placesNearbyRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        placesNearbyRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        placesNearbyRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        placesNearbyRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        placesNearbyRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placesNearbyRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coordsLonLatPlacesNearby(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlacesNearbyApi.CoordsLonLatPlacesNearbyRequestBuilder placesNearbyRequestBuilder = this.navitiaSdk.placesNearbyApi.newCoordsLonLatPlacesNearbyRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        placesNearbyRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        placesNearbyRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
+                        // Param: type, Type: List
+                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        placesNearbyRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        placesNearbyRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        placesNearbyRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        placesNearbyRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        placesNearbyRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placesNearbyRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatPlacesNearby(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlacesNearbyApi.CoverageLonLatPlacesNearbyRequestBuilder placesNearbyRequestBuilder = this.navitiaSdk.placesNearbyApi.newCoverageLonLatPlacesNearbyRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        placesNearbyRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        placesNearbyRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
+                        // Param: type, Type: List
+                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        placesNearbyRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        placesNearbyRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        placesNearbyRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        placesNearbyRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        placesNearbyRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placesNearbyRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriPlacesNearby(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlacesNearbyApi.CoverageLonLatUriPlacesNearbyRequestBuilder placesNearbyRequestBuilder = this.navitiaSdk.placesNearbyApi.newCoverageLonLatUriPlacesNearbyRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        placesNearbyRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        placesNearbyRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        placesNearbyRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
+                        // Param: type, Type: List
+                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        placesNearbyRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        placesNearbyRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        placesNearbyRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        placesNearbyRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        placesNearbyRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placesNearbyRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionPlacesNearby(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlacesNearbyApi.CoverageRegionPlacesNearbyRequestBuilder placesNearbyRequestBuilder = this.navitiaSdk.placesNearbyApi.newCoverageRegionPlacesNearbyRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        placesNearbyRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
+                        // Param: type, Type: List
+                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        placesNearbyRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        placesNearbyRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        placesNearbyRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        placesNearbyRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        placesNearbyRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placesNearbyRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriPlacesNearby(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlacesNearbyApi.CoverageRegionUriPlacesNearbyRequestBuilder placesNearbyRequestBuilder = this.navitiaSdk.placesNearbyApi.newCoverageRegionUriPlacesNearbyRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        placesNearbyRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        placesNearbyRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
+                        // Param: type, Type: List
+                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        placesNearbyRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        placesNearbyRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        placesNearbyRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        placesNearbyRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        placesNearbyRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placesNearbyRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
     final private void coverageLonLatPoiTypes(final JSONObject params, final CallbackContext callbackContext) {
         if (this.navitiaSdk == null) {
             callbackContext.error("NavitiaSDK is not instanciated");
@@ -13468,11 +14527,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -13581,11 +14640,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -13690,11 +14749,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -13807,11 +14866,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -13908,11 +14967,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14017,11 +15076,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14122,11 +15181,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14235,11 +15294,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14340,11 +15399,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14362,6 +15421,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
                         // Param: bssStands, Type: Boolean
                         poisRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -14461,11 +15524,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14479,6 +15542,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
                         // Param: bssStands, Type: Boolean
                         poisRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -14578,11 +15645,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14600,6 +15667,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
                         // Param: bssStands, Type: Boolean
                         poisRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -14703,11 +15774,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14721,6 +15792,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
                         // Param: bssStands, Type: Boolean
                         poisRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -14812,11 +15887,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14834,6 +15909,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
                         // Param: bssStands, Type: Boolean
                         poisRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -14929,11 +16008,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -14947,6 +16026,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
                         // Param: bssStands, Type: Boolean
                         poisRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15042,11 +16125,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -15064,6 +16147,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
                         // Param: bssStands, Type: Boolean
                         poisRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15163,11 +16250,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -15182,8 +16269,162 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: bssStands, Type: Boolean
                         poisRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
                     }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                    }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatPtObjects(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PtobjectsApi.CoverageLonLatPtObjectsRequestBuilder ptobjectsRequestBuilder = this.navitiaSdk.ptobjectsApi.newCoverageLonLatPtObjectsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("q") && (params.getString("q") != null) && (!params.getString("q").isEmpty()) ) {
+                        // Param: q, Type: String
+                        ptobjectsRequestBuilder.withQ(stringStraightPass(params.getString("q")));
+                    }
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        ptobjectsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        ptobjectsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
+                        // Param: type, Type: List
+                        ptobjectsRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        ptobjectsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("adminUri") && (params.getString("adminUri") != null) && (!params.getString("adminUri").isEmpty()) ) {
+                        // Param: adminUri, Type: List
+                        ptobjectsRequestBuilder.withAdminUri(jsonArrayToList(params.getJSONArray("adminUri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        ptobjectsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        ptobjectsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    ptobjectsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionPtObjects(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PtobjectsApi.CoverageRegionPtObjectsRequestBuilder ptobjectsRequestBuilder = this.navitiaSdk.ptobjectsApi.newCoverageRegionPtObjectsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("q") && (params.getString("q") != null) && (!params.getString("q").isEmpty()) ) {
+                        // Param: q, Type: String
+                        ptobjectsRequestBuilder.withQ(stringStraightPass(params.getString("q")));
+                    }
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        ptobjectsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
+                        // Param: type, Type: List
+                        ptobjectsRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        ptobjectsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("adminUri") && (params.getString("adminUri") != null) && (!params.getString("adminUri").isEmpty()) ) {
+                        // Param: adminUri, Type: List
+                        ptobjectsRequestBuilder.withAdminUri(jsonArrayToList(params.getJSONArray("adminUri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        ptobjectsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        ptobjectsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    ptobjectsRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -15244,11 +16485,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routeSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         routeSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         routeSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -15361,11 +16602,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routeSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         routeSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         routeSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -15470,11 +16711,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routeSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         routeSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         routeSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -15623,11 +16864,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -15740,11 +16981,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -15853,11 +17094,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -15974,11 +17215,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16079,11 +17320,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16192,11 +17433,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16301,11 +17542,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16418,11 +17659,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16519,11 +17760,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16540,6 +17781,55 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     
                     routesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionStatus(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final StatusApi.CoverageRegionStatusRequestBuilder statusRequestBuilder = this.navitiaSdk.statusApi.newCoverageRegionStatusRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        statusRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    
+                    statusRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -16632,11 +17922,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16749,11 +18039,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16862,11 +18152,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -16983,11 +18273,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17088,11 +18378,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17201,11 +18491,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17310,11 +18600,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17427,11 +18717,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17528,11 +18818,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17641,11 +18931,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17758,11 +19048,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17871,11 +19161,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -17992,11 +19282,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -18097,11 +19387,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -18210,11 +19500,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -18319,11 +19609,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -18436,11 +19726,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -18537,11 +19827,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -18618,11 +19908,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         stopSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         stopSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -18735,11 +20025,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         stopSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         stopSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -18844,11 +20134,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         stopSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
-                        // Param: fromDatetime, Type: String
+                        // Param: fromDatetime, Type: Date
                         stopSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
-                        // Param: untilDatetime, Type: String
+                        // Param: untilDatetime, Type: Date
                         stopSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
@@ -18905,6 +20195,164 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     
                     stopSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionTrafficReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final TrafficReportApi.CoverageRegionTrafficReportsRequestBuilder trafficReportRequestBuilder = this.navitiaSdk.trafficReportApi.newCoverageRegionTrafficReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        trafficReportRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        trafficReportRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        trafficReportRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        trafficReportRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        trafficReportRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        trafficReportRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        trafficReportRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        trafficReportRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    trafficReportRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriTrafficReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final TrafficReportApi.CoverageRegionUriTrafficReportsRequestBuilder trafficReportRequestBuilder = this.navitiaSdk.trafficReportApi.newCoverageRegionUriTrafficReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        trafficReportRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        trafficReportRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        trafficReportRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        trafficReportRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        trafficReportRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        trafficReportRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        trafficReportRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        trafficReportRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        trafficReportRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    trafficReportRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -18997,11 +20445,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19110,11 +20558,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19219,11 +20667,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19336,11 +20784,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19437,11 +20885,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19546,11 +20994,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19651,11 +21099,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19764,11 +21212,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19873,11 +21321,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -19990,11 +21438,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -20095,11 +21543,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -20208,11 +21656,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -20313,11 +21761,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -20426,11 +21874,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -20527,11 +21975,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -20636,11 +22084,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
@@ -20733,11 +22181,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
-                        // Param: since, Type: String
+                        // Param: since, Type: Date
                         vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
-                        // Param: until, Type: String
+                        // Param: until, Type: Date
                         vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
