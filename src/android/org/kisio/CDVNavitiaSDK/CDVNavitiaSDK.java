@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import org.joda.time.DateTime;
+
 import org.kisio.NavitiaSDK.NavitiaSDK;
 import org.kisio.NavitiaSDK.NavitiaConfiguration;
 import org.kisio.NavitiaSDK.apis.CalendarsApi;
@@ -68,11 +70,22 @@ public class CDVNavitiaSDK extends CordovaPlugin {
         public abstract void doAction(JSONObject params, CallbackContext callbackContext);
     }
 
-    private List<String> jsonArrayToList(JSONArray array) {
+    private List<String> jsonArrayToStringList(JSONArray array) {
         List<String> result = new ArrayList<String>();
         try {
             for (int i = 0; i < array.length(); i++) {
                 result.add(array.getString(i));
+            }
+        } catch (JSONException e) {
+        }
+        return result;
+    }
+
+    private List<Integer> jsonArrayToIntegerList(JSONArray array) {
+        List<Integer> result = new ArrayList<Integer>();
+        try {
+            for (int i = 0; i < array.length(); i++) {
+                result.add(array.getInt(i));
             }
         } catch (JSONException e) {
         }
@@ -97,6 +110,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
 
     private String stringStraightPass(String value) {
         return value;
+    }
+
+    private DateTime stringToDateTime(String value) {
+        return new DateTime(value);
     }
 
     public CDVNavitiaSDK() {
@@ -1326,11 +1343,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        calendarsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
@@ -1411,11 +1428,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        calendarsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
@@ -1496,11 +1513,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        calendarsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
@@ -1573,11 +1590,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -1601,11 +1618,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        commercialModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        commercialModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -1686,11 +1703,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -1714,11 +1731,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        commercialModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        commercialModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -1795,11 +1812,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -1823,11 +1840,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        commercialModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        commercialModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -1912,11 +1929,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -1940,11 +1957,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        commercialModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        commercialModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2013,11 +2030,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2041,11 +2058,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        commercialModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        commercialModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2122,11 +2139,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2150,11 +2167,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        commercialModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        commercialModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2227,11 +2244,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2255,11 +2272,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        commercialModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        commercialModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2340,11 +2357,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        commercialModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        commercialModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2368,11 +2385,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        commercialModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        commercialModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        commercialModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        commercialModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2445,11 +2462,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        companiesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        companiesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        companiesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        companiesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2473,11 +2490,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        companiesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        companiesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2558,11 +2575,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        companiesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        companiesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        companiesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        companiesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2586,11 +2603,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        companiesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        companiesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2667,11 +2684,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        companiesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        companiesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        companiesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        companiesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2695,11 +2712,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        companiesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        companiesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2784,11 +2801,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        companiesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        companiesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        companiesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        companiesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2812,11 +2829,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        companiesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        companiesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2885,11 +2902,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        companiesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        companiesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        companiesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        companiesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -2913,11 +2930,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        companiesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        companiesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -2994,11 +3011,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        companiesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        companiesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        companiesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        companiesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3022,11 +3039,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        companiesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        companiesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3099,11 +3116,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        companiesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        companiesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        companiesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        companiesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3127,11 +3144,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        companiesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        companiesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3212,11 +3229,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        companiesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        companiesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        companiesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        companiesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3240,11 +3257,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        companiesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        companiesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        companiesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        companiesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3317,11 +3334,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        contributorsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        contributorsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3345,11 +3362,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        contributorsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        contributorsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3430,11 +3447,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        contributorsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        contributorsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3458,11 +3475,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        contributorsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        contributorsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3539,11 +3556,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        contributorsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        contributorsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3567,11 +3584,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        contributorsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        contributorsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3656,11 +3673,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        contributorsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        contributorsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3684,11 +3701,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        contributorsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        contributorsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3757,11 +3774,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        contributorsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        contributorsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3785,11 +3802,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        contributorsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        contributorsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3866,11 +3883,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        contributorsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        contributorsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3894,11 +3911,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        contributorsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        contributorsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -3971,11 +3988,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        contributorsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        contributorsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -3999,11 +4016,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        contributorsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        contributorsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -4084,11 +4101,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        contributorsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        contributorsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        contributorsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -4112,11 +4129,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        contributorsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        contributorsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        contributorsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        contributorsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -4348,11 +4365,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        datasetsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        datasetsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -4376,11 +4393,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        datasetsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        datasetsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -4461,11 +4478,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        datasetsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        datasetsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -4489,11 +4506,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        datasetsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        datasetsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -4570,11 +4587,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        datasetsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        datasetsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -4598,11 +4615,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        datasetsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        datasetsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -4687,11 +4704,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        datasetsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        datasetsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -4715,11 +4732,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        datasetsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        datasetsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -4788,11 +4805,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        datasetsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        datasetsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -4816,11 +4833,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        datasetsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        datasetsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -4897,11 +4914,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        datasetsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        datasetsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -4925,11 +4942,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        datasetsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        datasetsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5002,11 +5019,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        datasetsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        datasetsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5030,11 +5047,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        datasetsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        datasetsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5115,11 +5132,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        datasetsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        datasetsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        datasetsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5143,11 +5160,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        datasetsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        datasetsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        datasetsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        datasetsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5220,11 +5237,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5248,11 +5265,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        disruptionsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        disruptionsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5337,11 +5354,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5365,11 +5382,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        disruptionsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        disruptionsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5450,11 +5467,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5478,11 +5495,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        disruptionsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        disruptionsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5571,11 +5588,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5599,11 +5616,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        disruptionsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        disruptionsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5676,11 +5693,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5704,11 +5721,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        disruptionsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        disruptionsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5789,11 +5806,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5817,11 +5834,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        disruptionsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        disruptionsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -5898,11 +5915,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -5926,11 +5943,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        disruptionsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        disruptionsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -6015,11 +6032,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        disruptionsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        disruptionsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -6043,11 +6060,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        disruptionsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        disruptionsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        disruptionsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        disruptionsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -6165,7 +6182,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
                         // Param: datetime, Type: Date
-                        graphicalIsochroneRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
+                        graphicalIsochroneRequestBuilder.withDatetime(stringToDateTime(params.getString("datetime")));
                     }
                     if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
                         // Param: datetimeRepresents, Type: String
@@ -6181,11 +6198,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
                         // Param: firstSectionMode, Type: List
-                        graphicalIsochroneRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
+                        graphicalIsochroneRequestBuilder.withFirstSectionMode(jsonArrayToStringList(params.getJSONArray("firstSectionMode")));
                     }
                     if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
                         // Param: lastSectionMode, Type: List
-                        graphicalIsochroneRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
+                        graphicalIsochroneRequestBuilder.withLastSectionMode(jsonArrayToStringList(params.getJSONArray("lastSectionMode")));
                     }
                     if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
                         // Param: maxDurationToPt, Type: Integer
@@ -6225,11 +6242,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        graphicalIsochroneRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        graphicalIsochroneRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
                         // Param: allowedId, Type: List
-                        graphicalIsochroneRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
+                        graphicalIsochroneRequestBuilder.withAllowedId(jsonArrayToStringList(params.getJSONArray("allowedId")));
                     }
                     if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
                         // Param: disruptionActive, Type: Boolean
@@ -6261,7 +6278,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("boundaryDuration") && (params.getString("boundaryDuration") != null) && (!params.getString("boundaryDuration").isEmpty()) ) {
                         // Param: boundaryDuration, Type: List
-                        graphicalIsochroneRequestBuilder.withBoundaryDuration(jsonArrayToList(params.getJSONArray("boundaryDuration")));
+                        graphicalIsochroneRequestBuilder.withBoundaryDuration(jsonArrayToIntegerList(params.getJSONArray("boundaryDuration")));
                     }
                     
                     graphicalIsochroneRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -6322,7 +6339,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
                         // Param: datetime, Type: Date
-                        heatMapRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
+                        heatMapRequestBuilder.withDatetime(stringToDateTime(params.getString("datetime")));
                     }
                     if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
                         // Param: datetimeRepresents, Type: String
@@ -6338,11 +6355,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
                         // Param: firstSectionMode, Type: List
-                        heatMapRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
+                        heatMapRequestBuilder.withFirstSectionMode(jsonArrayToStringList(params.getJSONArray("firstSectionMode")));
                     }
                     if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
                         // Param: lastSectionMode, Type: List
-                        heatMapRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
+                        heatMapRequestBuilder.withLastSectionMode(jsonArrayToStringList(params.getJSONArray("lastSectionMode")));
                     }
                     if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
                         // Param: maxDurationToPt, Type: Integer
@@ -6382,11 +6399,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        heatMapRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        heatMapRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
                         // Param: allowedId, Type: List
-                        heatMapRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
+                        heatMapRequestBuilder.withAllowedId(jsonArrayToStringList(params.getJSONArray("allowedId")));
                     }
                     if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
                         // Param: disruptionActive, Type: Boolean
@@ -6483,11 +6500,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -6511,11 +6528,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -6596,11 +6613,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -6624,11 +6641,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -6705,11 +6722,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -6733,11 +6750,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -6822,11 +6839,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -6850,11 +6867,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -6923,11 +6940,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -6951,11 +6968,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7032,11 +7049,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7060,11 +7077,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7137,11 +7154,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7165,11 +7182,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7250,11 +7267,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7278,11 +7295,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7355,11 +7372,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7383,11 +7400,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7468,11 +7485,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7496,11 +7513,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7577,11 +7594,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7605,11 +7622,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7694,11 +7711,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7722,11 +7739,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7795,11 +7812,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7823,11 +7840,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -7904,11 +7921,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -7932,11 +7949,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -8009,11 +8026,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -8037,11 +8054,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -8122,11 +8139,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        journeyPatternsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeyPatternsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -8150,11 +8167,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        journeyPatternsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        journeyPatternsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        journeyPatternsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        journeyPatternsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -8223,7 +8240,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
                         // Param: datetime, Type: Date
-                        journeysRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
+                        journeysRequestBuilder.withDatetime(stringToDateTime(params.getString("datetime")));
                     }
                     if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
                         // Param: datetimeRepresents, Type: String
@@ -8239,11 +8256,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
                         // Param: firstSectionMode, Type: List
-                        journeysRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
+                        journeysRequestBuilder.withFirstSectionMode(jsonArrayToStringList(params.getJSONArray("firstSectionMode")));
                     }
                     if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
                         // Param: lastSectionMode, Type: List
-                        journeysRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
+                        journeysRequestBuilder.withLastSectionMode(jsonArrayToStringList(params.getJSONArray("lastSectionMode")));
                     }
                     if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
                         // Param: maxDurationToPt, Type: Integer
@@ -8283,11 +8300,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
                         // Param: allowedId, Type: List
-                        journeysRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
+                        journeysRequestBuilder.withAllowedId(jsonArrayToStringList(params.getJSONArray("allowedId")));
                     }
                     if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
                         // Param: disruptionActive, Type: Boolean
@@ -8335,7 +8352,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -8396,7 +8413,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
                         // Param: datetime, Type: Date
-                        journeysRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
+                        journeysRequestBuilder.withDatetime(stringToDateTime(params.getString("datetime")));
                     }
                     if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
                         // Param: datetimeRepresents, Type: String
@@ -8412,11 +8429,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
                         // Param: firstSectionMode, Type: List
-                        journeysRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
+                        journeysRequestBuilder.withFirstSectionMode(jsonArrayToStringList(params.getJSONArray("firstSectionMode")));
                     }
                     if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
                         // Param: lastSectionMode, Type: List
-                        journeysRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
+                        journeysRequestBuilder.withLastSectionMode(jsonArrayToStringList(params.getJSONArray("lastSectionMode")));
                     }
                     if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
                         // Param: maxDurationToPt, Type: Integer
@@ -8456,11 +8473,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
                         // Param: allowedId, Type: List
-                        journeysRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
+                        journeysRequestBuilder.withAllowedId(jsonArrayToStringList(params.getJSONArray("allowedId")));
                     }
                     if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
                         // Param: disruptionActive, Type: Boolean
@@ -8508,7 +8525,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -8565,7 +8582,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
                         // Param: datetime, Type: Date
-                        journeysRequestBuilder.withDatetime(stringStraightPass(params.getString("datetime")));
+                        journeysRequestBuilder.withDatetime(stringToDateTime(params.getString("datetime")));
                     }
                     if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
                         // Param: datetimeRepresents, Type: String
@@ -8581,11 +8598,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
                         // Param: firstSectionMode, Type: List
-                        journeysRequestBuilder.withFirstSectionMode(jsonArrayToList(params.getJSONArray("firstSectionMode")));
+                        journeysRequestBuilder.withFirstSectionMode(jsonArrayToStringList(params.getJSONArray("firstSectionMode")));
                     }
                     if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
                         // Param: lastSectionMode, Type: List
-                        journeysRequestBuilder.withLastSectionMode(jsonArrayToList(params.getJSONArray("lastSectionMode")));
+                        journeysRequestBuilder.withLastSectionMode(jsonArrayToStringList(params.getJSONArray("lastSectionMode")));
                     }
                     if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
                         // Param: maxDurationToPt, Type: Integer
@@ -8625,11 +8642,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        journeysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        journeysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
                         // Param: allowedId, Type: List
-                        journeysRequestBuilder.withAllowedId(jsonArrayToList(params.getJSONArray("allowedId")));
+                        journeysRequestBuilder.withAllowedId(jsonArrayToStringList(params.getJSONArray("allowedId")));
                     }
                     if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
                         // Param: disruptionActive, Type: Boolean
@@ -8677,7 +8694,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        journeysRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -8746,11 +8763,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -8774,11 +8791,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -8863,11 +8880,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -8891,11 +8908,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -8976,11 +8993,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -9004,11 +9021,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9097,11 +9114,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -9125,11 +9142,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9202,11 +9219,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -9230,11 +9247,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9315,11 +9332,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -9343,11 +9360,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9424,11 +9441,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -9452,11 +9469,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9541,11 +9558,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -9569,11 +9586,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9646,11 +9663,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        lineGroupsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineGroupsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("headsign") && (params.getString("headsign") != null) && (!params.getString("headsign").isEmpty()) ) {
                         // Param: headsign, Type: String
@@ -9670,11 +9687,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        lineGroupsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        lineGroupsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        lineGroupsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        lineGroupsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9751,7 +9768,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineReportsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9824,7 +9841,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        lineReportsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        lineReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -9897,11 +9914,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -9925,11 +9942,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10014,11 +10031,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -10042,11 +10059,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10127,11 +10144,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -10155,11 +10172,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10248,11 +10265,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -10276,11 +10293,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10353,11 +10370,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -10381,11 +10398,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10466,11 +10483,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -10494,11 +10511,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10575,11 +10592,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -10603,11 +10620,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10692,11 +10709,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -10720,11 +10737,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10797,11 +10814,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        linesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        linesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        linesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        linesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("headsign") && (params.getString("headsign") != null) && (!params.getString("headsign").isEmpty()) ) {
                         // Param: headsign, Type: String
@@ -10821,11 +10838,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        linesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        linesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        linesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        linesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -10906,11 +10923,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -10934,11 +10951,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11023,11 +11040,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -11051,11 +11068,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11136,11 +11153,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -11164,11 +11181,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11257,11 +11274,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -11285,11 +11302,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11362,11 +11379,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -11390,11 +11407,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11475,11 +11492,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -11503,11 +11520,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11584,11 +11601,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -11612,11 +11629,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11701,11 +11718,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -11729,11 +11746,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11806,11 +11823,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        networksRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        networksRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        networksRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        networksRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("headsign") && (params.getString("headsign") != null) && (!params.getString("headsign").isEmpty()) ) {
                         // Param: headsign, Type: String
@@ -11830,11 +11847,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        networksRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        networksRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        networksRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        networksRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -11907,11 +11924,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        nextArrivalsRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        nextArrivalsRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        nextArrivalsRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        nextArrivalsRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -11935,11 +11952,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        nextArrivalsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        nextArrivalsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        nextArrivalsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        nextArrivalsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -12028,11 +12045,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        nextArrivalsRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        nextArrivalsRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        nextArrivalsRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        nextArrivalsRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -12056,11 +12073,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        nextArrivalsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        nextArrivalsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        nextArrivalsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        nextArrivalsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -12141,11 +12158,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        nextArrivalsRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        nextArrivalsRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        nextArrivalsRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        nextArrivalsRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -12169,11 +12186,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        nextArrivalsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        nextArrivalsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        nextArrivalsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        nextArrivalsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -12258,11 +12275,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        nextArrivalsRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        nextArrivalsRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        nextArrivalsRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        nextArrivalsRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -12286,11 +12303,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        nextArrivalsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        nextArrivalsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        nextArrivalsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        nextArrivalsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -12375,11 +12392,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        nextDeparturesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        nextDeparturesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        nextDeparturesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        nextDeparturesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -12403,11 +12420,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        nextDeparturesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        nextDeparturesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        nextDeparturesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        nextDeparturesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -12496,11 +12513,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        nextDeparturesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        nextDeparturesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        nextDeparturesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        nextDeparturesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -12524,11 +12541,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        nextDeparturesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        nextDeparturesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        nextDeparturesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        nextDeparturesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -12609,11 +12626,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        nextDeparturesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        nextDeparturesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        nextDeparturesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        nextDeparturesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -12637,11 +12654,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        nextDeparturesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        nextDeparturesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        nextDeparturesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        nextDeparturesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -12726,11 +12743,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        nextDeparturesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        nextDeparturesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        nextDeparturesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        nextDeparturesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -12754,11 +12771,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        nextDeparturesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        nextDeparturesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        nextDeparturesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        nextDeparturesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -12851,11 +12868,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -12879,11 +12896,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        physicalModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        physicalModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -12964,11 +12981,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -12992,11 +13009,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        physicalModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        physicalModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -13073,11 +13090,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -13101,11 +13118,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        physicalModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        physicalModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -13190,11 +13207,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -13218,11 +13235,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        physicalModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        physicalModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -13291,11 +13308,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -13319,11 +13336,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        physicalModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        physicalModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -13400,11 +13417,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -13428,11 +13445,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        physicalModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        physicalModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -13505,11 +13522,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -13533,11 +13550,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        physicalModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        physicalModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -13618,11 +13635,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        physicalModesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        physicalModesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -13646,11 +13663,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        physicalModesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        physicalModesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        physicalModesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        physicalModesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -13715,7 +13732,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
                         // Param: count, Type: Integer
@@ -13723,7 +13740,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("adminUri") && (params.getString("adminUri") != null) && (!params.getString("adminUri").isEmpty()) ) {
                         // Param: adminUri, Type: List
-                        placesRequestBuilder.withAdminUri(jsonArrayToList(params.getJSONArray("adminUri")));
+                        placesRequestBuilder.withAdminUri(jsonArrayToStringList(params.getJSONArray("adminUri")));
                     }
                     if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
                         // Param: depth, Type: Integer
@@ -13796,7 +13813,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
                         // Param: count, Type: Integer
@@ -13804,7 +13821,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("adminUri") && (params.getString("adminUri") != null) && (!params.getString("adminUri").isEmpty()) ) {
                         // Param: adminUri, Type: List
-                        placesRequestBuilder.withAdminUri(jsonArrayToList(params.getJSONArray("adminUri")));
+                        placesRequestBuilder.withAdminUri(jsonArrayToStringList(params.getJSONArray("adminUri")));
                     }
                     if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
                         // Param: depth, Type: Integer
@@ -13873,7 +13890,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
                         // Param: count, Type: Integer
@@ -13881,7 +13898,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("adminUri") && (params.getString("adminUri") != null) && (!params.getString("adminUri").isEmpty()) ) {
                         // Param: adminUri, Type: List
-                        placesRequestBuilder.withAdminUri(jsonArrayToList(params.getJSONArray("adminUri")));
+                        placesRequestBuilder.withAdminUri(jsonArrayToStringList(params.getJSONArray("adminUri")));
                     }
                     if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
                         // Param: depth, Type: Integer
@@ -13954,7 +13971,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesNearbyRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
@@ -13982,7 +13999,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14043,7 +14060,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesNearbyRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
@@ -14071,7 +14088,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14132,7 +14149,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesNearbyRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
@@ -14160,7 +14177,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14225,7 +14242,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesNearbyRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
@@ -14253,7 +14270,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14310,7 +14327,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesNearbyRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
@@ -14338,7 +14355,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14399,7 +14416,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        placesNearbyRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        placesNearbyRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
@@ -14427,7 +14444,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        placesNearbyRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14500,11 +14517,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -14528,11 +14545,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poiTypesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poiTypesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14613,11 +14630,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -14641,11 +14658,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poiTypesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poiTypesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14722,11 +14739,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -14750,11 +14767,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poiTypesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poiTypesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14839,11 +14856,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -14867,11 +14884,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poiTypesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poiTypesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -14940,11 +14957,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -14968,11 +14985,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poiTypesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poiTypesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15049,11 +15066,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -15077,11 +15094,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poiTypesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poiTypesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15154,11 +15171,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -15182,11 +15199,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poiTypesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poiTypesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15267,11 +15284,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poiTypesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poiTypesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -15295,11 +15312,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poiTypesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poiTypesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poiTypesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poiTypesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15372,11 +15389,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poisRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poisRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poisRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poisRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -15400,11 +15417,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poisRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poisRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15424,7 +15441,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15497,11 +15514,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poisRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poisRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poisRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poisRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -15525,11 +15542,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poisRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poisRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15545,7 +15562,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15618,11 +15635,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poisRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poisRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poisRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poisRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -15646,11 +15663,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poisRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poisRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15670,7 +15687,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15747,11 +15764,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poisRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poisRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poisRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poisRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -15775,11 +15792,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poisRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poisRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15795,7 +15812,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15860,11 +15877,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poisRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poisRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poisRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poisRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -15888,11 +15905,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poisRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poisRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -15912,7 +15929,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15981,11 +15998,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poisRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poisRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poisRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poisRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -16009,11 +16026,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poisRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poisRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -16029,7 +16046,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -16098,11 +16115,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poisRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poisRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poisRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poisRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -16126,11 +16143,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poisRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poisRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -16150,7 +16167,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -16223,11 +16240,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        poisRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        poisRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        poisRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        poisRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -16251,11 +16268,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        poisRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        poisRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        poisRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        poisRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -16271,7 +16288,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
-                        poisRequestBuilder.withAddPoiInfos(jsonArrayToList(params.getJSONArray("addPoiInfos")));
+                        poisRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
                     }
                     
                     poisRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -16332,7 +16349,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        ptobjectsRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        ptobjectsRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
                         // Param: count, Type: Integer
@@ -16340,7 +16357,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("adminUri") && (params.getString("adminUri") != null) && (!params.getString("adminUri").isEmpty()) ) {
                         // Param: adminUri, Type: List
-                        ptobjectsRequestBuilder.withAdminUri(jsonArrayToList(params.getJSONArray("adminUri")));
+                        ptobjectsRequestBuilder.withAdminUri(jsonArrayToStringList(params.getJSONArray("adminUri")));
                     }
                     if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
                         // Param: depth, Type: Integer
@@ -16405,7 +16422,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("type") && (params.getString("type") != null) && (!params.getString("type").isEmpty()) ) {
                         // Param: type, Type: List
-                        ptobjectsRequestBuilder.withType(jsonArrayToList(params.getJSONArray("type")));
+                        ptobjectsRequestBuilder.withType(jsonArrayToStringList(params.getJSONArray("type")));
                     }
                     if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
                         // Param: count, Type: Integer
@@ -16413,7 +16430,7 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("adminUri") && (params.getString("adminUri") != null) && (!params.getString("adminUri").isEmpty()) ) {
                         // Param: adminUri, Type: List
-                        ptobjectsRequestBuilder.withAdminUri(jsonArrayToList(params.getJSONArray("adminUri")));
+                        ptobjectsRequestBuilder.withAdminUri(jsonArrayToStringList(params.getJSONArray("adminUri")));
                     }
                     if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
                         // Param: depth, Type: Integer
@@ -16486,11 +16503,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        routeSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        routeSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        routeSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        routeSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -16514,11 +16531,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routeSchedulesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routeSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routeSchedulesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routeSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -16603,11 +16620,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        routeSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        routeSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        routeSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        routeSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -16631,11 +16648,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routeSchedulesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routeSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routeSchedulesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routeSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -16712,11 +16729,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        routeSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        routeSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        routeSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        routeSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -16740,11 +16757,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routeSchedulesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routeSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routeSchedulesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routeSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -16837,11 +16854,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -16865,11 +16882,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -16954,11 +16971,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -16982,11 +16999,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -17067,11 +17084,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -17095,11 +17112,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -17188,11 +17205,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -17216,11 +17233,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -17293,11 +17310,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -17321,11 +17338,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -17406,11 +17423,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -17434,11 +17451,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -17515,11 +17532,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -17543,11 +17560,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -17632,11 +17649,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -17660,11 +17677,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -17737,11 +17754,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        routesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        routesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        routesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        routesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("headsign") && (params.getString("headsign") != null) && (!params.getString("headsign").isEmpty()) ) {
                         // Param: headsign, Type: String
@@ -17761,11 +17778,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        routesRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        routesRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        routesRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        routesRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -17895,11 +17912,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -17923,11 +17940,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18012,11 +18029,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -18040,11 +18057,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18125,11 +18142,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -18153,11 +18170,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18246,11 +18263,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -18274,11 +18291,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18351,11 +18368,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -18379,11 +18396,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18464,11 +18481,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -18492,11 +18509,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18573,11 +18590,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -18601,11 +18618,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18690,11 +18707,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -18718,11 +18735,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18795,11 +18812,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopAreasRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopAreasRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("headsign") && (params.getString("headsign") != null) && (!params.getString("headsign").isEmpty()) ) {
                         // Param: headsign, Type: String
@@ -18819,11 +18836,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopAreasRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopAreasRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopAreasRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopAreasRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -18904,11 +18921,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -18932,11 +18949,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19021,11 +19038,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -19049,11 +19066,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19134,11 +19151,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -19162,11 +19179,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19255,11 +19272,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -19283,11 +19300,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19360,11 +19377,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -19388,11 +19405,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19473,11 +19490,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -19501,11 +19518,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19582,11 +19599,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -19610,11 +19627,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19699,11 +19716,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -19727,11 +19744,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19804,11 +19821,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopPointsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopPointsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("headsign") && (params.getString("headsign") != null) && (!params.getString("headsign").isEmpty()) ) {
                         // Param: headsign, Type: String
@@ -19828,11 +19845,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        stopPointsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        stopPointsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        stopPointsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        stopPointsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -19909,11 +19926,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        stopSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        stopSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        stopSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        stopSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -19937,11 +19954,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopSchedulesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopSchedulesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -20026,11 +20043,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        stopSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        stopSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        stopSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        stopSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -20054,11 +20071,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopSchedulesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopSchedulesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -20135,11 +20152,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
                         // Param: fromDatetime, Type: Date
-                        stopSchedulesRequestBuilder.withFromDatetime(stringStraightPass(params.getString("fromDatetime")));
+                        stopSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
                     }
                     if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
                         // Param: untilDatetime, Type: Date
-                        stopSchedulesRequestBuilder.withUntilDatetime(stringStraightPass(params.getString("untilDatetime")));
+                        stopSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
                     }
                     if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
                         // Param: duration, Type: Integer
@@ -20163,11 +20180,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        stopSchedulesRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        stopSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        stopSchedulesRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        stopSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
                         // Param: calendar, Type: String
@@ -20256,11 +20273,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        trafficReportRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        trafficReportRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        trafficReportRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        trafficReportRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
@@ -20337,11 +20354,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        trafficReportRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        trafficReportRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        trafficReportRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        trafficReportRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
@@ -20418,11 +20435,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        tripsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        tripsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        tripsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        tripsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -20446,11 +20463,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        tripsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        tripsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -20531,11 +20548,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        tripsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        tripsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        tripsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        tripsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -20559,11 +20576,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        tripsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        tripsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -20640,11 +20657,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        tripsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        tripsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        tripsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        tripsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -20668,11 +20685,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        tripsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        tripsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -20757,11 +20774,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        tripsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        tripsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        tripsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        tripsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -20785,11 +20802,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        tripsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        tripsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -20858,11 +20875,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        tripsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        tripsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        tripsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        tripsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -20886,11 +20903,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        tripsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        tripsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -20967,11 +20984,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        tripsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        tripsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        tripsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        tripsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -20995,11 +21012,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        tripsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        tripsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21072,11 +21089,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        tripsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        tripsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        tripsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        tripsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21100,11 +21117,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        tripsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        tripsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21185,11 +21202,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        tripsRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        tripsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        tripsRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        tripsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21213,11 +21230,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        tripsRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        tripsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        tripsRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        tripsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21294,11 +21311,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21322,11 +21339,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21411,11 +21428,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21439,11 +21456,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21516,11 +21533,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21544,11 +21561,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21629,11 +21646,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21657,11 +21674,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21734,11 +21751,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21762,11 +21779,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21847,11 +21864,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21875,11 +21892,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -21948,11 +21965,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -21976,11 +21993,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -22057,11 +22074,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("externalCode") && (params.getString("externalCode") != null) && (!params.getString("externalCode").isEmpty()) ) {
                         // Param: externalCode, Type: String
@@ -22085,11 +22102,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
@@ -22158,11 +22175,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
                         // Param: forbiddenId, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToList(params.getJSONArray("forbiddenId")));
+                        vehicleJourneysRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
-                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToList(params.getJSONArray("forbiddenUris")));
+                        vehicleJourneysRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
                     }
                     if (params.has("headsign") && (params.getString("headsign") != null) && (!params.getString("headsign").isEmpty()) ) {
                         // Param: headsign, Type: String
@@ -22182,11 +22199,11 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
                         // Param: since, Type: Date
-                        vehicleJourneysRequestBuilder.withSince(stringStraightPass(params.getString("since")));
+                        vehicleJourneysRequestBuilder.withSince(stringToDateTime(params.getString("since")));
                     }
                     if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
                         // Param: until, Type: Date
-                        vehicleJourneysRequestBuilder.withUntil(stringStraightPass(params.getString("until")));
+                        vehicleJourneysRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean

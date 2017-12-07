@@ -16,8 +16,7 @@
                 <param name="ios-package" value="CDVNavitiaSDK" />
             </feature>
         </config-file>
-        <header-file src="src/ios/CDVNavitiaSDK.h" />
-        <source-file src="src/ios/CDVNavitiaSDK.m" />
+        <source-file src="src/ios/CDVNavitiaSDK.swift" />
 
         <framework src="Carthage/Build/iOS/Alamofire.framework" custom="true" embed="true" />
         <framework src="Carthage/Build/iOS/AlamofireObjectMapper.framework" custom="true" embed="true" />
