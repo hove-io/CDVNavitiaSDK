@@ -22,6 +22,10 @@ import NavitiaSDK
         return value as? Float ?? 0
     }
 
+    func anyToDouble(_ value: Any) -> Double {
+        return value as? Double ?? 0
+    }
+
     func anyToString(_ value: Any) -> String {
         return value as? String ?? ""
     }
@@ -55,7 +59,7 @@ import NavitiaSDK
         var pluginResult: CDVPluginResult?
         let token = command.arguments[0] as? String
 
-        if token == nil || token?.count == 0 {
+        if token == nil || token!.isEmpty {
             pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "No token provided")
         } else {
             self.sdk = NavitiaSDK.init(configuration: NavitiaConfiguration.init(token: token!))
@@ -81,33 +85,33 @@ import NavitiaSDK
             )
         } else {
             if let api: CalendarsApi? = self.sdk?.calendarsApi {
-                let queryBuilder: CoverageRegionCalendarsRequestBuilder = api.newCoverageRegionCalendarsRequestBuilder();
+                let queryBuilder: CoverageRegionCalendarsRequestBuilder = api!.newCoverageRegionCalendarsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "startDate") != nil) {
+                if params?.index(forKey: "startDate") != nil {
                     queryBuilder.withStartDate(anyToString(params!["startDate"]!))
                 }
-                if (params?.index(forKey: "endDate") != nil) {
+                if params?.index(forKey: "endDate") != nil {
                     queryBuilder.withEndDate(anyToString(params!["endDate"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
 
@@ -147,36 +151,36 @@ import NavitiaSDK
             )
         } else {
             if let api: CalendarsApi? = self.sdk?.calendarsApi {
-                let queryBuilder: CoverageRegionCalendarsIdRequestBuilder = api.newCoverageRegionCalendarsIdRequestBuilder();
+                let queryBuilder: CoverageRegionCalendarsIdRequestBuilder = api!.newCoverageRegionCalendarsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "startDate") != nil) {
+                if params?.index(forKey: "startDate") != nil {
                     queryBuilder.withStartDate(anyToString(params!["startDate"]!))
                 }
-                if (params?.index(forKey: "endDate") != nil) {
+                if params?.index(forKey: "endDate") != nil {
                     queryBuilder.withEndDate(anyToString(params!["endDate"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
 
@@ -216,36 +220,36 @@ import NavitiaSDK
             )
         } else {
             if let api: CalendarsApi? = self.sdk?.calendarsApi {
-                let queryBuilder: CoverageRegionUriCalendarsRequestBuilder = api.newCoverageRegionUriCalendarsRequestBuilder();
+                let queryBuilder: CoverageRegionUriCalendarsRequestBuilder = api!.newCoverageRegionUriCalendarsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "startDate") != nil) {
+                if params?.index(forKey: "startDate") != nil {
                     queryBuilder.withStartDate(anyToString(params!["startDate"]!))
                 }
-                if (params?.index(forKey: "endDate") != nil) {
+                if params?.index(forKey: "endDate") != nil {
                     queryBuilder.withEndDate(anyToString(params!["endDate"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
 
@@ -285,56 +289,56 @@ import NavitiaSDK
             )
         } else {
             if let api: CommercialModesApi? = self.sdk?.commercialModesApi {
-                let queryBuilder: CoverageLonLatCommercialModesRequestBuilder = api.newCoverageLonLatCommercialModesRequestBuilder();
+                let queryBuilder: CoverageLonLatCommercialModesRequestBuilder = api!.newCoverageLonLatCommercialModesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatCommercialModesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatCommercialModesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -374,56 +378,56 @@ import NavitiaSDK
             )
         } else {
             if let api: CommercialModesApi? = self.sdk?.commercialModesApi {
-                let queryBuilder: CoverageLonLatCommercialModesIdRequestBuilder = api.newCoverageLonLatCommercialModesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatCommercialModesIdRequestBuilder = api!.newCoverageLonLatCommercialModesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatCommercialModesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatCommercialModesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -463,59 +467,59 @@ import NavitiaSDK
             )
         } else {
             if let api: CommercialModesApi? = self.sdk?.commercialModesApi {
-                let queryBuilder: CoverageLonLatUriCommercialModesRequestBuilder = api.newCoverageLonLatUriCommercialModesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriCommercialModesRequestBuilder = api!.newCoverageLonLatUriCommercialModesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriCommercialModesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriCommercialModesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -555,59 +559,59 @@ import NavitiaSDK
             )
         } else {
             if let api: CommercialModesApi? = self.sdk?.commercialModesApi {
-                let queryBuilder: CoverageLonLatUriCommercialModesIdRequestBuilder = api.newCoverageLonLatUriCommercialModesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriCommercialModesIdRequestBuilder = api!.newCoverageLonLatUriCommercialModesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriCommercialModesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriCommercialModesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -647,53 +651,53 @@ import NavitiaSDK
             )
         } else {
             if let api: CommercialModesApi? = self.sdk?.commercialModesApi {
-                let queryBuilder: CoverageRegionCommercialModesRequestBuilder = api.newCoverageRegionCommercialModesRequestBuilder();
+                let queryBuilder: CoverageRegionCommercialModesRequestBuilder = api!.newCoverageRegionCommercialModesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionCommercialModesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionCommercialModesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -733,53 +737,53 @@ import NavitiaSDK
             )
         } else {
             if let api: CommercialModesApi? = self.sdk?.commercialModesApi {
-                let queryBuilder: CoverageRegionCommercialModesIdRequestBuilder = api.newCoverageRegionCommercialModesIdRequestBuilder();
+                let queryBuilder: CoverageRegionCommercialModesIdRequestBuilder = api!.newCoverageRegionCommercialModesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionCommercialModesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionCommercialModesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -819,56 +823,56 @@ import NavitiaSDK
             )
         } else {
             if let api: CommercialModesApi? = self.sdk?.commercialModesApi {
-                let queryBuilder: CoverageRegionUriCommercialModesRequestBuilder = api.newCoverageRegionUriCommercialModesRequestBuilder();
+                let queryBuilder: CoverageRegionUriCommercialModesRequestBuilder = api!.newCoverageRegionUriCommercialModesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriCommercialModesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriCommercialModesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -908,56 +912,56 @@ import NavitiaSDK
             )
         } else {
             if let api: CommercialModesApi? = self.sdk?.commercialModesApi {
-                let queryBuilder: CoverageRegionUriCommercialModesIdRequestBuilder = api.newCoverageRegionUriCommercialModesIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriCommercialModesIdRequestBuilder = api!.newCoverageRegionUriCommercialModesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriCommercialModesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriCommercialModesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -997,56 +1001,56 @@ import NavitiaSDK
             )
         } else {
             if let api: CompaniesApi? = self.sdk?.companiesApi {
-                let queryBuilder: CoverageLonLatCompaniesRequestBuilder = api.newCoverageLonLatCompaniesRequestBuilder();
+                let queryBuilder: CoverageLonLatCompaniesRequestBuilder = api!.newCoverageLonLatCompaniesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatCompaniesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatCompaniesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -1086,56 +1090,56 @@ import NavitiaSDK
             )
         } else {
             if let api: CompaniesApi? = self.sdk?.companiesApi {
-                let queryBuilder: CoverageLonLatCompaniesIdRequestBuilder = api.newCoverageLonLatCompaniesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatCompaniesIdRequestBuilder = api!.newCoverageLonLatCompaniesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatCompaniesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatCompaniesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -1175,59 +1179,59 @@ import NavitiaSDK
             )
         } else {
             if let api: CompaniesApi? = self.sdk?.companiesApi {
-                let queryBuilder: CoverageLonLatUriCompaniesRequestBuilder = api.newCoverageLonLatUriCompaniesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriCompaniesRequestBuilder = api!.newCoverageLonLatUriCompaniesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriCompaniesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriCompaniesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -1267,59 +1271,59 @@ import NavitiaSDK
             )
         } else {
             if let api: CompaniesApi? = self.sdk?.companiesApi {
-                let queryBuilder: CoverageLonLatUriCompaniesIdRequestBuilder = api.newCoverageLonLatUriCompaniesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriCompaniesIdRequestBuilder = api!.newCoverageLonLatUriCompaniesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriCompaniesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriCompaniesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -1359,53 +1363,53 @@ import NavitiaSDK
             )
         } else {
             if let api: CompaniesApi? = self.sdk?.companiesApi {
-                let queryBuilder: CoverageRegionCompaniesRequestBuilder = api.newCoverageRegionCompaniesRequestBuilder();
+                let queryBuilder: CoverageRegionCompaniesRequestBuilder = api!.newCoverageRegionCompaniesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionCompaniesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionCompaniesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -1445,53 +1449,53 @@ import NavitiaSDK
             )
         } else {
             if let api: CompaniesApi? = self.sdk?.companiesApi {
-                let queryBuilder: CoverageRegionCompaniesIdRequestBuilder = api.newCoverageRegionCompaniesIdRequestBuilder();
+                let queryBuilder: CoverageRegionCompaniesIdRequestBuilder = api!.newCoverageRegionCompaniesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionCompaniesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionCompaniesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -1531,56 +1535,56 @@ import NavitiaSDK
             )
         } else {
             if let api: CompaniesApi? = self.sdk?.companiesApi {
-                let queryBuilder: CoverageRegionUriCompaniesRequestBuilder = api.newCoverageRegionUriCompaniesRequestBuilder();
+                let queryBuilder: CoverageRegionUriCompaniesRequestBuilder = api!.newCoverageRegionUriCompaniesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriCompaniesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriCompaniesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -1620,56 +1624,56 @@ import NavitiaSDK
             )
         } else {
             if let api: CompaniesApi? = self.sdk?.companiesApi {
-                let queryBuilder: CoverageRegionUriCompaniesIdRequestBuilder = api.newCoverageRegionUriCompaniesIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriCompaniesIdRequestBuilder = api!.newCoverageRegionUriCompaniesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriCompaniesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriCompaniesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -1709,56 +1713,56 @@ import NavitiaSDK
             )
         } else {
             if let api: ContributorsApi? = self.sdk?.contributorsApi {
-                let queryBuilder: CoverageLonLatContributorsRequestBuilder = api.newCoverageLonLatContributorsRequestBuilder();
+                let queryBuilder: CoverageLonLatContributorsRequestBuilder = api!.newCoverageLonLatContributorsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatContributorsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatContributorsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -1798,56 +1802,56 @@ import NavitiaSDK
             )
         } else {
             if let api: ContributorsApi? = self.sdk?.contributorsApi {
-                let queryBuilder: CoverageLonLatContributorsIdRequestBuilder = api.newCoverageLonLatContributorsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatContributorsIdRequestBuilder = api!.newCoverageLonLatContributorsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatContributorsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatContributorsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -1887,59 +1891,59 @@ import NavitiaSDK
             )
         } else {
             if let api: ContributorsApi? = self.sdk?.contributorsApi {
-                let queryBuilder: CoverageLonLatUriContributorsRequestBuilder = api.newCoverageLonLatUriContributorsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriContributorsRequestBuilder = api!.newCoverageLonLatUriContributorsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriContributorsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriContributorsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -1979,59 +1983,59 @@ import NavitiaSDK
             )
         } else {
             if let api: ContributorsApi? = self.sdk?.contributorsApi {
-                let queryBuilder: CoverageLonLatUriContributorsIdRequestBuilder = api.newCoverageLonLatUriContributorsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriContributorsIdRequestBuilder = api!.newCoverageLonLatUriContributorsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriContributorsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriContributorsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -2071,53 +2075,53 @@ import NavitiaSDK
             )
         } else {
             if let api: ContributorsApi? = self.sdk?.contributorsApi {
-                let queryBuilder: CoverageRegionContributorsRequestBuilder = api.newCoverageRegionContributorsRequestBuilder();
+                let queryBuilder: CoverageRegionContributorsRequestBuilder = api!.newCoverageRegionContributorsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionContributorsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionContributorsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -2157,53 +2161,53 @@ import NavitiaSDK
             )
         } else {
             if let api: ContributorsApi? = self.sdk?.contributorsApi {
-                let queryBuilder: CoverageRegionContributorsIdRequestBuilder = api.newCoverageRegionContributorsIdRequestBuilder();
+                let queryBuilder: CoverageRegionContributorsIdRequestBuilder = api!.newCoverageRegionContributorsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionContributorsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionContributorsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -2243,56 +2247,56 @@ import NavitiaSDK
             )
         } else {
             if let api: ContributorsApi? = self.sdk?.contributorsApi {
-                let queryBuilder: CoverageRegionUriContributorsRequestBuilder = api.newCoverageRegionUriContributorsRequestBuilder();
+                let queryBuilder: CoverageRegionUriContributorsRequestBuilder = api!.newCoverageRegionUriContributorsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriContributorsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriContributorsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -2332,56 +2336,56 @@ import NavitiaSDK
             )
         } else {
             if let api: ContributorsApi? = self.sdk?.contributorsApi {
-                let queryBuilder: CoverageRegionUriContributorsIdRequestBuilder = api.newCoverageRegionUriContributorsIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriContributorsIdRequestBuilder = api!.newCoverageRegionUriContributorsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriContributorsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriContributorsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -2421,9 +2425,9 @@ import NavitiaSDK
             )
         } else {
             if let api: CoverageApi? = self.sdk?.coverageApi {
-                let queryBuilder: CoverageRequestBuilder = api.newCoverageRequestBuilder();
+                let queryBuilder: CoverageRequestBuilder = api!.newCoverageRequestBuilder();
 
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -2463,15 +2467,15 @@ import NavitiaSDK
             )
         } else {
             if let api: CoverageApi? = self.sdk?.coverageApi {
-                let queryBuilder: CoverageLonLatRequestBuilder = api.newCoverageLonLatRequestBuilder();
+                let queryBuilder: CoverageLonLatRequestBuilder = api!.newCoverageLonLatRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -2511,12 +2515,12 @@ import NavitiaSDK
             )
         } else {
             if let api: CoverageApi? = self.sdk?.coverageApi {
-                let queryBuilder: CoverageRegionRequestBuilder = api.newCoverageRegionRequestBuilder();
+                let queryBuilder: CoverageRegionRequestBuilder = api!.newCoverageRegionRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -2556,56 +2560,56 @@ import NavitiaSDK
             )
         } else {
             if let api: DatasetsApi? = self.sdk?.datasetsApi {
-                let queryBuilder: CoverageLonLatDatasetsRequestBuilder = api.newCoverageLonLatDatasetsRequestBuilder();
+                let queryBuilder: CoverageLonLatDatasetsRequestBuilder = api!.newCoverageLonLatDatasetsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatDatasetsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatDatasetsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -2645,56 +2649,56 @@ import NavitiaSDK
             )
         } else {
             if let api: DatasetsApi? = self.sdk?.datasetsApi {
-                let queryBuilder: CoverageLonLatDatasetsIdRequestBuilder = api.newCoverageLonLatDatasetsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatDatasetsIdRequestBuilder = api!.newCoverageLonLatDatasetsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatDatasetsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatDatasetsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -2734,59 +2738,59 @@ import NavitiaSDK
             )
         } else {
             if let api: DatasetsApi? = self.sdk?.datasetsApi {
-                let queryBuilder: CoverageLonLatUriDatasetsRequestBuilder = api.newCoverageLonLatUriDatasetsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriDatasetsRequestBuilder = api!.newCoverageLonLatUriDatasetsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriDatasetsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriDatasetsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -2826,59 +2830,59 @@ import NavitiaSDK
             )
         } else {
             if let api: DatasetsApi? = self.sdk?.datasetsApi {
-                let queryBuilder: CoverageLonLatUriDatasetsIdRequestBuilder = api.newCoverageLonLatUriDatasetsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriDatasetsIdRequestBuilder = api!.newCoverageLonLatUriDatasetsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriDatasetsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriDatasetsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -2918,53 +2922,53 @@ import NavitiaSDK
             )
         } else {
             if let api: DatasetsApi? = self.sdk?.datasetsApi {
-                let queryBuilder: CoverageRegionDatasetsRequestBuilder = api.newCoverageRegionDatasetsRequestBuilder();
+                let queryBuilder: CoverageRegionDatasetsRequestBuilder = api!.newCoverageRegionDatasetsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionDatasetsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionDatasetsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -3004,53 +3008,53 @@ import NavitiaSDK
             )
         } else {
             if let api: DatasetsApi? = self.sdk?.datasetsApi {
-                let queryBuilder: CoverageRegionDatasetsIdRequestBuilder = api.newCoverageRegionDatasetsIdRequestBuilder();
+                let queryBuilder: CoverageRegionDatasetsIdRequestBuilder = api!.newCoverageRegionDatasetsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionDatasetsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionDatasetsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -3090,56 +3094,56 @@ import NavitiaSDK
             )
         } else {
             if let api: DatasetsApi? = self.sdk?.datasetsApi {
-                let queryBuilder: CoverageRegionUriDatasetsRequestBuilder = api.newCoverageRegionUriDatasetsRequestBuilder();
+                let queryBuilder: CoverageRegionUriDatasetsRequestBuilder = api!.newCoverageRegionUriDatasetsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriDatasetsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriDatasetsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -3179,56 +3183,56 @@ import NavitiaSDK
             )
         } else {
             if let api: DatasetsApi? = self.sdk?.datasetsApi {
-                let queryBuilder: CoverageRegionUriDatasetsIdRequestBuilder = api.newCoverageRegionUriDatasetsIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriDatasetsIdRequestBuilder = api!.newCoverageRegionUriDatasetsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriDatasetsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriDatasetsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -3268,59 +3272,59 @@ import NavitiaSDK
             )
         } else {
             if let api: DisruptionsApi? = self.sdk?.disruptionsApi {
-                let queryBuilder: CoverageLonLatDisruptionsRequestBuilder = api.newCoverageLonLatDisruptionsRequestBuilder();
+                let queryBuilder: CoverageLonLatDisruptionsRequestBuilder = api!.newCoverageLonLatDisruptionsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatDisruptionsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatDisruptionsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -3360,59 +3364,59 @@ import NavitiaSDK
             )
         } else {
             if let api: DisruptionsApi? = self.sdk?.disruptionsApi {
-                let queryBuilder: CoverageLonLatDisruptionsIdRequestBuilder = api.newCoverageLonLatDisruptionsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatDisruptionsIdRequestBuilder = api!.newCoverageLonLatDisruptionsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatDisruptionsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatDisruptionsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -3452,62 +3456,62 @@ import NavitiaSDK
             )
         } else {
             if let api: DisruptionsApi? = self.sdk?.disruptionsApi {
-                let queryBuilder: CoverageLonLatUriDisruptionsRequestBuilder = api.newCoverageLonLatUriDisruptionsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriDisruptionsRequestBuilder = api!.newCoverageLonLatUriDisruptionsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriDisruptionsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriDisruptionsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -3547,62 +3551,62 @@ import NavitiaSDK
             )
         } else {
             if let api: DisruptionsApi? = self.sdk?.disruptionsApi {
-                let queryBuilder: CoverageLonLatUriDisruptionsIdRequestBuilder = api.newCoverageLonLatUriDisruptionsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriDisruptionsIdRequestBuilder = api!.newCoverageLonLatUriDisruptionsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriDisruptionsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriDisruptionsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -3642,56 +3646,56 @@ import NavitiaSDK
             )
         } else {
             if let api: DisruptionsApi? = self.sdk?.disruptionsApi {
-                let queryBuilder: CoverageRegionDisruptionsRequestBuilder = api.newCoverageRegionDisruptionsRequestBuilder();
+                let queryBuilder: CoverageRegionDisruptionsRequestBuilder = api!.newCoverageRegionDisruptionsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionDisruptionsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionDisruptionsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -3731,56 +3735,56 @@ import NavitiaSDK
             )
         } else {
             if let api: DisruptionsApi? = self.sdk?.disruptionsApi {
-                let queryBuilder: CoverageRegionDisruptionsIdRequestBuilder = api.newCoverageRegionDisruptionsIdRequestBuilder();
+                let queryBuilder: CoverageRegionDisruptionsIdRequestBuilder = api!.newCoverageRegionDisruptionsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionDisruptionsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionDisruptionsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -3820,59 +3824,59 @@ import NavitiaSDK
             )
         } else {
             if let api: DisruptionsApi? = self.sdk?.disruptionsApi {
-                let queryBuilder: CoverageRegionUriDisruptionsRequestBuilder = api.newCoverageRegionUriDisruptionsRequestBuilder();
+                let queryBuilder: CoverageRegionUriDisruptionsRequestBuilder = api!.newCoverageRegionUriDisruptionsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriDisruptionsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriDisruptionsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -3912,59 +3916,59 @@ import NavitiaSDK
             )
         } else {
             if let api: DisruptionsApi? = self.sdk?.disruptionsApi {
-                let queryBuilder: CoverageRegionUriDisruptionsIdRequestBuilder = api.newCoverageRegionUriDisruptionsIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriDisruptionsIdRequestBuilder = api!.newCoverageRegionUriDisruptionsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriDisruptionsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriDisruptionsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -4004,9 +4008,9 @@ import NavitiaSDK
             )
         } else {
             if let api: GeoStatusApi? = self.sdk?.geoStatusApi {
-                let queryBuilder: CoverageRegionGeoStatusRequestBuilder = api.newCoverageRegionGeoStatusRequestBuilder();
+                let queryBuilder: CoverageRegionGeoStatusRequestBuilder = api!.newCoverageRegionGeoStatusRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
 
@@ -4046,98 +4050,98 @@ import NavitiaSDK
             )
         } else {
             if let api: GraphicalIsochroneApi? = self.sdk?.graphicalIsochroneApi {
-                let queryBuilder: CoverageRegionIsochronesRequestBuilder = api.newCoverageRegionIsochronesRequestBuilder();
+                let queryBuilder: CoverageRegionIsochronesRequestBuilder = api!.newCoverageRegionIsochronesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "from") != nil) {
+                if params?.index(forKey: "from") != nil {
                     queryBuilder.withFrom(anyToString(params!["from"]!))
                 }
-                if (params?.index(forKey: "to") != nil) {
+                if params?.index(forKey: "to") != nil {
                     queryBuilder.withTo(anyToString(params!["to"]!))
                 }
-                if (params?.index(forKey: "datetime") != nil) {
+                if params?.index(forKey: "datetime") != nil {
                     queryBuilder.withDatetime(anyToDateTime(params!["datetime"]!))
                 }
-                if (params?.index(forKey: "datetimeRepresents") != nil) {
-                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageRegionIsochronesRequestBuilder.Datetime_representsEnum? {
+                if params?.index(forKey: "datetimeRepresents") != nil {
+                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageRegionIsochronesRequestBuilder.DatetimeRepresents? {
                         queryBuilder.withDatetimeRepresents(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxNbTransfers") != nil) {
+                if params?.index(forKey: "maxNbTransfers") != nil {
                     queryBuilder.withMaxNbTransfers(anyToInt(params!["maxNbTransfers"]!))
                 }
-                if (params?.index(forKey: "minNbTransfers") != nil) {
+                if params?.index(forKey: "minNbTransfers") != nil {
                     queryBuilder.withMinNbTransfers(anyToInt(params!["minNbTransfers"]!))
                 }
-                if (params?.index(forKey: "firstSectionMode") != nil) {
-                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageRegionIsochronesRequestBuilder.First_section_mode[]Enum])
+                if params?.index(forKey: "firstSectionMode") != nil {
+                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageRegionIsochronesRequestBuilder.FirstSectionMode])
                 }
-                if (params?.index(forKey: "lastSectionMode") != nil) {
-                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageRegionIsochronesRequestBuilder.Last_section_mode[]Enum])
+                if params?.index(forKey: "lastSectionMode") != nil {
+                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageRegionIsochronesRequestBuilder.LastSectionMode])
                 }
-                if (params?.index(forKey: "maxDurationToPt") != nil) {
+                if params?.index(forKey: "maxDurationToPt") != nil {
                     queryBuilder.withMaxDurationToPt(anyToInt(params!["maxDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxWalkingDurationToPt") != nil) {
+                if params?.index(forKey: "maxWalkingDurationToPt") != nil {
                     queryBuilder.withMaxWalkingDurationToPt(anyToInt(params!["maxWalkingDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBikeDurationToPt") != nil) {
+                if params?.index(forKey: "maxBikeDurationToPt") != nil {
                     queryBuilder.withMaxBikeDurationToPt(anyToInt(params!["maxBikeDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBssDurationToPt") != nil) {
+                if params?.index(forKey: "maxBssDurationToPt") != nil {
                     queryBuilder.withMaxBssDurationToPt(anyToInt(params!["maxBssDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxCarDurationToPt") != nil) {
+                if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
-                if (params?.index(forKey: "walkingSpeed") != nil) {
+                if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
-                if (params?.index(forKey: "bikeSpeed") != nil) {
+                if params?.index(forKey: "bikeSpeed") != nil {
                     queryBuilder.withBikeSpeed(anyToFloat(params!["bikeSpeed"]!))
                 }
-                if (params?.index(forKey: "bssSpeed") != nil) {
+                if params?.index(forKey: "bssSpeed") != nil {
                     queryBuilder.withBssSpeed(anyToFloat(params!["bssSpeed"]!))
                 }
-                if (params?.index(forKey: "carSpeed") != nil) {
+                if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "allowedId") != nil) {
+                if params?.index(forKey: "allowedId") != nil {
                     queryBuilder.withAllowedId(arrayToStringDict(params!["allowedId"]!))
                 }
-                if (params?.index(forKey: "disruptionActive") != nil) {
+                if params?.index(forKey: "disruptionActive") != nil {
                     queryBuilder.withDisruptionActive(anyToBool(params!["disruptionActive"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionIsochronesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionIsochronesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxDuration") != nil) {
+                if params?.index(forKey: "maxDuration") != nil {
                     queryBuilder.withMaxDuration(anyToInt(params!["maxDuration"]!))
                 }
-                if (params?.index(forKey: "wheelchair") != nil) {
+                if params?.index(forKey: "wheelchair") != nil {
                     queryBuilder.withWheelchair(anyToBool(params!["wheelchair"]!))
                 }
-                if (params?.index(forKey: "travelerType") != nil) {
-                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageRegionIsochronesRequestBuilder.Traveler_typeEnum? {
+                if params?.index(forKey: "travelerType") != nil {
+                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageRegionIsochronesRequestBuilder.TravelerType? {
                         queryBuilder.withTravelerType(enumValue)
                     }
                 }
-                if (params?.index(forKey: "directPath") != nil) {
-                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageRegionIsochronesRequestBuilder.Direct_pathEnum? {
+                if params?.index(forKey: "directPath") != nil {
+                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageRegionIsochronesRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
                 }
-                if (params?.index(forKey: "minDuration") != nil) {
+                if params?.index(forKey: "minDuration") != nil {
                     queryBuilder.withMinDuration(anyToInt(params!["minDuration"]!))
                 }
-                if (params?.index(forKey: "boundaryDuration") != nil) {
+                if params?.index(forKey: "boundaryDuration") != nil {
                     queryBuilder.withBoundaryDuration(arrayToIntDict(params!["boundaryDuration"]!))
                 }
 
@@ -4177,95 +4181,95 @@ import NavitiaSDK
             )
         } else {
             if let api: HeatMapApi? = self.sdk?.heatMapApi {
-                let queryBuilder: CoverageRegionHeatMapsRequestBuilder = api.newCoverageRegionHeatMapsRequestBuilder();
+                let queryBuilder: CoverageRegionHeatMapsRequestBuilder = api!.newCoverageRegionHeatMapsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "from") != nil) {
+                if params?.index(forKey: "from") != nil {
                     queryBuilder.withFrom(anyToString(params!["from"]!))
                 }
-                if (params?.index(forKey: "to") != nil) {
+                if params?.index(forKey: "to") != nil {
                     queryBuilder.withTo(anyToString(params!["to"]!))
                 }
-                if (params?.index(forKey: "datetime") != nil) {
+                if params?.index(forKey: "datetime") != nil {
                     queryBuilder.withDatetime(anyToDateTime(params!["datetime"]!))
                 }
-                if (params?.index(forKey: "datetimeRepresents") != nil) {
-                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageRegionHeatMapsRequestBuilder.Datetime_representsEnum? {
+                if params?.index(forKey: "datetimeRepresents") != nil {
+                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageRegionHeatMapsRequestBuilder.DatetimeRepresents? {
                         queryBuilder.withDatetimeRepresents(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxNbTransfers") != nil) {
+                if params?.index(forKey: "maxNbTransfers") != nil {
                     queryBuilder.withMaxNbTransfers(anyToInt(params!["maxNbTransfers"]!))
                 }
-                if (params?.index(forKey: "minNbTransfers") != nil) {
+                if params?.index(forKey: "minNbTransfers") != nil {
                     queryBuilder.withMinNbTransfers(anyToInt(params!["minNbTransfers"]!))
                 }
-                if (params?.index(forKey: "firstSectionMode") != nil) {
-                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageRegionHeatMapsRequestBuilder.First_section_mode[]Enum])
+                if params?.index(forKey: "firstSectionMode") != nil {
+                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageRegionHeatMapsRequestBuilder.FirstSectionMode])
                 }
-                if (params?.index(forKey: "lastSectionMode") != nil) {
-                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageRegionHeatMapsRequestBuilder.Last_section_mode[]Enum])
+                if params?.index(forKey: "lastSectionMode") != nil {
+                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageRegionHeatMapsRequestBuilder.LastSectionMode])
                 }
-                if (params?.index(forKey: "maxDurationToPt") != nil) {
+                if params?.index(forKey: "maxDurationToPt") != nil {
                     queryBuilder.withMaxDurationToPt(anyToInt(params!["maxDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxWalkingDurationToPt") != nil) {
+                if params?.index(forKey: "maxWalkingDurationToPt") != nil {
                     queryBuilder.withMaxWalkingDurationToPt(anyToInt(params!["maxWalkingDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBikeDurationToPt") != nil) {
+                if params?.index(forKey: "maxBikeDurationToPt") != nil {
                     queryBuilder.withMaxBikeDurationToPt(anyToInt(params!["maxBikeDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBssDurationToPt") != nil) {
+                if params?.index(forKey: "maxBssDurationToPt") != nil {
                     queryBuilder.withMaxBssDurationToPt(anyToInt(params!["maxBssDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxCarDurationToPt") != nil) {
+                if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
-                if (params?.index(forKey: "walkingSpeed") != nil) {
+                if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
-                if (params?.index(forKey: "bikeSpeed") != nil) {
+                if params?.index(forKey: "bikeSpeed") != nil {
                     queryBuilder.withBikeSpeed(anyToFloat(params!["bikeSpeed"]!))
                 }
-                if (params?.index(forKey: "bssSpeed") != nil) {
+                if params?.index(forKey: "bssSpeed") != nil {
                     queryBuilder.withBssSpeed(anyToFloat(params!["bssSpeed"]!))
                 }
-                if (params?.index(forKey: "carSpeed") != nil) {
+                if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "allowedId") != nil) {
+                if params?.index(forKey: "allowedId") != nil {
                     queryBuilder.withAllowedId(arrayToStringDict(params!["allowedId"]!))
                 }
-                if (params?.index(forKey: "disruptionActive") != nil) {
+                if params?.index(forKey: "disruptionActive") != nil {
                     queryBuilder.withDisruptionActive(anyToBool(params!["disruptionActive"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionHeatMapsRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionHeatMapsRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxDuration") != nil) {
+                if params?.index(forKey: "maxDuration") != nil {
                     queryBuilder.withMaxDuration(anyToInt(params!["maxDuration"]!))
                 }
-                if (params?.index(forKey: "wheelchair") != nil) {
+                if params?.index(forKey: "wheelchair") != nil {
                     queryBuilder.withWheelchair(anyToBool(params!["wheelchair"]!))
                 }
-                if (params?.index(forKey: "travelerType") != nil) {
-                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageRegionHeatMapsRequestBuilder.Traveler_typeEnum? {
+                if params?.index(forKey: "travelerType") != nil {
+                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageRegionHeatMapsRequestBuilder.TravelerType? {
                         queryBuilder.withTravelerType(enumValue)
                     }
                 }
-                if (params?.index(forKey: "directPath") != nil) {
-                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageRegionHeatMapsRequestBuilder.Direct_pathEnum? {
+                if params?.index(forKey: "directPath") != nil {
+                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageRegionHeatMapsRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
                 }
-                if (params?.index(forKey: "resolution") != nil) {
+                if params?.index(forKey: "resolution") != nil {
                     queryBuilder.withResolution(anyToInt(params!["resolution"]!))
                 }
 
@@ -4305,56 +4309,56 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternPointsApi? = self.sdk?.journeyPatternPointsApi {
-                let queryBuilder: CoverageLonLatJourneyPatternPointsRequestBuilder = api.newCoverageLonLatJourneyPatternPointsRequestBuilder();
+                let queryBuilder: CoverageLonLatJourneyPatternPointsRequestBuilder = api!.newCoverageLonLatJourneyPatternPointsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatJourneyPatternPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatJourneyPatternPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -4394,56 +4398,56 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternPointsApi? = self.sdk?.journeyPatternPointsApi {
-                let queryBuilder: CoverageLonLatJourneyPatternPointsIdRequestBuilder = api.newCoverageLonLatJourneyPatternPointsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatJourneyPatternPointsIdRequestBuilder = api!.newCoverageLonLatJourneyPatternPointsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatJourneyPatternPointsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatJourneyPatternPointsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -4483,59 +4487,59 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternPointsApi? = self.sdk?.journeyPatternPointsApi {
-                let queryBuilder: CoverageLonLatUriJourneyPatternPointsRequestBuilder = api.newCoverageLonLatUriJourneyPatternPointsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriJourneyPatternPointsRequestBuilder = api!.newCoverageLonLatUriJourneyPatternPointsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriJourneyPatternPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriJourneyPatternPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -4575,59 +4579,59 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternPointsApi? = self.sdk?.journeyPatternPointsApi {
-                let queryBuilder: CoverageLonLatUriJourneyPatternPointsIdRequestBuilder = api.newCoverageLonLatUriJourneyPatternPointsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriJourneyPatternPointsIdRequestBuilder = api!.newCoverageLonLatUriJourneyPatternPointsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriJourneyPatternPointsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriJourneyPatternPointsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -4667,53 +4671,53 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternPointsApi? = self.sdk?.journeyPatternPointsApi {
-                let queryBuilder: CoverageRegionJourneyPatternPointsRequestBuilder = api.newCoverageRegionJourneyPatternPointsRequestBuilder();
+                let queryBuilder: CoverageRegionJourneyPatternPointsRequestBuilder = api!.newCoverageRegionJourneyPatternPointsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionJourneyPatternPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionJourneyPatternPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -4753,53 +4757,53 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternPointsApi? = self.sdk?.journeyPatternPointsApi {
-                let queryBuilder: CoverageRegionJourneyPatternPointsIdRequestBuilder = api.newCoverageRegionJourneyPatternPointsIdRequestBuilder();
+                let queryBuilder: CoverageRegionJourneyPatternPointsIdRequestBuilder = api!.newCoverageRegionJourneyPatternPointsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionJourneyPatternPointsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionJourneyPatternPointsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -4839,56 +4843,56 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternPointsApi? = self.sdk?.journeyPatternPointsApi {
-                let queryBuilder: CoverageRegionUriJourneyPatternPointsRequestBuilder = api.newCoverageRegionUriJourneyPatternPointsRequestBuilder();
+                let queryBuilder: CoverageRegionUriJourneyPatternPointsRequestBuilder = api!.newCoverageRegionUriJourneyPatternPointsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriJourneyPatternPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriJourneyPatternPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -4928,56 +4932,56 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternPointsApi? = self.sdk?.journeyPatternPointsApi {
-                let queryBuilder: CoverageRegionUriJourneyPatternPointsIdRequestBuilder = api.newCoverageRegionUriJourneyPatternPointsIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriJourneyPatternPointsIdRequestBuilder = api!.newCoverageRegionUriJourneyPatternPointsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriJourneyPatternPointsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriJourneyPatternPointsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -5017,56 +5021,56 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternsApi? = self.sdk?.journeyPatternsApi {
-                let queryBuilder: CoverageLonLatJourneyPatternsRequestBuilder = api.newCoverageLonLatJourneyPatternsRequestBuilder();
+                let queryBuilder: CoverageLonLatJourneyPatternsRequestBuilder = api!.newCoverageLonLatJourneyPatternsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatJourneyPatternsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatJourneyPatternsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -5106,56 +5110,56 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternsApi? = self.sdk?.journeyPatternsApi {
-                let queryBuilder: CoverageLonLatJourneyPatternsIdRequestBuilder = api.newCoverageLonLatJourneyPatternsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatJourneyPatternsIdRequestBuilder = api!.newCoverageLonLatJourneyPatternsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatJourneyPatternsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatJourneyPatternsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -5195,59 +5199,59 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternsApi? = self.sdk?.journeyPatternsApi {
-                let queryBuilder: CoverageLonLatUriJourneyPatternsRequestBuilder = api.newCoverageLonLatUriJourneyPatternsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriJourneyPatternsRequestBuilder = api!.newCoverageLonLatUriJourneyPatternsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriJourneyPatternsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriJourneyPatternsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -5287,59 +5291,59 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternsApi? = self.sdk?.journeyPatternsApi {
-                let queryBuilder: CoverageLonLatUriJourneyPatternsIdRequestBuilder = api.newCoverageLonLatUriJourneyPatternsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriJourneyPatternsIdRequestBuilder = api!.newCoverageLonLatUriJourneyPatternsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriJourneyPatternsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriJourneyPatternsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -5379,53 +5383,53 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternsApi? = self.sdk?.journeyPatternsApi {
-                let queryBuilder: CoverageRegionJourneyPatternsRequestBuilder = api.newCoverageRegionJourneyPatternsRequestBuilder();
+                let queryBuilder: CoverageRegionJourneyPatternsRequestBuilder = api!.newCoverageRegionJourneyPatternsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionJourneyPatternsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionJourneyPatternsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -5465,53 +5469,53 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternsApi? = self.sdk?.journeyPatternsApi {
-                let queryBuilder: CoverageRegionJourneyPatternsIdRequestBuilder = api.newCoverageRegionJourneyPatternsIdRequestBuilder();
+                let queryBuilder: CoverageRegionJourneyPatternsIdRequestBuilder = api!.newCoverageRegionJourneyPatternsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionJourneyPatternsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionJourneyPatternsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -5551,56 +5555,56 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternsApi? = self.sdk?.journeyPatternsApi {
-                let queryBuilder: CoverageRegionUriJourneyPatternsRequestBuilder = api.newCoverageRegionUriJourneyPatternsRequestBuilder();
+                let queryBuilder: CoverageRegionUriJourneyPatternsRequestBuilder = api!.newCoverageRegionUriJourneyPatternsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriJourneyPatternsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriJourneyPatternsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -5640,56 +5644,56 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneyPatternsApi? = self.sdk?.journeyPatternsApi {
-                let queryBuilder: CoverageRegionUriJourneyPatternsIdRequestBuilder = api.newCoverageRegionUriJourneyPatternsIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriJourneyPatternsIdRequestBuilder = api!.newCoverageRegionUriJourneyPatternsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriJourneyPatternsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriJourneyPatternsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -5729,114 +5733,114 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneysApi? = self.sdk?.journeysApi {
-                let queryBuilder: CoverageLonLatJourneysRequestBuilder = api.newCoverageLonLatJourneysRequestBuilder();
+                let queryBuilder: CoverageLonLatJourneysRequestBuilder = api!.newCoverageLonLatJourneysRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "from") != nil) {
+                if params?.index(forKey: "from") != nil {
                     queryBuilder.withFrom(anyToString(params!["from"]!))
                 }
-                if (params?.index(forKey: "to") != nil) {
+                if params?.index(forKey: "to") != nil {
                     queryBuilder.withTo(anyToString(params!["to"]!))
                 }
-                if (params?.index(forKey: "datetime") != nil) {
+                if params?.index(forKey: "datetime") != nil {
                     queryBuilder.withDatetime(anyToDateTime(params!["datetime"]!))
                 }
-                if (params?.index(forKey: "datetimeRepresents") != nil) {
-                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageLonLatJourneysRequestBuilder.Datetime_representsEnum? {
+                if params?.index(forKey: "datetimeRepresents") != nil {
+                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageLonLatJourneysRequestBuilder.DatetimeRepresents? {
                         queryBuilder.withDatetimeRepresents(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxNbTransfers") != nil) {
+                if params?.index(forKey: "maxNbTransfers") != nil {
                     queryBuilder.withMaxNbTransfers(anyToInt(params!["maxNbTransfers"]!))
                 }
-                if (params?.index(forKey: "minNbTransfers") != nil) {
+                if params?.index(forKey: "minNbTransfers") != nil {
                     queryBuilder.withMinNbTransfers(anyToInt(params!["minNbTransfers"]!))
                 }
-                if (params?.index(forKey: "firstSectionMode") != nil) {
-                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageLonLatJourneysRequestBuilder.First_section_mode[]Enum])
+                if params?.index(forKey: "firstSectionMode") != nil {
+                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageLonLatJourneysRequestBuilder.FirstSectionMode])
                 }
-                if (params?.index(forKey: "lastSectionMode") != nil) {
-                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageLonLatJourneysRequestBuilder.Last_section_mode[]Enum])
+                if params?.index(forKey: "lastSectionMode") != nil {
+                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageLonLatJourneysRequestBuilder.LastSectionMode])
                 }
-                if (params?.index(forKey: "maxDurationToPt") != nil) {
+                if params?.index(forKey: "maxDurationToPt") != nil {
                     queryBuilder.withMaxDurationToPt(anyToInt(params!["maxDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxWalkingDurationToPt") != nil) {
+                if params?.index(forKey: "maxWalkingDurationToPt") != nil {
                     queryBuilder.withMaxWalkingDurationToPt(anyToInt(params!["maxWalkingDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBikeDurationToPt") != nil) {
+                if params?.index(forKey: "maxBikeDurationToPt") != nil {
                     queryBuilder.withMaxBikeDurationToPt(anyToInt(params!["maxBikeDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBssDurationToPt") != nil) {
+                if params?.index(forKey: "maxBssDurationToPt") != nil {
                     queryBuilder.withMaxBssDurationToPt(anyToInt(params!["maxBssDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxCarDurationToPt") != nil) {
+                if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
-                if (params?.index(forKey: "walkingSpeed") != nil) {
+                if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
-                if (params?.index(forKey: "bikeSpeed") != nil) {
+                if params?.index(forKey: "bikeSpeed") != nil {
                     queryBuilder.withBikeSpeed(anyToFloat(params!["bikeSpeed"]!))
                 }
-                if (params?.index(forKey: "bssSpeed") != nil) {
+                if params?.index(forKey: "bssSpeed") != nil {
                     queryBuilder.withBssSpeed(anyToFloat(params!["bssSpeed"]!))
                 }
-                if (params?.index(forKey: "carSpeed") != nil) {
+                if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "allowedId") != nil) {
+                if params?.index(forKey: "allowedId") != nil {
                     queryBuilder.withAllowedId(arrayToStringDict(params!["allowedId"]!))
                 }
-                if (params?.index(forKey: "disruptionActive") != nil) {
+                if params?.index(forKey: "disruptionActive") != nil {
                     queryBuilder.withDisruptionActive(anyToBool(params!["disruptionActive"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatJourneysRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatJourneysRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxDuration") != nil) {
+                if params?.index(forKey: "maxDuration") != nil {
                     queryBuilder.withMaxDuration(anyToInt(params!["maxDuration"]!))
                 }
-                if (params?.index(forKey: "wheelchair") != nil) {
+                if params?.index(forKey: "wheelchair") != nil {
                     queryBuilder.withWheelchair(anyToBool(params!["wheelchair"]!))
                 }
-                if (params?.index(forKey: "travelerType") != nil) {
-                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageLonLatJourneysRequestBuilder.Traveler_typeEnum? {
+                if params?.index(forKey: "travelerType") != nil {
+                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageLonLatJourneysRequestBuilder.TravelerType? {
                         queryBuilder.withTravelerType(enumValue)
                     }
                 }
-                if (params?.index(forKey: "directPath") != nil) {
-                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageLonLatJourneysRequestBuilder.Direct_pathEnum? {
+                if params?.index(forKey: "directPath") != nil {
+                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageLonLatJourneysRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "isJourneySchedules") != nil) {
+                if params?.index(forKey: "isJourneySchedules") != nil {
                     queryBuilder.withIsJourneySchedules(anyToBool(params!["isJourneySchedules"]!))
                 }
-                if (params?.index(forKey: "minNbJourneys") != nil) {
+                if params?.index(forKey: "minNbJourneys") != nil {
                     queryBuilder.withMinNbJourneys(anyToInt(params!["minNbJourneys"]!))
                 }
-                if (params?.index(forKey: "maxNbJourneys") != nil) {
+                if params?.index(forKey: "maxNbJourneys") != nil {
                     queryBuilder.withMaxNbJourneys(anyToInt(params!["maxNbJourneys"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatJourneysRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatJourneysRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -5875,111 +5879,111 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneysApi? = self.sdk?.journeysApi {
-                let queryBuilder: CoverageRegionJourneysRequestBuilder = api.newCoverageRegionJourneysRequestBuilder();
+                let queryBuilder: CoverageRegionJourneysRequestBuilder = api!.newCoverageRegionJourneysRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "from") != nil) {
+                if params?.index(forKey: "from") != nil {
                     queryBuilder.withFrom(anyToString(params!["from"]!))
                 }
-                if (params?.index(forKey: "to") != nil) {
+                if params?.index(forKey: "to") != nil {
                     queryBuilder.withTo(anyToString(params!["to"]!))
                 }
-                if (params?.index(forKey: "datetime") != nil) {
+                if params?.index(forKey: "datetime") != nil {
                     queryBuilder.withDatetime(anyToDateTime(params!["datetime"]!))
                 }
-                if (params?.index(forKey: "datetimeRepresents") != nil) {
-                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageRegionJourneysRequestBuilder.Datetime_representsEnum? {
+                if params?.index(forKey: "datetimeRepresents") != nil {
+                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageRegionJourneysRequestBuilder.DatetimeRepresents? {
                         queryBuilder.withDatetimeRepresents(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxNbTransfers") != nil) {
+                if params?.index(forKey: "maxNbTransfers") != nil {
                     queryBuilder.withMaxNbTransfers(anyToInt(params!["maxNbTransfers"]!))
                 }
-                if (params?.index(forKey: "minNbTransfers") != nil) {
+                if params?.index(forKey: "minNbTransfers") != nil {
                     queryBuilder.withMinNbTransfers(anyToInt(params!["minNbTransfers"]!))
                 }
-                if (params?.index(forKey: "firstSectionMode") != nil) {
-                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageRegionJourneysRequestBuilder.First_section_mode[]Enum])
+                if params?.index(forKey: "firstSectionMode") != nil {
+                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageRegionJourneysRequestBuilder.FirstSectionMode])
                 }
-                if (params?.index(forKey: "lastSectionMode") != nil) {
-                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageRegionJourneysRequestBuilder.Last_section_mode[]Enum])
+                if params?.index(forKey: "lastSectionMode") != nil {
+                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageRegionJourneysRequestBuilder.LastSectionMode])
                 }
-                if (params?.index(forKey: "maxDurationToPt") != nil) {
+                if params?.index(forKey: "maxDurationToPt") != nil {
                     queryBuilder.withMaxDurationToPt(anyToInt(params!["maxDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxWalkingDurationToPt") != nil) {
+                if params?.index(forKey: "maxWalkingDurationToPt") != nil {
                     queryBuilder.withMaxWalkingDurationToPt(anyToInt(params!["maxWalkingDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBikeDurationToPt") != nil) {
+                if params?.index(forKey: "maxBikeDurationToPt") != nil {
                     queryBuilder.withMaxBikeDurationToPt(anyToInt(params!["maxBikeDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBssDurationToPt") != nil) {
+                if params?.index(forKey: "maxBssDurationToPt") != nil {
                     queryBuilder.withMaxBssDurationToPt(anyToInt(params!["maxBssDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxCarDurationToPt") != nil) {
+                if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
-                if (params?.index(forKey: "walkingSpeed") != nil) {
+                if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
-                if (params?.index(forKey: "bikeSpeed") != nil) {
+                if params?.index(forKey: "bikeSpeed") != nil {
                     queryBuilder.withBikeSpeed(anyToFloat(params!["bikeSpeed"]!))
                 }
-                if (params?.index(forKey: "bssSpeed") != nil) {
+                if params?.index(forKey: "bssSpeed") != nil {
                     queryBuilder.withBssSpeed(anyToFloat(params!["bssSpeed"]!))
                 }
-                if (params?.index(forKey: "carSpeed") != nil) {
+                if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "allowedId") != nil) {
+                if params?.index(forKey: "allowedId") != nil {
                     queryBuilder.withAllowedId(arrayToStringDict(params!["allowedId"]!))
                 }
-                if (params?.index(forKey: "disruptionActive") != nil) {
+                if params?.index(forKey: "disruptionActive") != nil {
                     queryBuilder.withDisruptionActive(anyToBool(params!["disruptionActive"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionJourneysRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionJourneysRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxDuration") != nil) {
+                if params?.index(forKey: "maxDuration") != nil {
                     queryBuilder.withMaxDuration(anyToInt(params!["maxDuration"]!))
                 }
-                if (params?.index(forKey: "wheelchair") != nil) {
+                if params?.index(forKey: "wheelchair") != nil {
                     queryBuilder.withWheelchair(anyToBool(params!["wheelchair"]!))
                 }
-                if (params?.index(forKey: "travelerType") != nil) {
-                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageRegionJourneysRequestBuilder.Traveler_typeEnum? {
+                if params?.index(forKey: "travelerType") != nil {
+                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageRegionJourneysRequestBuilder.TravelerType? {
                         queryBuilder.withTravelerType(enumValue)
                     }
                 }
-                if (params?.index(forKey: "directPath") != nil) {
-                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageRegionJourneysRequestBuilder.Direct_pathEnum? {
+                if params?.index(forKey: "directPath") != nil {
+                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageRegionJourneysRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "isJourneySchedules") != nil) {
+                if params?.index(forKey: "isJourneySchedules") != nil {
                     queryBuilder.withIsJourneySchedules(anyToBool(params!["isJourneySchedules"]!))
                 }
-                if (params?.index(forKey: "minNbJourneys") != nil) {
+                if params?.index(forKey: "minNbJourneys") != nil {
                     queryBuilder.withMinNbJourneys(anyToInt(params!["minNbJourneys"]!))
                 }
-                if (params?.index(forKey: "maxNbJourneys") != nil) {
+                if params?.index(forKey: "maxNbJourneys") != nil {
                     queryBuilder.withMaxNbJourneys(anyToInt(params!["maxNbJourneys"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionJourneysRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionJourneysRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6018,108 +6022,108 @@ import NavitiaSDK
             )
         } else {
             if let api: JourneysApi? = self.sdk?.journeysApi {
-                let queryBuilder: JourneysRequestBuilder = api.newJourneysRequestBuilder();
+                let queryBuilder: JourneysRequestBuilder = api!.newJourneysRequestBuilder();
 
-                if (params?.index(forKey: "from") != nil) {
+                if params?.index(forKey: "from") != nil {
                     queryBuilder.withFrom(anyToString(params!["from"]!))
                 }
-                if (params?.index(forKey: "to") != nil) {
+                if params?.index(forKey: "to") != nil {
                     queryBuilder.withTo(anyToString(params!["to"]!))
                 }
-                if (params?.index(forKey: "datetime") != nil) {
+                if params?.index(forKey: "datetime") != nil {
                     queryBuilder.withDatetime(anyToDateTime(params!["datetime"]!))
                 }
-                if (params?.index(forKey: "datetimeRepresents") != nil) {
-                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as JourneysRequestBuilder.Datetime_representsEnum? {
+                if params?.index(forKey: "datetimeRepresents") != nil {
+                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as JourneysRequestBuilder.DatetimeRepresents? {
                         queryBuilder.withDatetimeRepresents(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxNbTransfers") != nil) {
+                if params?.index(forKey: "maxNbTransfers") != nil {
                     queryBuilder.withMaxNbTransfers(anyToInt(params!["maxNbTransfers"]!))
                 }
-                if (params?.index(forKey: "minNbTransfers") != nil) {
+                if params?.index(forKey: "minNbTransfers") != nil {
                     queryBuilder.withMinNbTransfers(anyToInt(params!["minNbTransfers"]!))
                 }
-                if (params?.index(forKey: "firstSectionMode") != nil) {
-                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [JourneysRequestBuilder.First_section_mode[]Enum])
+                if params?.index(forKey: "firstSectionMode") != nil {
+                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [JourneysRequestBuilder.FirstSectionMode])
                 }
-                if (params?.index(forKey: "lastSectionMode") != nil) {
-                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [JourneysRequestBuilder.Last_section_mode[]Enum])
+                if params?.index(forKey: "lastSectionMode") != nil {
+                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [JourneysRequestBuilder.LastSectionMode])
                 }
-                if (params?.index(forKey: "maxDurationToPt") != nil) {
+                if params?.index(forKey: "maxDurationToPt") != nil {
                     queryBuilder.withMaxDurationToPt(anyToInt(params!["maxDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxWalkingDurationToPt") != nil) {
+                if params?.index(forKey: "maxWalkingDurationToPt") != nil {
                     queryBuilder.withMaxWalkingDurationToPt(anyToInt(params!["maxWalkingDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBikeDurationToPt") != nil) {
+                if params?.index(forKey: "maxBikeDurationToPt") != nil {
                     queryBuilder.withMaxBikeDurationToPt(anyToInt(params!["maxBikeDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxBssDurationToPt") != nil) {
+                if params?.index(forKey: "maxBssDurationToPt") != nil {
                     queryBuilder.withMaxBssDurationToPt(anyToInt(params!["maxBssDurationToPt"]!))
                 }
-                if (params?.index(forKey: "maxCarDurationToPt") != nil) {
+                if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
-                if (params?.index(forKey: "walkingSpeed") != nil) {
+                if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
-                if (params?.index(forKey: "bikeSpeed") != nil) {
+                if params?.index(forKey: "bikeSpeed") != nil {
                     queryBuilder.withBikeSpeed(anyToFloat(params!["bikeSpeed"]!))
                 }
-                if (params?.index(forKey: "bssSpeed") != nil) {
+                if params?.index(forKey: "bssSpeed") != nil {
                     queryBuilder.withBssSpeed(anyToFloat(params!["bssSpeed"]!))
                 }
-                if (params?.index(forKey: "carSpeed") != nil) {
+                if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "allowedId") != nil) {
+                if params?.index(forKey: "allowedId") != nil {
                     queryBuilder.withAllowedId(arrayToStringDict(params!["allowedId"]!))
                 }
-                if (params?.index(forKey: "disruptionActive") != nil) {
+                if params?.index(forKey: "disruptionActive") != nil {
                     queryBuilder.withDisruptionActive(anyToBool(params!["disruptionActive"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as JourneysRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as JourneysRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "maxDuration") != nil) {
+                if params?.index(forKey: "maxDuration") != nil {
                     queryBuilder.withMaxDuration(anyToInt(params!["maxDuration"]!))
                 }
-                if (params?.index(forKey: "wheelchair") != nil) {
+                if params?.index(forKey: "wheelchair") != nil {
                     queryBuilder.withWheelchair(anyToBool(params!["wheelchair"]!))
                 }
-                if (params?.index(forKey: "travelerType") != nil) {
-                    if let enumValue = anyToEnum(params!["travelerType"]!) as JourneysRequestBuilder.Traveler_typeEnum? {
+                if params?.index(forKey: "travelerType") != nil {
+                    if let enumValue = anyToEnum(params!["travelerType"]!) as JourneysRequestBuilder.TravelerType? {
                         queryBuilder.withTravelerType(enumValue)
                     }
                 }
-                if (params?.index(forKey: "directPath") != nil) {
-                    if let enumValue = anyToEnum(params!["directPath"]!) as JourneysRequestBuilder.Direct_pathEnum? {
+                if params?.index(forKey: "directPath") != nil {
+                    if let enumValue = anyToEnum(params!["directPath"]!) as JourneysRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "isJourneySchedules") != nil) {
+                if params?.index(forKey: "isJourneySchedules") != nil {
                     queryBuilder.withIsJourneySchedules(anyToBool(params!["isJourneySchedules"]!))
                 }
-                if (params?.index(forKey: "minNbJourneys") != nil) {
+                if params?.index(forKey: "minNbJourneys") != nil {
                     queryBuilder.withMinNbJourneys(anyToInt(params!["minNbJourneys"]!))
                 }
-                if (params?.index(forKey: "maxNbJourneys") != nil) {
+                if params?.index(forKey: "maxNbJourneys") != nil {
                     queryBuilder.withMaxNbJourneys(anyToInt(params!["maxNbJourneys"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [JourneysRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [JourneysRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6158,59 +6162,59 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: CoverageLonLatLineGroupsRequestBuilder = api.newCoverageLonLatLineGroupsRequestBuilder();
+                let queryBuilder: CoverageLonLatLineGroupsRequestBuilder = api!.newCoverageLonLatLineGroupsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatLineGroupsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatLineGroupsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6250,59 +6254,59 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: CoverageLonLatLineGroupsIdRequestBuilder = api.newCoverageLonLatLineGroupsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatLineGroupsIdRequestBuilder = api!.newCoverageLonLatLineGroupsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatLineGroupsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatLineGroupsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6342,62 +6346,62 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: CoverageLonLatUriLineGroupsRequestBuilder = api.newCoverageLonLatUriLineGroupsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriLineGroupsRequestBuilder = api!.newCoverageLonLatUriLineGroupsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriLineGroupsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriLineGroupsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6437,62 +6441,62 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: CoverageLonLatUriLineGroupsIdRequestBuilder = api.newCoverageLonLatUriLineGroupsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriLineGroupsIdRequestBuilder = api!.newCoverageLonLatUriLineGroupsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriLineGroupsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriLineGroupsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6532,56 +6536,56 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: CoverageRegionLineGroupsRequestBuilder = api.newCoverageRegionLineGroupsRequestBuilder();
+                let queryBuilder: CoverageRegionLineGroupsRequestBuilder = api!.newCoverageRegionLineGroupsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionLineGroupsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionLineGroupsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6621,56 +6625,56 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: CoverageRegionLineGroupsIdRequestBuilder = api.newCoverageRegionLineGroupsIdRequestBuilder();
+                let queryBuilder: CoverageRegionLineGroupsIdRequestBuilder = api!.newCoverageRegionLineGroupsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionLineGroupsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionLineGroupsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6710,59 +6714,59 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: CoverageRegionUriLineGroupsRequestBuilder = api.newCoverageRegionUriLineGroupsRequestBuilder();
+                let queryBuilder: CoverageRegionUriLineGroupsRequestBuilder = api!.newCoverageRegionUriLineGroupsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriLineGroupsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriLineGroupsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6802,59 +6806,59 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: CoverageRegionUriLineGroupsIdRequestBuilder = api.newCoverageRegionUriLineGroupsIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriLineGroupsIdRequestBuilder = api!.newCoverageRegionUriLineGroupsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriLineGroupsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriLineGroupsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6894,53 +6898,53 @@ import NavitiaSDK
             )
         } else {
             if let api: LineGroupsApi? = self.sdk?.lineGroupsApi {
-                let queryBuilder: LineGroupsRequestBuilder = api.newLineGroupsRequestBuilder();
+                let queryBuilder: LineGroupsRequestBuilder = api!.newLineGroupsRequestBuilder();
 
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as LineGroupsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as LineGroupsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -6980,24 +6984,24 @@ import NavitiaSDK
             )
         } else {
             if let api: LineReportsApi? = self.sdk?.lineReportsApi {
-                let queryBuilder: CoverageRegionLineReportsRequestBuilder = api.newCoverageRegionLineReportsRequestBuilder();
+                let queryBuilder: CoverageRegionLineReportsRequestBuilder = api!.newCoverageRegionLineReportsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -7037,27 +7041,27 @@ import NavitiaSDK
             )
         } else {
             if let api: LineReportsApi? = self.sdk?.lineReportsApi {
-                let queryBuilder: CoverageRegionUriLineReportsRequestBuilder = api.newCoverageRegionUriLineReportsRequestBuilder();
+                let queryBuilder: CoverageRegionUriLineReportsRequestBuilder = api!.newCoverageRegionUriLineReportsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -7097,59 +7101,59 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: CoverageLonLatLinesRequestBuilder = api.newCoverageLonLatLinesRequestBuilder();
+                let queryBuilder: CoverageLonLatLinesRequestBuilder = api!.newCoverageLonLatLinesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatLinesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatLinesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7189,59 +7193,59 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: CoverageLonLatLinesIdRequestBuilder = api.newCoverageLonLatLinesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatLinesIdRequestBuilder = api!.newCoverageLonLatLinesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatLinesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatLinesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7281,62 +7285,62 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: CoverageLonLatUriLinesRequestBuilder = api.newCoverageLonLatUriLinesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriLinesRequestBuilder = api!.newCoverageLonLatUriLinesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriLinesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriLinesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7376,62 +7380,62 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: CoverageLonLatUriLinesIdRequestBuilder = api.newCoverageLonLatUriLinesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriLinesIdRequestBuilder = api!.newCoverageLonLatUriLinesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriLinesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriLinesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7471,56 +7475,56 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: CoverageRegionLinesRequestBuilder = api.newCoverageRegionLinesRequestBuilder();
+                let queryBuilder: CoverageRegionLinesRequestBuilder = api!.newCoverageRegionLinesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionLinesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionLinesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7560,56 +7564,56 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: CoverageRegionLinesIdRequestBuilder = api.newCoverageRegionLinesIdRequestBuilder();
+                let queryBuilder: CoverageRegionLinesIdRequestBuilder = api!.newCoverageRegionLinesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionLinesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionLinesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7649,59 +7653,59 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: CoverageRegionUriLinesRequestBuilder = api.newCoverageRegionUriLinesRequestBuilder();
+                let queryBuilder: CoverageRegionUriLinesRequestBuilder = api!.newCoverageRegionUriLinesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriLinesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriLinesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7741,59 +7745,59 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: CoverageRegionUriLinesIdRequestBuilder = api.newCoverageRegionUriLinesIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriLinesIdRequestBuilder = api!.newCoverageRegionUriLinesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriLinesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriLinesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7833,53 +7837,53 @@ import NavitiaSDK
             )
         } else {
             if let api: LinesApi? = self.sdk?.linesApi {
-                let queryBuilder: LinesRequestBuilder = api.newLinesRequestBuilder();
+                let queryBuilder: LinesRequestBuilder = api!.newLinesRequestBuilder();
 
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as LinesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as LinesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -7919,59 +7923,59 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: CoverageLonLatNetworksRequestBuilder = api.newCoverageLonLatNetworksRequestBuilder();
+                let queryBuilder: CoverageLonLatNetworksRequestBuilder = api!.newCoverageLonLatNetworksRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatNetworksRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatNetworksRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8011,59 +8015,59 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: CoverageLonLatNetworksIdRequestBuilder = api.newCoverageLonLatNetworksIdRequestBuilder();
+                let queryBuilder: CoverageLonLatNetworksIdRequestBuilder = api!.newCoverageLonLatNetworksIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatNetworksIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatNetworksIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8103,62 +8107,62 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: CoverageLonLatUriNetworksRequestBuilder = api.newCoverageLonLatUriNetworksRequestBuilder();
+                let queryBuilder: CoverageLonLatUriNetworksRequestBuilder = api!.newCoverageLonLatUriNetworksRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriNetworksRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriNetworksRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8198,62 +8202,62 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: CoverageLonLatUriNetworksIdRequestBuilder = api.newCoverageLonLatUriNetworksIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriNetworksIdRequestBuilder = api!.newCoverageLonLatUriNetworksIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriNetworksIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriNetworksIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8293,56 +8297,56 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: CoverageRegionNetworksRequestBuilder = api.newCoverageRegionNetworksRequestBuilder();
+                let queryBuilder: CoverageRegionNetworksRequestBuilder = api!.newCoverageRegionNetworksRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionNetworksRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionNetworksRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8382,56 +8386,56 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: CoverageRegionNetworksIdRequestBuilder = api.newCoverageRegionNetworksIdRequestBuilder();
+                let queryBuilder: CoverageRegionNetworksIdRequestBuilder = api!.newCoverageRegionNetworksIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionNetworksIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionNetworksIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8471,59 +8475,59 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: CoverageRegionUriNetworksRequestBuilder = api.newCoverageRegionUriNetworksRequestBuilder();
+                let queryBuilder: CoverageRegionUriNetworksRequestBuilder = api!.newCoverageRegionUriNetworksRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriNetworksRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriNetworksRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8563,59 +8567,59 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: CoverageRegionUriNetworksIdRequestBuilder = api.newCoverageRegionUriNetworksIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriNetworksIdRequestBuilder = api!.newCoverageRegionUriNetworksIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriNetworksIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriNetworksIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8655,53 +8659,53 @@ import NavitiaSDK
             )
         } else {
             if let api: NetworksApi? = self.sdk?.networksApi {
-                let queryBuilder: NetworksRequestBuilder = api.newNetworksRequestBuilder();
+                let queryBuilder: NetworksRequestBuilder = api!.newNetworksRequestBuilder();
 
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as NetworksRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as NetworksRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -8741,62 +8745,62 @@ import NavitiaSDK
             )
         } else {
             if let api: NextArrivalsApi? = self.sdk?.nextArrivalsApi {
-                let queryBuilder: CoverageLonLatArrivalsRequestBuilder = api.newCoverageLonLatArrivalsRequestBuilder();
+                let queryBuilder: CoverageLonLatArrivalsRequestBuilder = api!.newCoverageLonLatArrivalsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatArrivalsRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatArrivalsRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -8836,65 +8840,65 @@ import NavitiaSDK
             )
         } else {
             if let api: NextArrivalsApi? = self.sdk?.nextArrivalsApi {
-                let queryBuilder: CoverageLonLatUriArrivalsRequestBuilder = api.newCoverageLonLatUriArrivalsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriArrivalsRequestBuilder = api!.newCoverageLonLatUriArrivalsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriArrivalsRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriArrivalsRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -8934,59 +8938,59 @@ import NavitiaSDK
             )
         } else {
             if let api: NextArrivalsApi? = self.sdk?.nextArrivalsApi {
-                let queryBuilder: CoverageRegionArrivalsRequestBuilder = api.newCoverageRegionArrivalsRequestBuilder();
+                let queryBuilder: CoverageRegionArrivalsRequestBuilder = api!.newCoverageRegionArrivalsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionArrivalsRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionArrivalsRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -9026,62 +9030,62 @@ import NavitiaSDK
             )
         } else {
             if let api: NextArrivalsApi? = self.sdk?.nextArrivalsApi {
-                let queryBuilder: CoverageRegionUriArrivalsRequestBuilder = api.newCoverageRegionUriArrivalsRequestBuilder();
+                let queryBuilder: CoverageRegionUriArrivalsRequestBuilder = api!.newCoverageRegionUriArrivalsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriArrivalsRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriArrivalsRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -9121,62 +9125,62 @@ import NavitiaSDK
             )
         } else {
             if let api: NextDeparturesApi? = self.sdk?.nextDeparturesApi {
-                let queryBuilder: CoverageLonLatDeparturesRequestBuilder = api.newCoverageLonLatDeparturesRequestBuilder();
+                let queryBuilder: CoverageLonLatDeparturesRequestBuilder = api!.newCoverageLonLatDeparturesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatDeparturesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatDeparturesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -9216,65 +9220,65 @@ import NavitiaSDK
             )
         } else {
             if let api: NextDeparturesApi? = self.sdk?.nextDeparturesApi {
-                let queryBuilder: CoverageLonLatUriDeparturesRequestBuilder = api.newCoverageLonLatUriDeparturesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriDeparturesRequestBuilder = api!.newCoverageLonLatUriDeparturesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriDeparturesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriDeparturesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -9314,59 +9318,59 @@ import NavitiaSDK
             )
         } else {
             if let api: NextDeparturesApi? = self.sdk?.nextDeparturesApi {
-                let queryBuilder: CoverageRegionDeparturesRequestBuilder = api.newCoverageRegionDeparturesRequestBuilder();
+                let queryBuilder: CoverageRegionDeparturesRequestBuilder = api!.newCoverageRegionDeparturesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionDeparturesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionDeparturesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -9406,62 +9410,62 @@ import NavitiaSDK
             )
         } else {
             if let api: NextDeparturesApi? = self.sdk?.nextDeparturesApi {
-                let queryBuilder: CoverageRegionUriDeparturesRequestBuilder = api.newCoverageRegionUriDeparturesRequestBuilder();
+                let queryBuilder: CoverageRegionUriDeparturesRequestBuilder = api!.newCoverageRegionUriDeparturesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriDeparturesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriDeparturesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -9501,56 +9505,56 @@ import NavitiaSDK
             )
         } else {
             if let api: PhysicalModesApi? = self.sdk?.physicalModesApi {
-                let queryBuilder: CoverageLonLatPhysicalModesRequestBuilder = api.newCoverageLonLatPhysicalModesRequestBuilder();
+                let queryBuilder: CoverageLonLatPhysicalModesRequestBuilder = api!.newCoverageLonLatPhysicalModesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPhysicalModesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPhysicalModesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -9590,56 +9594,56 @@ import NavitiaSDK
             )
         } else {
             if let api: PhysicalModesApi? = self.sdk?.physicalModesApi {
-                let queryBuilder: CoverageLonLatPhysicalModesIdRequestBuilder = api.newCoverageLonLatPhysicalModesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatPhysicalModesIdRequestBuilder = api!.newCoverageLonLatPhysicalModesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPhysicalModesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPhysicalModesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -9679,59 +9683,59 @@ import NavitiaSDK
             )
         } else {
             if let api: PhysicalModesApi? = self.sdk?.physicalModesApi {
-                let queryBuilder: CoverageLonLatUriPhysicalModesRequestBuilder = api.newCoverageLonLatUriPhysicalModesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriPhysicalModesRequestBuilder = api!.newCoverageLonLatUriPhysicalModesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPhysicalModesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPhysicalModesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -9771,59 +9775,59 @@ import NavitiaSDK
             )
         } else {
             if let api: PhysicalModesApi? = self.sdk?.physicalModesApi {
-                let queryBuilder: CoverageLonLatUriPhysicalModesIdRequestBuilder = api.newCoverageLonLatUriPhysicalModesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriPhysicalModesIdRequestBuilder = api!.newCoverageLonLatUriPhysicalModesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPhysicalModesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPhysicalModesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -9863,53 +9867,53 @@ import NavitiaSDK
             )
         } else {
             if let api: PhysicalModesApi? = self.sdk?.physicalModesApi {
-                let queryBuilder: CoverageRegionPhysicalModesRequestBuilder = api.newCoverageRegionPhysicalModesRequestBuilder();
+                let queryBuilder: CoverageRegionPhysicalModesRequestBuilder = api!.newCoverageRegionPhysicalModesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPhysicalModesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPhysicalModesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -9949,53 +9953,53 @@ import NavitiaSDK
             )
         } else {
             if let api: PhysicalModesApi? = self.sdk?.physicalModesApi {
-                let queryBuilder: CoverageRegionPhysicalModesIdRequestBuilder = api.newCoverageRegionPhysicalModesIdRequestBuilder();
+                let queryBuilder: CoverageRegionPhysicalModesIdRequestBuilder = api!.newCoverageRegionPhysicalModesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPhysicalModesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPhysicalModesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -10035,56 +10039,56 @@ import NavitiaSDK
             )
         } else {
             if let api: PhysicalModesApi? = self.sdk?.physicalModesApi {
-                let queryBuilder: CoverageRegionUriPhysicalModesRequestBuilder = api.newCoverageRegionUriPhysicalModesRequestBuilder();
+                let queryBuilder: CoverageRegionUriPhysicalModesRequestBuilder = api!.newCoverageRegionUriPhysicalModesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPhysicalModesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPhysicalModesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -10124,56 +10128,56 @@ import NavitiaSDK
             )
         } else {
             if let api: PhysicalModesApi? = self.sdk?.physicalModesApi {
-                let queryBuilder: CoverageRegionUriPhysicalModesIdRequestBuilder = api.newCoverageRegionUriPhysicalModesIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriPhysicalModesIdRequestBuilder = api!.newCoverageRegionUriPhysicalModesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPhysicalModesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPhysicalModesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -10213,36 +10217,36 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesApi? = self.sdk?.placesApi {
-                let queryBuilder: CoverageLonLatPlacesRequestBuilder = api.newCoverageLonLatPlacesRequestBuilder();
+                let queryBuilder: CoverageLonLatPlacesRequestBuilder = api!.newCoverageLonLatPlacesRequestBuilder();
 
-                if (params?.index(forKey: "q") != nil) {
+                if params?.index(forKey: "q") != nil {
                     queryBuilder.withQ(anyToString(params!["q"]!))
                 }
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageLonLatPlacesRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageLonLatPlacesRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "adminUri") != nil) {
+                if params?.index(forKey: "adminUri") != nil {
                     queryBuilder.withAdminUri(arrayToStringDict(params!["adminUri"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "from") != nil) {
+                if params?.index(forKey: "from") != nil {
                     queryBuilder.withFrom(anyToString(params!["from"]!))
                 }
-                if (params?.index(forKey: "shape") != nil) {
+                if params?.index(forKey: "shape") != nil {
                     queryBuilder.withShape(anyToString(params!["shape"]!))
                 }
 
@@ -10282,33 +10286,33 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesApi? = self.sdk?.placesApi {
-                let queryBuilder: CoverageRegionPlacesRequestBuilder = api.newCoverageRegionPlacesRequestBuilder();
+                let queryBuilder: CoverageRegionPlacesRequestBuilder = api!.newCoverageRegionPlacesRequestBuilder();
 
-                if (params?.index(forKey: "q") != nil) {
+                if params?.index(forKey: "q") != nil {
                     queryBuilder.withQ(anyToString(params!["q"]!))
                 }
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageRegionPlacesRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageRegionPlacesRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "adminUri") != nil) {
+                if params?.index(forKey: "adminUri") != nil {
                     queryBuilder.withAdminUri(arrayToStringDict(params!["adminUri"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "from") != nil) {
+                if params?.index(forKey: "from") != nil {
                     queryBuilder.withFrom(anyToString(params!["from"]!))
                 }
-                if (params?.index(forKey: "shape") != nil) {
+                if params?.index(forKey: "shape") != nil {
                     queryBuilder.withShape(anyToString(params!["shape"]!))
                 }
 
@@ -10348,30 +10352,30 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesApi? = self.sdk?.placesApi {
-                let queryBuilder: PlacesRequestBuilder = api.newPlacesRequestBuilder();
+                let queryBuilder: PlacesRequestBuilder = api!.newPlacesRequestBuilder();
 
-                if (params?.index(forKey: "q") != nil) {
+                if params?.index(forKey: "q") != nil {
                     queryBuilder.withQ(anyToString(params!["q"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [PlacesRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [PlacesRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "adminUri") != nil) {
+                if params?.index(forKey: "adminUri") != nil {
                     queryBuilder.withAdminUri(arrayToStringDict(params!["adminUri"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "from") != nil) {
+                if params?.index(forKey: "from") != nil {
                     queryBuilder.withFrom(anyToString(params!["from"]!))
                 }
-                if (params?.index(forKey: "shape") != nil) {
+                if params?.index(forKey: "shape") != nil {
                     queryBuilder.withShape(anyToString(params!["shape"]!))
                 }
 
@@ -10411,39 +10415,39 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesNearbyApi? = self.sdk?.placesNearbyApi {
-                let queryBuilder: CoordLonLatPlacesNearbyRequestBuilder = api.newCoordLonLatPlacesNearbyRequestBuilder();
+                let queryBuilder: CoordLonLatPlacesNearbyRequestBuilder = api!.newCoordLonLatPlacesNearbyRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoordLonLatPlacesNearbyRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoordLonLatPlacesNearbyRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoordLonLatPlacesNearbyRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoordLonLatPlacesNearbyRequestBuilder.AddPoiInfos])
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -10483,39 +10487,39 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesNearbyApi? = self.sdk?.placesNearbyApi {
-                let queryBuilder: CoordsLonLatPlacesNearbyRequestBuilder = api.newCoordsLonLatPlacesNearbyRequestBuilder();
+                let queryBuilder: CoordsLonLatPlacesNearbyRequestBuilder = api!.newCoordsLonLatPlacesNearbyRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoordsLonLatPlacesNearbyRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoordsLonLatPlacesNearbyRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoordsLonLatPlacesNearbyRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoordsLonLatPlacesNearbyRequestBuilder.AddPoiInfos])
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -10555,39 +10559,39 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesNearbyApi? = self.sdk?.placesNearbyApi {
-                let queryBuilder: CoverageLonLatPlacesNearbyRequestBuilder = api.newCoverageLonLatPlacesNearbyRequestBuilder();
+                let queryBuilder: CoverageLonLatPlacesNearbyRequestBuilder = api!.newCoverageLonLatPlacesNearbyRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageLonLatPlacesNearbyRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageLonLatPlacesNearbyRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatPlacesNearbyRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatPlacesNearbyRequestBuilder.AddPoiInfos])
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -10627,42 +10631,42 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesNearbyApi? = self.sdk?.placesNearbyApi {
-                let queryBuilder: CoverageLonLatUriPlacesNearbyRequestBuilder = api.newCoverageLonLatUriPlacesNearbyRequestBuilder();
+                let queryBuilder: CoverageLonLatUriPlacesNearbyRequestBuilder = api!.newCoverageLonLatUriPlacesNearbyRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageLonLatUriPlacesNearbyRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageLonLatUriPlacesNearbyRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatUriPlacesNearbyRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatUriPlacesNearbyRequestBuilder.AddPoiInfos])
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -10702,36 +10706,36 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesNearbyApi? = self.sdk?.placesNearbyApi {
-                let queryBuilder: CoverageRegionPlacesNearbyRequestBuilder = api.newCoverageRegionPlacesNearbyRequestBuilder();
+                let queryBuilder: CoverageRegionPlacesNearbyRequestBuilder = api!.newCoverageRegionPlacesNearbyRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageRegionPlacesNearbyRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageRegionPlacesNearbyRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionPlacesNearbyRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionPlacesNearbyRequestBuilder.AddPoiInfos])
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -10771,39 +10775,39 @@ import NavitiaSDK
             )
         } else {
             if let api: PlacesNearbyApi? = self.sdk?.placesNearbyApi {
-                let queryBuilder: CoverageRegionUriPlacesNearbyRequestBuilder = api.newCoverageRegionUriPlacesNearbyRequestBuilder();
+                let queryBuilder: CoverageRegionUriPlacesNearbyRequestBuilder = api!.newCoverageRegionUriPlacesNearbyRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageRegionUriPlacesNearbyRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageRegionUriPlacesNearbyRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionUriPlacesNearbyRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionUriPlacesNearbyRequestBuilder.AddPoiInfos])
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -10843,56 +10847,56 @@ import NavitiaSDK
             )
         } else {
             if let api: PoiTypesApi? = self.sdk?.poiTypesApi {
-                let queryBuilder: CoverageLonLatPoiTypesRequestBuilder = api.newCoverageLonLatPoiTypesRequestBuilder();
+                let queryBuilder: CoverageLonLatPoiTypesRequestBuilder = api!.newCoverageLonLatPoiTypesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPoiTypesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPoiTypesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -10932,56 +10936,56 @@ import NavitiaSDK
             )
         } else {
             if let api: PoiTypesApi? = self.sdk?.poiTypesApi {
-                let queryBuilder: CoverageLonLatPoiTypesIdRequestBuilder = api.newCoverageLonLatPoiTypesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatPoiTypesIdRequestBuilder = api!.newCoverageLonLatPoiTypesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPoiTypesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPoiTypesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -11021,59 +11025,59 @@ import NavitiaSDK
             )
         } else {
             if let api: PoiTypesApi? = self.sdk?.poiTypesApi {
-                let queryBuilder: CoverageLonLatUriPoiTypesRequestBuilder = api.newCoverageLonLatUriPoiTypesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriPoiTypesRequestBuilder = api!.newCoverageLonLatUriPoiTypesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPoiTypesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPoiTypesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -11113,59 +11117,59 @@ import NavitiaSDK
             )
         } else {
             if let api: PoiTypesApi? = self.sdk?.poiTypesApi {
-                let queryBuilder: CoverageLonLatUriPoiTypesIdRequestBuilder = api.newCoverageLonLatUriPoiTypesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriPoiTypesIdRequestBuilder = api!.newCoverageLonLatUriPoiTypesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPoiTypesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPoiTypesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -11205,53 +11209,53 @@ import NavitiaSDK
             )
         } else {
             if let api: PoiTypesApi? = self.sdk?.poiTypesApi {
-                let queryBuilder: CoverageRegionPoiTypesRequestBuilder = api.newCoverageRegionPoiTypesRequestBuilder();
+                let queryBuilder: CoverageRegionPoiTypesRequestBuilder = api!.newCoverageRegionPoiTypesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPoiTypesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPoiTypesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -11291,53 +11295,53 @@ import NavitiaSDK
             )
         } else {
             if let api: PoiTypesApi? = self.sdk?.poiTypesApi {
-                let queryBuilder: CoverageRegionPoiTypesIdRequestBuilder = api.newCoverageRegionPoiTypesIdRequestBuilder();
+                let queryBuilder: CoverageRegionPoiTypesIdRequestBuilder = api!.newCoverageRegionPoiTypesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPoiTypesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPoiTypesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -11377,56 +11381,56 @@ import NavitiaSDK
             )
         } else {
             if let api: PoiTypesApi? = self.sdk?.poiTypesApi {
-                let queryBuilder: CoverageRegionUriPoiTypesRequestBuilder = api.newCoverageRegionUriPoiTypesRequestBuilder();
+                let queryBuilder: CoverageRegionUriPoiTypesRequestBuilder = api!.newCoverageRegionUriPoiTypesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPoiTypesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPoiTypesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -11466,56 +11470,56 @@ import NavitiaSDK
             )
         } else {
             if let api: PoiTypesApi? = self.sdk?.poiTypesApi {
-                let queryBuilder: CoverageRegionUriPoiTypesIdRequestBuilder = api.newCoverageRegionUriPoiTypesIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriPoiTypesIdRequestBuilder = api!.newCoverageRegionUriPoiTypesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPoiTypesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPoiTypesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -11555,66 +11559,66 @@ import NavitiaSDK
             )
         } else {
             if let api: PoisApi? = self.sdk?.poisApi {
-                let queryBuilder: CoverageLonLatPoisRequestBuilder = api.newCoverageLonLatPoisRequestBuilder();
+                let queryBuilder: CoverageLonLatPoisRequestBuilder = api!.newCoverageLonLatPoisRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPoisRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPoisRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatPoisRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatPoisRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11653,66 +11657,66 @@ import NavitiaSDK
             )
         } else {
             if let api: PoisApi? = self.sdk?.poisApi {
-                let queryBuilder: CoverageLonLatPoisIdRequestBuilder = api.newCoverageLonLatPoisIdRequestBuilder();
+                let queryBuilder: CoverageLonLatPoisIdRequestBuilder = api!.newCoverageLonLatPoisIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPoisIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatPoisIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatPoisIdRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatPoisIdRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11751,69 +11755,69 @@ import NavitiaSDK
             )
         } else {
             if let api: PoisApi? = self.sdk?.poisApi {
-                let queryBuilder: CoverageLonLatUriPoisRequestBuilder = api.newCoverageLonLatUriPoisRequestBuilder();
+                let queryBuilder: CoverageLonLatUriPoisRequestBuilder = api!.newCoverageLonLatUriPoisRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPoisRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPoisRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatUriPoisRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatUriPoisRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11852,69 +11856,69 @@ import NavitiaSDK
             )
         } else {
             if let api: PoisApi? = self.sdk?.poisApi {
-                let queryBuilder: CoverageLonLatUriPoisIdRequestBuilder = api.newCoverageLonLatUriPoisIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriPoisIdRequestBuilder = api!.newCoverageLonLatUriPoisIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPoisIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriPoisIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatUriPoisIdRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatUriPoisIdRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11953,63 +11957,63 @@ import NavitiaSDK
             )
         } else {
             if let api: PoisApi? = self.sdk?.poisApi {
-                let queryBuilder: CoverageRegionPoisRequestBuilder = api.newCoverageRegionPoisRequestBuilder();
+                let queryBuilder: CoverageRegionPoisRequestBuilder = api!.newCoverageRegionPoisRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPoisRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPoisRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionPoisRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionPoisRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12048,63 +12052,63 @@ import NavitiaSDK
             )
         } else {
             if let api: PoisApi? = self.sdk?.poisApi {
-                let queryBuilder: CoverageRegionPoisIdRequestBuilder = api.newCoverageRegionPoisIdRequestBuilder();
+                let queryBuilder: CoverageRegionPoisIdRequestBuilder = api!.newCoverageRegionPoisIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPoisIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionPoisIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionPoisIdRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionPoisIdRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12143,66 +12147,66 @@ import NavitiaSDK
             )
         } else {
             if let api: PoisApi? = self.sdk?.poisApi {
-                let queryBuilder: CoverageRegionUriPoisRequestBuilder = api.newCoverageRegionUriPoisRequestBuilder();
+                let queryBuilder: CoverageRegionUriPoisRequestBuilder = api!.newCoverageRegionUriPoisRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPoisRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPoisRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionUriPoisRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionUriPoisRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12241,66 +12245,66 @@ import NavitiaSDK
             )
         } else {
             if let api: PoisApi? = self.sdk?.poisApi {
-                let queryBuilder: CoverageRegionUriPoisIdRequestBuilder = api.newCoverageRegionUriPoisIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriPoisIdRequestBuilder = api!.newCoverageRegionUriPoisIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPoisIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriPoisIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
-                if (params?.index(forKey: "bssStands") != nil) {
+                if params?.index(forKey: "bssStands") != nil {
                     queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
                 }
-                if (params?.index(forKey: "addPoiInfos") != nil) {
-                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionUriPoisIdRequestBuilder.Add_poi_infos[]Enum])
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionUriPoisIdRequestBuilder.AddPoiInfos])
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12339,30 +12343,30 @@ import NavitiaSDK
             )
         } else {
             if let api: PtobjectsApi? = self.sdk?.ptobjectsApi {
-                let queryBuilder: CoverageLonLatPtObjectsRequestBuilder = api.newCoverageLonLatPtObjectsRequestBuilder();
+                let queryBuilder: CoverageLonLatPtObjectsRequestBuilder = api!.newCoverageLonLatPtObjectsRequestBuilder();
 
-                if (params?.index(forKey: "q") != nil) {
+                if params?.index(forKey: "q") != nil {
                     queryBuilder.withQ(anyToString(params!["q"]!))
                 }
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageLonLatPtObjectsRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageLonLatPtObjectsRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "adminUri") != nil) {
+                if params?.index(forKey: "adminUri") != nil {
                     queryBuilder.withAdminUri(arrayToStringDict(params!["adminUri"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -12402,27 +12406,27 @@ import NavitiaSDK
             )
         } else {
             if let api: PtobjectsApi? = self.sdk?.ptobjectsApi {
-                let queryBuilder: CoverageRegionPtObjectsRequestBuilder = api.newCoverageRegionPtObjectsRequestBuilder();
+                let queryBuilder: CoverageRegionPtObjectsRequestBuilder = api!.newCoverageRegionPtObjectsRequestBuilder();
 
-                if (params?.index(forKey: "q") != nil) {
+                if params?.index(forKey: "q") != nil {
                     queryBuilder.withQ(anyToString(params!["q"]!))
                 }
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "type") != nil) {
-                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageRegionPtObjectsRequestBuilder.Type[]Enum])
+                if params?.index(forKey: "type") != nil {
+                    queryBuilder.withType(arrayToEnum(params!["type"]!) as [CoverageRegionPtObjectsRequestBuilder.ModelType])
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "adminUri") != nil) {
+                if params?.index(forKey: "adminUri") != nil {
                     queryBuilder.withAdminUri(arrayToStringDict(params!["adminUri"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -12462,65 +12466,65 @@ import NavitiaSDK
             )
         } else {
             if let api: RouteSchedulesApi? = self.sdk?.routeSchedulesApi {
-                let queryBuilder: CoverageLonLatUriRouteSchedulesRequestBuilder = api.newCoverageLonLatUriRouteSchedulesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriRouteSchedulesRequestBuilder = api!.newCoverageLonLatUriRouteSchedulesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriRouteSchedulesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriRouteSchedulesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -12560,62 +12564,62 @@ import NavitiaSDK
             )
         } else {
             if let api: RouteSchedulesApi? = self.sdk?.routeSchedulesApi {
-                let queryBuilder: CoverageRegionUriRouteSchedulesRequestBuilder = api.newCoverageRegionUriRouteSchedulesRequestBuilder();
+                let queryBuilder: CoverageRegionUriRouteSchedulesRequestBuilder = api!.newCoverageRegionUriRouteSchedulesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriRouteSchedulesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriRouteSchedulesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -12655,56 +12659,56 @@ import NavitiaSDK
             )
         } else {
             if let api: RouteSchedulesApi? = self.sdk?.routeSchedulesApi {
-                let queryBuilder: RouteSchedulesRequestBuilder = api.newRouteSchedulesRequestBuilder();
+                let queryBuilder: RouteSchedulesRequestBuilder = api!.newRouteSchedulesRequestBuilder();
 
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as RouteSchedulesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as RouteSchedulesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -12744,59 +12748,59 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: CoverageLonLatRoutesRequestBuilder = api.newCoverageLonLatRoutesRequestBuilder();
+                let queryBuilder: CoverageLonLatRoutesRequestBuilder = api!.newCoverageLonLatRoutesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatRoutesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatRoutesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -12836,59 +12840,59 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: CoverageLonLatRoutesIdRequestBuilder = api.newCoverageLonLatRoutesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatRoutesIdRequestBuilder = api!.newCoverageLonLatRoutesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatRoutesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatRoutesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -12928,62 +12932,62 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: CoverageLonLatUriRoutesRequestBuilder = api.newCoverageLonLatUriRoutesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriRoutesRequestBuilder = api!.newCoverageLonLatUriRoutesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriRoutesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriRoutesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13023,62 +13027,62 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: CoverageLonLatUriRoutesIdRequestBuilder = api.newCoverageLonLatUriRoutesIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriRoutesIdRequestBuilder = api!.newCoverageLonLatUriRoutesIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriRoutesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriRoutesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13118,56 +13122,56 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: CoverageRegionRoutesRequestBuilder = api.newCoverageRegionRoutesRequestBuilder();
+                let queryBuilder: CoverageRegionRoutesRequestBuilder = api!.newCoverageRegionRoutesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionRoutesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionRoutesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13207,56 +13211,56 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: CoverageRegionRoutesIdRequestBuilder = api.newCoverageRegionRoutesIdRequestBuilder();
+                let queryBuilder: CoverageRegionRoutesIdRequestBuilder = api!.newCoverageRegionRoutesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionRoutesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionRoutesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13296,59 +13300,59 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: CoverageRegionUriRoutesRequestBuilder = api.newCoverageRegionUriRoutesRequestBuilder();
+                let queryBuilder: CoverageRegionUriRoutesRequestBuilder = api!.newCoverageRegionUriRoutesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriRoutesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriRoutesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13388,59 +13392,59 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: CoverageRegionUriRoutesIdRequestBuilder = api.newCoverageRegionUriRoutesIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriRoutesIdRequestBuilder = api!.newCoverageRegionUriRoutesIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriRoutesIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriRoutesIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13480,53 +13484,53 @@ import NavitiaSDK
             )
         } else {
             if let api: RoutesApi? = self.sdk?.routesApi {
-                let queryBuilder: RoutesRequestBuilder = api.newRoutesRequestBuilder();
+                let queryBuilder: RoutesRequestBuilder = api!.newRoutesRequestBuilder();
 
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as RoutesRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as RoutesRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13566,9 +13570,9 @@ import NavitiaSDK
             )
         } else {
             if let api: StatusApi? = self.sdk?.statusApi {
-                let queryBuilder: CoverageRegionStatusRequestBuilder = api.newCoverageRegionStatusRequestBuilder();
+                let queryBuilder: CoverageRegionStatusRequestBuilder = api!.newCoverageRegionStatusRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
 
@@ -13608,59 +13612,59 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: CoverageLonLatStopAreasRequestBuilder = api.newCoverageLonLatStopAreasRequestBuilder();
+                let queryBuilder: CoverageLonLatStopAreasRequestBuilder = api!.newCoverageLonLatStopAreasRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatStopAreasRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatStopAreasRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13700,59 +13704,59 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: CoverageLonLatStopAreasIdRequestBuilder = api.newCoverageLonLatStopAreasIdRequestBuilder();
+                let queryBuilder: CoverageLonLatStopAreasIdRequestBuilder = api!.newCoverageLonLatStopAreasIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatStopAreasIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatStopAreasIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13792,62 +13796,62 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: CoverageLonLatUriStopAreasRequestBuilder = api.newCoverageLonLatUriStopAreasRequestBuilder();
+                let queryBuilder: CoverageLonLatUriStopAreasRequestBuilder = api!.newCoverageLonLatUriStopAreasRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriStopAreasRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriStopAreasRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13887,62 +13891,62 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: CoverageLonLatUriStopAreasIdRequestBuilder = api.newCoverageLonLatUriStopAreasIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriStopAreasIdRequestBuilder = api!.newCoverageLonLatUriStopAreasIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriStopAreasIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriStopAreasIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -13982,56 +13986,56 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: CoverageRegionStopAreasRequestBuilder = api.newCoverageRegionStopAreasRequestBuilder();
+                let queryBuilder: CoverageRegionStopAreasRequestBuilder = api!.newCoverageRegionStopAreasRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionStopAreasRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionStopAreasRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14071,56 +14075,56 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: CoverageRegionStopAreasIdRequestBuilder = api.newCoverageRegionStopAreasIdRequestBuilder();
+                let queryBuilder: CoverageRegionStopAreasIdRequestBuilder = api!.newCoverageRegionStopAreasIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionStopAreasIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionStopAreasIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14160,59 +14164,59 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: CoverageRegionUriStopAreasRequestBuilder = api.newCoverageRegionUriStopAreasRequestBuilder();
+                let queryBuilder: CoverageRegionUriStopAreasRequestBuilder = api!.newCoverageRegionUriStopAreasRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriStopAreasRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriStopAreasRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14252,59 +14256,59 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: CoverageRegionUriStopAreasIdRequestBuilder = api.newCoverageRegionUriStopAreasIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriStopAreasIdRequestBuilder = api!.newCoverageRegionUriStopAreasIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriStopAreasIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriStopAreasIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14344,53 +14348,53 @@ import NavitiaSDK
             )
         } else {
             if let api: StopAreasApi? = self.sdk?.stopAreasApi {
-                let queryBuilder: StopAreasRequestBuilder = api.newStopAreasRequestBuilder();
+                let queryBuilder: StopAreasRequestBuilder = api!.newStopAreasRequestBuilder();
 
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as StopAreasRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as StopAreasRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14430,59 +14434,59 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: CoverageLonLatStopPointsRequestBuilder = api.newCoverageLonLatStopPointsRequestBuilder();
+                let queryBuilder: CoverageLonLatStopPointsRequestBuilder = api!.newCoverageLonLatStopPointsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatStopPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatStopPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14522,59 +14526,59 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: CoverageLonLatStopPointsIdRequestBuilder = api.newCoverageLonLatStopPointsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatStopPointsIdRequestBuilder = api!.newCoverageLonLatStopPointsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatStopPointsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatStopPointsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14614,62 +14618,62 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: CoverageLonLatUriStopPointsRequestBuilder = api.newCoverageLonLatUriStopPointsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriStopPointsRequestBuilder = api!.newCoverageLonLatUriStopPointsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriStopPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriStopPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14709,62 +14713,62 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: CoverageLonLatUriStopPointsIdRequestBuilder = api.newCoverageLonLatUriStopPointsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriStopPointsIdRequestBuilder = api!.newCoverageLonLatUriStopPointsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriStopPointsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriStopPointsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14804,56 +14808,56 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: CoverageRegionStopPointsRequestBuilder = api.newCoverageRegionStopPointsRequestBuilder();
+                let queryBuilder: CoverageRegionStopPointsRequestBuilder = api!.newCoverageRegionStopPointsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionStopPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionStopPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14893,56 +14897,56 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: CoverageRegionStopPointsIdRequestBuilder = api.newCoverageRegionStopPointsIdRequestBuilder();
+                let queryBuilder: CoverageRegionStopPointsIdRequestBuilder = api!.newCoverageRegionStopPointsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionStopPointsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionStopPointsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -14982,59 +14986,59 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: CoverageRegionUriStopPointsRequestBuilder = api.newCoverageRegionUriStopPointsRequestBuilder();
+                let queryBuilder: CoverageRegionUriStopPointsRequestBuilder = api!.newCoverageRegionUriStopPointsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriStopPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriStopPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -15074,59 +15078,59 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: CoverageRegionUriStopPointsIdRequestBuilder = api.newCoverageRegionUriStopPointsIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriStopPointsIdRequestBuilder = api!.newCoverageRegionUriStopPointsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriStopPointsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriStopPointsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -15166,53 +15170,53 @@ import NavitiaSDK
             )
         } else {
             if let api: StopPointsApi? = self.sdk?.stopPointsApi {
-                let queryBuilder: StopPointsRequestBuilder = api.newStopPointsRequestBuilder();
+                let queryBuilder: StopPointsRequestBuilder = api!.newStopPointsRequestBuilder();
 
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as StopPointsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as StopPointsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "originalId") != nil) {
+                if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
                 }
 
@@ -15252,65 +15256,65 @@ import NavitiaSDK
             )
         } else {
             if let api: StopSchedulesApi? = self.sdk?.stopSchedulesApi {
-                let queryBuilder: CoverageLonLatUriStopSchedulesRequestBuilder = api.newCoverageLonLatUriStopSchedulesRequestBuilder();
+                let queryBuilder: CoverageLonLatUriStopSchedulesRequestBuilder = api!.newCoverageLonLatUriStopSchedulesRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriStopSchedulesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriStopSchedulesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -15350,62 +15354,62 @@ import NavitiaSDK
             )
         } else {
             if let api: StopSchedulesApi? = self.sdk?.stopSchedulesApi {
-                let queryBuilder: CoverageRegionUriStopSchedulesRequestBuilder = api.newCoverageRegionUriStopSchedulesRequestBuilder();
+                let queryBuilder: CoverageRegionUriStopSchedulesRequestBuilder = api!.newCoverageRegionUriStopSchedulesRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriStopSchedulesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriStopSchedulesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -15445,56 +15449,56 @@ import NavitiaSDK
             )
         } else {
             if let api: StopSchedulesApi? = self.sdk?.stopSchedulesApi {
-                let queryBuilder: StopSchedulesRequestBuilder = api.newStopSchedulesRequestBuilder();
+                let queryBuilder: StopSchedulesRequestBuilder = api!.newStopSchedulesRequestBuilder();
 
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
-                if (params?.index(forKey: "fromDatetime") != nil) {
+                if params?.index(forKey: "fromDatetime") != nil {
                     queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
                 }
-                if (params?.index(forKey: "untilDatetime") != nil) {
+                if params?.index(forKey: "untilDatetime") != nil {
                     queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
                 }
-                if (params?.index(forKey: "duration") != nil) {
+                if params?.index(forKey: "duration") != nil {
                     queryBuilder.withDuration(anyToInt(params!["duration"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "maxDateTimes") != nil) {
+                if params?.index(forKey: "maxDateTimes") != nil {
                     queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "calendar") != nil) {
+                if params?.index(forKey: "calendar") != nil {
                     queryBuilder.withCalendar(anyToString(params!["calendar"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "dataFreshness") != nil) {
-                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as StopSchedulesRequestBuilder.Data_freshnessEnum? {
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as StopSchedulesRequestBuilder.DataFreshness? {
                         queryBuilder.withDataFreshness(enumValue)
                     }
                 }
-                if (params?.index(forKey: "itemsPerSchedule") != nil) {
+                if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -15534,30 +15538,30 @@ import NavitiaSDK
             )
         } else {
             if let api: TrafficReportApi? = self.sdk?.trafficReportApi {
-                let queryBuilder: CoverageRegionTrafficReportsRequestBuilder = api.newCoverageRegionTrafficReportsRequestBuilder();
+                let queryBuilder: CoverageRegionTrafficReportsRequestBuilder = api!.newCoverageRegionTrafficReportsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -15597,33 +15601,33 @@ import NavitiaSDK
             )
         } else {
             if let api: TrafficReportApi? = self.sdk?.trafficReportApi {
-                let queryBuilder: CoverageRegionUriTrafficReportsRequestBuilder = api.newCoverageRegionUriTrafficReportsRequestBuilder();
+                let queryBuilder: CoverageRegionUriTrafficReportsRequestBuilder = api!.newCoverageRegionUriTrafficReportsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -15663,56 +15667,56 @@ import NavitiaSDK
             )
         } else {
             if let api: TripsApi? = self.sdk?.tripsApi {
-                let queryBuilder: CoverageLonLatTripsRequestBuilder = api.newCoverageLonLatTripsRequestBuilder();
+                let queryBuilder: CoverageLonLatTripsRequestBuilder = api!.newCoverageLonLatTripsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatTripsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatTripsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -15752,56 +15756,56 @@ import NavitiaSDK
             )
         } else {
             if let api: TripsApi? = self.sdk?.tripsApi {
-                let queryBuilder: CoverageLonLatTripsIdRequestBuilder = api.newCoverageLonLatTripsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatTripsIdRequestBuilder = api!.newCoverageLonLatTripsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatTripsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatTripsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -15841,59 +15845,59 @@ import NavitiaSDK
             )
         } else {
             if let api: TripsApi? = self.sdk?.tripsApi {
-                let queryBuilder: CoverageLonLatUriTripsRequestBuilder = api.newCoverageLonLatUriTripsRequestBuilder();
+                let queryBuilder: CoverageLonLatUriTripsRequestBuilder = api!.newCoverageLonLatUriTripsRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriTripsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriTripsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -15933,59 +15937,59 @@ import NavitiaSDK
             )
         } else {
             if let api: TripsApi? = self.sdk?.tripsApi {
-                let queryBuilder: CoverageLonLatUriTripsIdRequestBuilder = api.newCoverageLonLatUriTripsIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriTripsIdRequestBuilder = api!.newCoverageLonLatUriTripsIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriTripsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriTripsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -16025,53 +16029,53 @@ import NavitiaSDK
             )
         } else {
             if let api: TripsApi? = self.sdk?.tripsApi {
-                let queryBuilder: CoverageRegionTripsRequestBuilder = api.newCoverageRegionTripsRequestBuilder();
+                let queryBuilder: CoverageRegionTripsRequestBuilder = api!.newCoverageRegionTripsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionTripsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionTripsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -16111,53 +16115,53 @@ import NavitiaSDK
             )
         } else {
             if let api: TripsApi? = self.sdk?.tripsApi {
-                let queryBuilder: CoverageRegionTripsIdRequestBuilder = api.newCoverageRegionTripsIdRequestBuilder();
+                let queryBuilder: CoverageRegionTripsIdRequestBuilder = api!.newCoverageRegionTripsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionTripsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionTripsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -16197,56 +16201,56 @@ import NavitiaSDK
             )
         } else {
             if let api: TripsApi? = self.sdk?.tripsApi {
-                let queryBuilder: CoverageRegionUriTripsRequestBuilder = api.newCoverageRegionUriTripsRequestBuilder();
+                let queryBuilder: CoverageRegionUriTripsRequestBuilder = api!.newCoverageRegionUriTripsRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriTripsRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriTripsRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -16286,56 +16290,56 @@ import NavitiaSDK
             )
         } else {
             if let api: TripsApi? = self.sdk?.tripsApi {
-                let queryBuilder: CoverageRegionUriTripsIdRequestBuilder = api.newCoverageRegionUriTripsIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriTripsIdRequestBuilder = api!.newCoverageRegionUriTripsIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriTripsIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriTripsIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -16375,59 +16379,59 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: CoverageLonLatUriVehicleJourneysRequestBuilder = api.newCoverageLonLatUriVehicleJourneysRequestBuilder();
+                let queryBuilder: CoverageLonLatUriVehicleJourneysRequestBuilder = api!.newCoverageLonLatUriVehicleJourneysRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriVehicleJourneysRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriVehicleJourneysRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -16467,59 +16471,59 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: CoverageLonLatUriVehicleJourneysIdRequestBuilder = api.newCoverageLonLatUriVehicleJourneysIdRequestBuilder();
+                let queryBuilder: CoverageLonLatUriVehicleJourneysIdRequestBuilder = api!.newCoverageLonLatUriVehicleJourneysIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriVehicleJourneysIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatUriVehicleJourneysIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -16559,56 +16563,56 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: CoverageLonLatVehicleJourneysRequestBuilder = api.newCoverageLonLatVehicleJourneysRequestBuilder();
+                let queryBuilder: CoverageLonLatVehicleJourneysRequestBuilder = api!.newCoverageLonLatVehicleJourneysRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatVehicleJourneysRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatVehicleJourneysRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -16648,56 +16652,56 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: CoverageLonLatVehicleJourneysIdRequestBuilder = api.newCoverageLonLatVehicleJourneysIdRequestBuilder();
+                let queryBuilder: CoverageLonLatVehicleJourneysIdRequestBuilder = api!.newCoverageLonLatVehicleJourneysIdRequestBuilder();
 
-                if (params?.index(forKey: "lat") != nil) {
-                    queryBuilder.withLat(anyToFloat(params!["lat"]!))
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
                 }
-                if (params?.index(forKey: "lon") != nil) {
-                    queryBuilder.withLon(anyToFloat(params!["lon"]!))
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatVehicleJourneysIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageLonLatVehicleJourneysIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -16737,56 +16741,56 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: CoverageRegionUriVehicleJourneysRequestBuilder = api.newCoverageRegionUriVehicleJourneysRequestBuilder();
+                let queryBuilder: CoverageRegionUriVehicleJourneysRequestBuilder = api!.newCoverageRegionUriVehicleJourneysRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriVehicleJourneysRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriVehicleJourneysRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -16826,56 +16830,56 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: CoverageRegionUriVehicleJourneysIdRequestBuilder = api.newCoverageRegionUriVehicleJourneysIdRequestBuilder();
+                let queryBuilder: CoverageRegionUriVehicleJourneysIdRequestBuilder = api!.newCoverageRegionUriVehicleJourneysIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "uri") != nil) {
+                if params?.index(forKey: "uri") != nil {
                     queryBuilder.withUri(anyToString(params!["uri"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriVehicleJourneysIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionUriVehicleJourneysIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -16915,53 +16919,53 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: CoverageRegionVehicleJourneysRequestBuilder = api.newCoverageRegionVehicleJourneysRequestBuilder();
+                let queryBuilder: CoverageRegionVehicleJourneysRequestBuilder = api!.newCoverageRegionVehicleJourneysRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionVehicleJourneysRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionVehicleJourneysRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
@@ -17001,53 +17005,53 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: CoverageRegionVehicleJourneysIdRequestBuilder = api.newCoverageRegionVehicleJourneysIdRequestBuilder();
+                let queryBuilder: CoverageRegionVehicleJourneysIdRequestBuilder = api!.newCoverageRegionVehicleJourneysIdRequestBuilder();
 
-                if (params?.index(forKey: "region") != nil) {
+                if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
-                if (params?.index(forKey: "id") != nil) {
+                if params?.index(forKey: "id") != nil {
                     queryBuilder.withId(anyToString(params!["id"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionVehicleJourneysIdRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as CoverageRegionVehicleJourneysIdRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
 
@@ -17087,50 +17091,50 @@ import NavitiaSDK
             )
         } else {
             if let api: VehicleJourneysApi? = self.sdk?.vehicleJourneysApi {
-                let queryBuilder: VehicleJourneysRequestBuilder = api.newVehicleJourneysRequestBuilder();
+                let queryBuilder: VehicleJourneysRequestBuilder = api!.newVehicleJourneysRequestBuilder();
 
-                if (params?.index(forKey: "externalCode") != nil) {
+                if params?.index(forKey: "externalCode") != nil {
                     queryBuilder.withExternalCode(anyToString(params!["externalCode"]!))
                 }
-                if (params?.index(forKey: "startPage") != nil) {
+                if params?.index(forKey: "startPage") != nil {
                     queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
                 }
-                if (params?.index(forKey: "count") != nil) {
+                if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
-                if (params?.index(forKey: "depth") != nil) {
+                if params?.index(forKey: "depth") != nil {
                     queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
-                if (params?.index(forKey: "forbiddenId") != nil) {
+                if params?.index(forKey: "forbiddenId") != nil {
                     queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
                 }
-                if (params?.index(forKey: "forbiddenUris") != nil) {
+                if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
-                if (params?.index(forKey: "headsign") != nil) {
+                if params?.index(forKey: "headsign") != nil {
                     queryBuilder.withHeadsign(anyToString(params!["headsign"]!))
                 }
-                if (params?.index(forKey: "showCodes") != nil) {
+                if params?.index(forKey: "showCodes") != nil {
                     queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
                 }
-                if (params?.index(forKey: "odtLevel") != nil) {
-                    if let enumValue = anyToEnum(params!["odtLevel"]!) as VehicleJourneysRequestBuilder.Odt_levelEnum? {
+                if params?.index(forKey: "odtLevel") != nil {
+                    if let enumValue = anyToEnum(params!["odtLevel"]!) as VehicleJourneysRequestBuilder.OdtLevel? {
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
-                if (params?.index(forKey: "distance") != nil) {
+                if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
-                if (params?.index(forKey: "since") != nil) {
+                if params?.index(forKey: "since") != nil {
                     queryBuilder.withSince(anyToDateTime(params!["since"]!))
                 }
-                if (params?.index(forKey: "until") != nil) {
+                if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
-                if (params?.index(forKey: "disableGeojson") != nil) {
+                if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
-                if (params?.index(forKey: "filter") != nil) {
+                if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
