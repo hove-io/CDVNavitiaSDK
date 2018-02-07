@@ -73,6 +73,591 @@ import NavitiaSDK
         )
     }
 
+    @objc(coverageLonLatAddresses:)
+    func coverageLonLatAddresses(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: AddressesApi? = self.sdk?.addressesApi {
+                let queryBuilder: CoverageLonLatAddressesRequestBuilder = api!.newCoverageLonLatAddressesRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatAddressesId:)
+    func coverageLonLatAddressesId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: AddressesApi? = self.sdk?.addressesApi {
+                let queryBuilder: CoverageLonLatAddressesIdRequestBuilder = api!.newCoverageLonLatAddressesIdRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriAddresses:)
+    func coverageLonLatUriAddresses(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: AddressesApi? = self.sdk?.addressesApi {
+                let queryBuilder: CoverageLonLatUriAddressesRequestBuilder = api!.newCoverageLonLatUriAddressesRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriAddressesId:)
+    func coverageLonLatUriAddressesId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: AddressesApi? = self.sdk?.addressesApi {
+                let queryBuilder: CoverageLonLatUriAddressesIdRequestBuilder = api!.newCoverageLonLatUriAddressesIdRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionAddresses:)
+    func coverageRegionAddresses(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: AddressesApi? = self.sdk?.addressesApi {
+                let queryBuilder: CoverageRegionAddressesRequestBuilder = api!.newCoverageRegionAddressesRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionAddressesId:)
+    func coverageRegionAddressesId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: AddressesApi? = self.sdk?.addressesApi {
+                let queryBuilder: CoverageRegionAddressesIdRequestBuilder = api!.newCoverageRegionAddressesIdRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionUriAddresses:)
+    func coverageRegionUriAddresses(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: AddressesApi? = self.sdk?.addressesApi {
+                let queryBuilder: CoverageRegionUriAddressesRequestBuilder = api!.newCoverageRegionUriAddressesRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionUriAddressesId:)
+    func coverageRegionUriAddressesId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: AddressesApi? = self.sdk?.addressesApi {
+                let queryBuilder: CoverageRegionUriAddressesIdRequestBuilder = api!.newCoverageRegionUriAddressesIdRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatCalendars:)
+    func coverageLonLatCalendars(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CalendarsApi? = self.sdk?.calendarsApi {
+                let queryBuilder: CoverageLonLatCalendarsRequestBuilder = api!.newCoverageLonLatCalendarsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "startDate") != nil {
+                    queryBuilder.withStartDate(anyToString(params!["startDate"]!))
+                }
+                if params?.index(forKey: "endDate") != nil {
+                    queryBuilder.withEndDate(anyToString(params!["endDate"]!))
+                }
+                if params?.index(forKey: "forbiddenId") != nil {
+                    queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "distance") != nil {
+                    queryBuilder.withDistance(anyToInt(params!["distance"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatCalendarsId:)
+    func coverageLonLatCalendarsId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CalendarsApi? = self.sdk?.calendarsApi {
+                let queryBuilder: CoverageLonLatCalendarsIdRequestBuilder = api!.newCoverageLonLatCalendarsIdRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "startDate") != nil {
+                    queryBuilder.withStartDate(anyToString(params!["startDate"]!))
+                }
+                if params?.index(forKey: "endDate") != nil {
+                    queryBuilder.withEndDate(anyToString(params!["endDate"]!))
+                }
+                if params?.index(forKey: "forbiddenId") != nil {
+                    queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "distance") != nil {
+                    queryBuilder.withDistance(anyToInt(params!["distance"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriCalendars:)
+    func coverageLonLatUriCalendars(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CalendarsApi? = self.sdk?.calendarsApi {
+                let queryBuilder: CoverageLonLatUriCalendarsRequestBuilder = api!.newCoverageLonLatUriCalendarsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "startDate") != nil {
+                    queryBuilder.withStartDate(anyToString(params!["startDate"]!))
+                }
+                if params?.index(forKey: "endDate") != nil {
+                    queryBuilder.withEndDate(anyToString(params!["endDate"]!))
+                }
+                if params?.index(forKey: "forbiddenId") != nil {
+                    queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "distance") != nil {
+                    queryBuilder.withDistance(anyToInt(params!["distance"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
     @objc(coverageRegionCalendars:)
     func coverageRegionCalendars(command: CDVInvokedUrlCommand) {
         let params = command.arguments[0] as? [String : Any]
@@ -2413,6 +2998,840 @@ import NavitiaSDK
             }
         }
     }
+    @objc(coordLonLat:)
+    func coordLonLat(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordApi? = self.sdk?.coordApi {
+                let queryBuilder: CoordLonLatRequestBuilder = api!.newCoordLonLatRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coordsLonLat:)
+    func coordsLonLat(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordApi? = self.sdk?.coordApi {
+                let queryBuilder: CoordsLonLatRequestBuilder = api!.newCoordsLonLatRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatCoord:)
+    func coverageLonLatCoord(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageLonLatCoordRequestBuilder = api!.newCoverageLonLatCoordRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatCoordId:)
+    func coverageLonLatCoordId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageLonLatCoordIdRequestBuilder = api!.newCoverageLonLatCoordIdRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatCoords:)
+    func coverageLonLatCoords(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageLonLatCoordsRequestBuilder = api!.newCoverageLonLatCoordsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatCoordsId:)
+    func coverageLonLatCoordsId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageLonLatCoordsIdRequestBuilder = api!.newCoverageLonLatCoordsIdRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriCoord:)
+    func coverageLonLatUriCoord(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageLonLatUriCoordRequestBuilder = api!.newCoverageLonLatUriCoordRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriCoordId:)
+    func coverageLonLatUriCoordId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageLonLatUriCoordIdRequestBuilder = api!.newCoverageLonLatUriCoordIdRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriCoords:)
+    func coverageLonLatUriCoords(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageLonLatUriCoordsRequestBuilder = api!.newCoverageLonLatUriCoordsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriCoordsId:)
+    func coverageLonLatUriCoordsId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageLonLatUriCoordsIdRequestBuilder = api!.newCoverageLonLatUriCoordsIdRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionCoord:)
+    func coverageRegionCoord(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageRegionCoordRequestBuilder = api!.newCoverageRegionCoordRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionCoordId:)
+    func coverageRegionCoordId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageRegionCoordIdRequestBuilder = api!.newCoverageRegionCoordIdRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionCoords:)
+    func coverageRegionCoords(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageRegionCoordsRequestBuilder = api!.newCoverageRegionCoordsRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionCoordsId:)
+    func coverageRegionCoordsId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageRegionCoordsIdRequestBuilder = api!.newCoverageRegionCoordsIdRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionUriCoord:)
+    func coverageRegionUriCoord(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageRegionUriCoordRequestBuilder = api!.newCoverageRegionUriCoordRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionUriCoordId:)
+    func coverageRegionUriCoordId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageRegionUriCoordIdRequestBuilder = api!.newCoverageRegionUriCoordIdRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionUriCoords:)
+    func coverageRegionUriCoords(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageRegionUriCoordsRequestBuilder = api!.newCoverageRegionUriCoordsRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionUriCoordsId:)
+    func coverageRegionUriCoordsId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordsApi? = self.sdk?.coordsApi {
+                let queryBuilder: CoverageRegionUriCoordsIdRequestBuilder = api!.newCoverageRegionUriCoordsIdRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
     @objc(coverage:)
     func coverage(command: CDVInvokedUrlCommand) {
         let params = command.arguments[0] as? [String : Any]
@@ -3996,6 +5415,51 @@ import NavitiaSDK
             }
         }
     }
+    @objc(coverageLonLatGeoStatus:)
+    func coverageLonLatGeoStatus(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: GeoStatusApi? = self.sdk?.geoStatusApi {
+                let queryBuilder: CoverageLonLatGeoStatusRequestBuilder = api!.newCoverageLonLatGeoStatusRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
     @objc(coverageRegionGeoStatus:)
     func coverageRegionGeoStatus(command: CDVInvokedUrlCommand) {
         let params = command.arguments[0] as? [String : Any]
@@ -4012,6 +5476,140 @@ import NavitiaSDK
 
                 if params?.index(forKey: "region") != nil {
                     queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatIsochrones:)
+    func coverageLonLatIsochrones(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: GraphicalIsochroneApi? = self.sdk?.graphicalIsochroneApi {
+                let queryBuilder: CoverageLonLatIsochronesRequestBuilder = api!.newCoverageLonLatIsochronesRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "from") != nil {
+                    queryBuilder.withFrom(anyToString(params!["from"]!))
+                }
+                if params?.index(forKey: "to") != nil {
+                    queryBuilder.withTo(anyToString(params!["to"]!))
+                }
+                if params?.index(forKey: "datetime") != nil {
+                    queryBuilder.withDatetime(anyToDateTime(params!["datetime"]!))
+                }
+                if params?.index(forKey: "datetimeRepresents") != nil {
+                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageLonLatIsochronesRequestBuilder.DatetimeRepresents? {
+                        queryBuilder.withDatetimeRepresents(enumValue)
+                    }
+                }
+                if params?.index(forKey: "maxNbTransfers") != nil {
+                    queryBuilder.withMaxNbTransfers(anyToInt(params!["maxNbTransfers"]!))
+                }
+                if params?.index(forKey: "minNbTransfers") != nil {
+                    queryBuilder.withMinNbTransfers(anyToInt(params!["minNbTransfers"]!))
+                }
+                if params?.index(forKey: "firstSectionMode") != nil {
+                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageLonLatIsochronesRequestBuilder.FirstSectionMode])
+                }
+                if params?.index(forKey: "lastSectionMode") != nil {
+                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageLonLatIsochronesRequestBuilder.LastSectionMode])
+                }
+                if params?.index(forKey: "maxDurationToPt") != nil {
+                    queryBuilder.withMaxDurationToPt(anyToInt(params!["maxDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxWalkingDurationToPt") != nil {
+                    queryBuilder.withMaxWalkingDurationToPt(anyToInt(params!["maxWalkingDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxBikeDurationToPt") != nil {
+                    queryBuilder.withMaxBikeDurationToPt(anyToInt(params!["maxBikeDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxBssDurationToPt") != nil {
+                    queryBuilder.withMaxBssDurationToPt(anyToInt(params!["maxBssDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxCarDurationToPt") != nil {
+                    queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
+                }
+                if params?.index(forKey: "walkingSpeed") != nil {
+                    queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
+                }
+                if params?.index(forKey: "bikeSpeed") != nil {
+                    queryBuilder.withBikeSpeed(anyToFloat(params!["bikeSpeed"]!))
+                }
+                if params?.index(forKey: "bssSpeed") != nil {
+                    queryBuilder.withBssSpeed(anyToFloat(params!["bssSpeed"]!))
+                }
+                if params?.index(forKey: "carSpeed") != nil {
+                    queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "allowedId") != nil {
+                    queryBuilder.withAllowedId(arrayToStringDict(params!["allowedId"]!))
+                }
+                if params?.index(forKey: "disruptionActive") != nil {
+                    queryBuilder.withDisruptionActive(anyToBool(params!["disruptionActive"]!))
+                }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatIsochronesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
+                if params?.index(forKey: "maxDuration") != nil {
+                    queryBuilder.withMaxDuration(anyToInt(params!["maxDuration"]!))
+                }
+                if params?.index(forKey: "wheelchair") != nil {
+                    queryBuilder.withWheelchair(anyToBool(params!["wheelchair"]!))
+                }
+                if params?.index(forKey: "travelerType") != nil {
+                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageLonLatIsochronesRequestBuilder.TravelerType? {
+                        queryBuilder.withTravelerType(enumValue)
+                    }
+                }
+                if params?.index(forKey: "directPath") != nil {
+                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageLonLatIsochronesRequestBuilder.DirectPath? {
+                        queryBuilder.withDirectPath(enumValue)
+                    }
+                }
+                if params?.index(forKey: "minDuration") != nil {
+                    queryBuilder.withMinDuration(anyToInt(params!["minDuration"]!))
+                }
+                if params?.index(forKey: "boundaryDuration") != nil {
+                    queryBuilder.withBoundaryDuration(arrayToIntDict(params!["boundaryDuration"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4143,6 +5741,137 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "boundaryDuration") != nil {
                     queryBuilder.withBoundaryDuration(arrayToIntDict(params!["boundaryDuration"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatHeatMaps:)
+    func coverageLonLatHeatMaps(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: HeatMapApi? = self.sdk?.heatMapApi {
+                let queryBuilder: CoverageLonLatHeatMapsRequestBuilder = api!.newCoverageLonLatHeatMapsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "from") != nil {
+                    queryBuilder.withFrom(anyToString(params!["from"]!))
+                }
+                if params?.index(forKey: "to") != nil {
+                    queryBuilder.withTo(anyToString(params!["to"]!))
+                }
+                if params?.index(forKey: "datetime") != nil {
+                    queryBuilder.withDatetime(anyToDateTime(params!["datetime"]!))
+                }
+                if params?.index(forKey: "datetimeRepresents") != nil {
+                    if let enumValue = anyToEnum(params!["datetimeRepresents"]!) as CoverageLonLatHeatMapsRequestBuilder.DatetimeRepresents? {
+                        queryBuilder.withDatetimeRepresents(enumValue)
+                    }
+                }
+                if params?.index(forKey: "maxNbTransfers") != nil {
+                    queryBuilder.withMaxNbTransfers(anyToInt(params!["maxNbTransfers"]!))
+                }
+                if params?.index(forKey: "minNbTransfers") != nil {
+                    queryBuilder.withMinNbTransfers(anyToInt(params!["minNbTransfers"]!))
+                }
+                if params?.index(forKey: "firstSectionMode") != nil {
+                    queryBuilder.withFirstSectionMode(arrayToEnum(params!["firstSectionMode"]!) as [CoverageLonLatHeatMapsRequestBuilder.FirstSectionMode])
+                }
+                if params?.index(forKey: "lastSectionMode") != nil {
+                    queryBuilder.withLastSectionMode(arrayToEnum(params!["lastSectionMode"]!) as [CoverageLonLatHeatMapsRequestBuilder.LastSectionMode])
+                }
+                if params?.index(forKey: "maxDurationToPt") != nil {
+                    queryBuilder.withMaxDurationToPt(anyToInt(params!["maxDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxWalkingDurationToPt") != nil {
+                    queryBuilder.withMaxWalkingDurationToPt(anyToInt(params!["maxWalkingDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxBikeDurationToPt") != nil {
+                    queryBuilder.withMaxBikeDurationToPt(anyToInt(params!["maxBikeDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxBssDurationToPt") != nil {
+                    queryBuilder.withMaxBssDurationToPt(anyToInt(params!["maxBssDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxCarDurationToPt") != nil {
+                    queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
+                }
+                if params?.index(forKey: "walkingSpeed") != nil {
+                    queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
+                }
+                if params?.index(forKey: "bikeSpeed") != nil {
+                    queryBuilder.withBikeSpeed(anyToFloat(params!["bikeSpeed"]!))
+                }
+                if params?.index(forKey: "bssSpeed") != nil {
+                    queryBuilder.withBssSpeed(anyToFloat(params!["bssSpeed"]!))
+                }
+                if params?.index(forKey: "carSpeed") != nil {
+                    queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "allowedId") != nil {
+                    queryBuilder.withAllowedId(arrayToStringDict(params!["allowedId"]!))
+                }
+                if params?.index(forKey: "disruptionActive") != nil {
+                    queryBuilder.withDisruptionActive(anyToBool(params!["disruptionActive"]!))
+                }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatHeatMapsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
+                if params?.index(forKey: "maxDuration") != nil {
+                    queryBuilder.withMaxDuration(anyToInt(params!["maxDuration"]!))
+                }
+                if params?.index(forKey: "wheelchair") != nil {
+                    queryBuilder.withWheelchair(anyToBool(params!["wheelchair"]!))
+                }
+                if params?.index(forKey: "travelerType") != nil {
+                    if let enumValue = anyToEnum(params!["travelerType"]!) as CoverageLonLatHeatMapsRequestBuilder.TravelerType? {
+                        queryBuilder.withTravelerType(enumValue)
+                    }
+                }
+                if params?.index(forKey: "directPath") != nil {
+                    if let enumValue = anyToEnum(params!["directPath"]!) as CoverageLonLatHeatMapsRequestBuilder.DirectPath? {
+                        queryBuilder.withDirectPath(enumValue)
+                    }
+                }
+                if params?.index(forKey: "resolution") != nil {
+                    queryBuilder.withResolution(anyToInt(params!["resolution"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6972,6 +8701,141 @@ import NavitiaSDK
             }
         }
     }
+    @objc(coverageLonLatLineReports:)
+    func coverageLonLatLineReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: LineReportsApi? = self.sdk?.lineReportsApi {
+                let queryBuilder: CoverageLonLatLineReportsRequestBuilder = api!.newCoverageLonLatLineReportsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "since") != nil {
+                    queryBuilder.withSince(anyToDateTime(params!["since"]!))
+                }
+                if params?.index(forKey: "until") != nil {
+                    queryBuilder.withUntil(anyToDateTime(params!["until"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriLineReports:)
+    func coverageLonLatUriLineReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: LineReportsApi? = self.sdk?.lineReportsApi {
+                let queryBuilder: CoverageLonLatUriLineReportsRequestBuilder = api!.newCoverageLonLatUriLineReportsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "since") != nil {
+                    queryBuilder.withSince(anyToDateTime(params!["since"]!))
+                }
+                if params?.index(forKey: "until") != nil {
+                    queryBuilder.withUntil(anyToDateTime(params!["until"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
     @objc(coverageRegionLineReports:)
     func coverageRegionLineReports(command: CDVInvokedUrlCommand) {
         let params = command.arguments[0] as? [String : Any]
@@ -7003,6 +8867,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "since") != nil {
+                    queryBuilder.withSince(anyToDateTime(params!["since"]!))
+                }
+                if params?.index(forKey: "until") != nil {
+                    queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7063,6 +8933,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "since") != nil {
+                    queryBuilder.withSince(anyToDateTime(params!["since"]!))
+                }
+                if params?.index(forKey: "until") != nil {
+                    queryBuilder.withUntil(anyToDateTime(params!["until"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -10176,6 +12052,168 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "until") != nil {
                     queryBuilder.withUntil(anyToDateTime(params!["until"]!))
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatPlacesId:)
+    func coverageLonLatPlacesId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: PlaceUriApi? = self.sdk?.placeUriApi {
+                let queryBuilder: CoverageLonLatPlacesIdRequestBuilder = api!.newCoverageLonLatPlacesIdRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+                if params?.index(forKey: "bssStands") != nil {
+                    queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
+                }
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatPlacesIdRequestBuilder.AddPoiInfos])
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionPlacesId:)
+    func coverageRegionPlacesId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: PlaceUriApi? = self.sdk?.placeUriApi {
+                let queryBuilder: CoverageRegionPlacesIdRequestBuilder = api!.newCoverageRegionPlacesIdRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+                if params?.index(forKey: "bssStands") != nil {
+                    queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
+                }
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionPlacesIdRequestBuilder.AddPoiInfos])
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(placesId:)
+    func placesId(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: PlaceUriApi? = self.sdk?.placeUriApi {
+                let queryBuilder: PlacesIdRequestBuilder = api!.newPlacesIdRequestBuilder();
+
+                if params?.index(forKey: "id") != nil {
+                    queryBuilder.withId(anyToString(params!["id"]!))
+                }
+                if params?.index(forKey: "bssStands") != nil {
+                    queryBuilder.withBssStands(anyToBool(params!["bssStands"]!))
+                }
+                if params?.index(forKey: "addPoiInfos") != nil {
+                    queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [PlacesIdRequestBuilder.AddPoiInfos])
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
@@ -13558,48 +15596,6 @@ import NavitiaSDK
             }
         }
     }
-    @objc(coverageRegionStatus:)
-    func coverageRegionStatus(command: CDVInvokedUrlCommand) {
-        let params = command.arguments[0] as? [String : Any]
-
-        if params == nil || params?.count == 0 {
-            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
-            self.commandDelegate!.send(
-                pluginResult,
-                callbackId: command.callbackId
-            )
-        } else {
-            if let api: StatusApi? = self.sdk?.statusApi {
-                let queryBuilder: CoverageRegionStatusRequestBuilder = api!.newCoverageRegionStatusRequestBuilder();
-
-                if params?.index(forKey: "region") != nil {
-                    queryBuilder.withRegion(anyToString(params!["region"]!))
-                }
-
-                queryBuilder.rawGet(completion: { results, error in
-                    var pluginResult: CDVPluginResult? = nil
-
-                    if error == nil {
-                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
-                        let jsonData = results?.data(using: String.Encoding.utf8)
-                        if jsonData != nil {
-                            do {
-                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
-                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
-                            } catch {
-                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
-                            }
-                        }
-                    } else {
-                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
-                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
-                    }
-
-                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
-                })
-            }
-        }
-    }
     @objc(coverageLonLatStopAreas:)
     func coverageLonLatStopAreas(command: CDVInvokedUrlCommand) {
         let params = command.arguments[0] as? [String : Any]
@@ -15497,6 +17493,141 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "itemsPerSchedule") != nil {
                     queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatTrafficReports:)
+    func coverageLonLatTrafficReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: TrafficReportApi? = self.sdk?.trafficReportApi {
+                let queryBuilder: CoverageLonLatTrafficReportsRequestBuilder = api!.newCoverageLonLatTrafficReportsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenId") != nil {
+                    queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "distance") != nil {
+                    queryBuilder.withDistance(anyToInt(params!["distance"]!))
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriTrafficReports:)
+    func coverageLonLatUriTrafficReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: TrafficReportApi? = self.sdk?.trafficReportApi {
+                let queryBuilder: CoverageLonLatUriTrafficReportsRequestBuilder = api!.newCoverageLonLatUriTrafficReportsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenId") != nil {
+                    queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "distance") != nil {
+                    queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))

@@ -11,10 +11,13 @@ import org.joda.time.DateTime;
 
 import org.kisio.NavitiaSDK.NavitiaSDK;
 import org.kisio.NavitiaSDK.NavitiaConfiguration;
+import org.kisio.NavitiaSDK.apis.AddressesApi;
 import org.kisio.NavitiaSDK.apis.CalendarsApi;
 import org.kisio.NavitiaSDK.apis.CommercialModesApi;
 import org.kisio.NavitiaSDK.apis.CompaniesApi;
 import org.kisio.NavitiaSDK.apis.ContributorsApi;
+import org.kisio.NavitiaSDK.apis.CoordApi;
+import org.kisio.NavitiaSDK.apis.CoordsApi;
 import org.kisio.NavitiaSDK.apis.CoverageApi;
 import org.kisio.NavitiaSDK.apis.DatasetsApi;
 import org.kisio.NavitiaSDK.apis.DisruptionsApi;
@@ -31,6 +34,7 @@ import org.kisio.NavitiaSDK.apis.NetworksApi;
 import org.kisio.NavitiaSDK.apis.NextArrivalsApi;
 import org.kisio.NavitiaSDK.apis.NextDeparturesApi;
 import org.kisio.NavitiaSDK.apis.PhysicalModesApi;
+import org.kisio.NavitiaSDK.apis.PlaceUriApi;
 import org.kisio.NavitiaSDK.apis.PlacesApi;
 import org.kisio.NavitiaSDK.apis.PlacesNearbyApi;
 import org.kisio.NavitiaSDK.apis.PoiTypesApi;
@@ -38,7 +42,6 @@ import org.kisio.NavitiaSDK.apis.PoisApi;
 import org.kisio.NavitiaSDK.apis.PtobjectsApi;
 import org.kisio.NavitiaSDK.apis.RouteSchedulesApi;
 import org.kisio.NavitiaSDK.apis.RoutesApi;
-import org.kisio.NavitiaSDK.apis.StatusApi;
 import org.kisio.NavitiaSDK.apis.StopAreasApi;
 import org.kisio.NavitiaSDK.apis.StopPointsApi;
 import org.kisio.NavitiaSDK.apis.StopSchedulesApi;
@@ -117,6 +120,72 @@ public class CDVNavitiaSDK extends CordovaPlugin {
     }
 
     public CDVNavitiaSDK() {
+        actions.put("coverageLonLatAddresses", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatAddresses(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatAddressesId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatAddressesId(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriAddresses", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriAddresses(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriAddressesId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriAddressesId(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionAddresses", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionAddresses(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionAddressesId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionAddressesId(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriAddresses", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriAddresses(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriAddressesId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriAddressesId(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatCalendars", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatCalendars(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatCalendarsId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatCalendarsId(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriCalendars", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriCalendars(params, callbackContext);
+            }
+        });
         actions.put("coverageRegionCalendars", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -279,6 +348,114 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 coverageRegionUriContributorsId(params, callbackContext);
             }
         });
+        actions.put("coordLonLat", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coordLonLat(params, callbackContext);
+            }
+        });
+        actions.put("coordsLonLat", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coordsLonLat(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatCoord", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatCoord(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatCoordId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatCoordId(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatCoords", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatCoords(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatCoordsId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatCoordsId(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriCoord", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriCoord(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriCoordId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriCoordId(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriCoords", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriCoords(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriCoordsId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriCoordsId(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionCoord", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionCoord(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionCoordId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionCoordId(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionCoords", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionCoords(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionCoordsId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionCoordsId(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriCoord", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriCoord(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriCoordId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriCoordId(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriCoords", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriCoords(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriCoordsId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriCoordsId(params, callbackContext);
+            }
+        });
         actions.put("coverage", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -393,16 +570,34 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 coverageRegionUriDisruptionsId(params, callbackContext);
             }
         });
+        actions.put("coverageLonLatGeoStatus", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatGeoStatus(params, callbackContext);
+            }
+        });
         actions.put("coverageRegionGeoStatus", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 coverageRegionGeoStatus(params, callbackContext);
             }
         });
+        actions.put("coverageLonLatIsochrones", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatIsochrones(params, callbackContext);
+            }
+        });
         actions.put("coverageRegionIsochrones", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 coverageRegionIsochrones(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatHeatMaps", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatHeatMaps(params, callbackContext);
             }
         });
         actions.put("coverageRegionHeatMaps", new Action() {
@@ -577,6 +772,18 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 lineGroups(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatLineReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatLineReports(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriLineReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriLineReports(params, callbackContext);
             }
         });
         actions.put("coverageRegionLineReports", new Action() {
@@ -793,6 +1000,24 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 coverageRegionUriPhysicalModesId(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatPlacesId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatPlacesId(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionPlacesId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionPlacesId(params, callbackContext);
+            }
+        });
+        actions.put("placesId", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                placesId(params, callbackContext);
             }
         });
         actions.put("coverageLonLatPlaces", new Action() {
@@ -1029,12 +1254,6 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 routes(params, callbackContext);
             }
         });
-        actions.put("coverageRegionStatus", new Action() {
-            @Override
-            public void doAction(JSONObject params, CallbackContext callbackContext) {
-                coverageRegionStatus(params, callbackContext);
-            }
-        });
         actions.put("coverageLonLatStopAreas", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -1159,6 +1378,18 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 stopSchedules(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatTrafficReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatTrafficReports(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriTrafficReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriTrafficReports(params, callbackContext);
             }
         });
         actions.put("coverageRegionTrafficReports", new Action() {
@@ -1306,6 +1537,709 @@ public class CDVNavitiaSDK extends CordovaPlugin {
         }
     }
 
+    final private void coverageLonLatAddresses(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final AddressesApi.CoverageLonLatAddressesRequestBuilder addressesRequestBuilder = this.navitiaSdk.addressesApi.newCoverageLonLatAddressesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        addressesRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        addressesRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    
+                    addressesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatAddressesId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final AddressesApi.CoverageLonLatAddressesIdRequestBuilder addressesRequestBuilder = this.navitiaSdk.addressesApi.newCoverageLonLatAddressesIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        addressesRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        addressesRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        addressesRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    addressesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriAddresses(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final AddressesApi.CoverageLonLatUriAddressesRequestBuilder addressesRequestBuilder = this.navitiaSdk.addressesApi.newCoverageLonLatUriAddressesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        addressesRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        addressesRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        addressesRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    
+                    addressesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriAddressesId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final AddressesApi.CoverageLonLatUriAddressesIdRequestBuilder addressesRequestBuilder = this.navitiaSdk.addressesApi.newCoverageLonLatUriAddressesIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        addressesRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        addressesRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        addressesRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        addressesRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    addressesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionAddresses(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final AddressesApi.CoverageRegionAddressesRequestBuilder addressesRequestBuilder = this.navitiaSdk.addressesApi.newCoverageRegionAddressesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        addressesRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    
+                    addressesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionAddressesId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final AddressesApi.CoverageRegionAddressesIdRequestBuilder addressesRequestBuilder = this.navitiaSdk.addressesApi.newCoverageRegionAddressesIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        addressesRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        addressesRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    addressesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriAddresses(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final AddressesApi.CoverageRegionUriAddressesRequestBuilder addressesRequestBuilder = this.navitiaSdk.addressesApi.newCoverageRegionUriAddressesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        addressesRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        addressesRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    
+                    addressesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriAddressesId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final AddressesApi.CoverageRegionUriAddressesIdRequestBuilder addressesRequestBuilder = this.navitiaSdk.addressesApi.newCoverageRegionUriAddressesIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        addressesRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        addressesRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        addressesRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    addressesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatCalendars(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CalendarsApi.CoverageLonLatCalendarsRequestBuilder calendarsRequestBuilder = this.navitiaSdk.calendarsApi.newCoverageLonLatCalendarsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        calendarsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        calendarsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        calendarsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        calendarsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        calendarsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("startDate") && (params.getString("startDate") != null) && (!params.getString("startDate").isEmpty()) ) {
+                        // Param: startDate, Type: String
+                        calendarsRequestBuilder.withStartDate(stringStraightPass(params.getString("startDate")));
+                    }
+                    if (params.has("endDate") && (params.getString("endDate") != null) && (!params.getString("endDate").isEmpty()) ) {
+                        // Param: endDate, Type: String
+                        calendarsRequestBuilder.withEndDate(stringStraightPass(params.getString("endDate")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        calendarsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    
+                    calendarsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatCalendarsId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CalendarsApi.CoverageLonLatCalendarsIdRequestBuilder calendarsRequestBuilder = this.navitiaSdk.calendarsApi.newCoverageLonLatCalendarsIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        calendarsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        calendarsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        calendarsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        calendarsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        calendarsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        calendarsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("startDate") && (params.getString("startDate") != null) && (!params.getString("startDate").isEmpty()) ) {
+                        // Param: startDate, Type: String
+                        calendarsRequestBuilder.withStartDate(stringStraightPass(params.getString("startDate")));
+                    }
+                    if (params.has("endDate") && (params.getString("endDate") != null) && (!params.getString("endDate").isEmpty()) ) {
+                        // Param: endDate, Type: String
+                        calendarsRequestBuilder.withEndDate(stringStraightPass(params.getString("endDate")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        calendarsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    
+                    calendarsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriCalendars(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CalendarsApi.CoverageLonLatUriCalendarsRequestBuilder calendarsRequestBuilder = this.navitiaSdk.calendarsApi.newCoverageLonLatUriCalendarsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        calendarsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        calendarsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        calendarsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        calendarsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        calendarsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        calendarsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("startDate") && (params.getString("startDate") != null) && (!params.getString("startDate").isEmpty()) ) {
+                        // Param: startDate, Type: String
+                        calendarsRequestBuilder.withStartDate(stringStraightPass(params.getString("startDate")));
+                    }
+                    if (params.has("endDate") && (params.getString("endDate") != null) && (!params.getString("endDate").isEmpty()) ) {
+                        // Param: endDate, Type: String
+                        calendarsRequestBuilder.withEndDate(stringStraightPass(params.getString("endDate")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        calendarsRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        calendarsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        calendarsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    
+                    calendarsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
     final private void coverageRegionCalendars(final JSONObject params, final CallbackContext callbackContext) {
         if (this.navitiaSdk == null) {
             callbackContext.error("NavitiaSDK is not instanciated");
@@ -4173,6 +5107,992 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             }
         });
     }
+    final private void coordLonLat(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordApi.CoordLonLatRequestBuilder coordRequestBuilder = this.navitiaSdk.coordApi.newCoordLonLatRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    
+                    coordRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coordsLonLat(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordApi.CoordsLonLatRequestBuilder coordRequestBuilder = this.navitiaSdk.coordApi.newCoordsLonLatRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    
+                    coordRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatCoord(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageLonLatCoordRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageLonLatCoordRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatCoordId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageLonLatCoordIdRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageLonLatCoordIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        coordsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatCoords(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageLonLatCoordsRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageLonLatCoordsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatCoordsId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageLonLatCoordsIdRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageLonLatCoordsIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        coordsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriCoord(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageLonLatUriCoordRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageLonLatUriCoordRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        coordsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriCoordId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageLonLatUriCoordIdRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageLonLatUriCoordIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        coordsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        coordsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriCoords(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageLonLatUriCoordsRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageLonLatUriCoordsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        coordsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriCoordsId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageLonLatUriCoordsIdRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageLonLatUriCoordsIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        coordsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        coordsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionCoord(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageRegionCoordRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageRegionCoordRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionCoordId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageRegionCoordIdRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageRegionCoordIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        coordsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionCoords(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageRegionCoordsRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageRegionCoordsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionCoordsId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageRegionCoordsIdRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageRegionCoordsIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        coordsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriCoord(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageRegionUriCoordRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageRegionUriCoordRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        coordsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriCoordId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageRegionUriCoordIdRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageRegionUriCoordIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        coordsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        coordsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriCoords(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageRegionUriCoordsRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageRegionUriCoordsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        coordsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriCoordsId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordsApi.CoverageRegionUriCoordsIdRequestBuilder coordsRequestBuilder = this.navitiaSdk.coordsApi.newCoverageRegionUriCoordsIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        coordsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        coordsRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    
+                    coordsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
     final private void coverage(final JSONObject params, final CallbackContext callbackContext) {
         if (this.navitiaSdk == null) {
             callbackContext.error("NavitiaSDK is not instanciated");
@@ -6108,6 +8028,59 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             }
         });
     }
+    final private void coverageLonLatGeoStatus(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final GeoStatusApi.CoverageLonLatGeoStatusRequestBuilder geoStatusRequestBuilder = this.navitiaSdk.geoStatusApi.newCoverageLonLatGeoStatusRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        geoStatusRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        geoStatusRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    
+                    geoStatusRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
     final private void coverageRegionGeoStatus(final JSONObject params, final CallbackContext callbackContext) {
         if (this.navitiaSdk == null) {
             callbackContext.error("NavitiaSDK is not instanciated");
@@ -6125,6 +8098,167 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     
                     geoStatusRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatIsochrones(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final GraphicalIsochroneApi.CoverageLonLatIsochronesRequestBuilder graphicalIsochroneRequestBuilder = this.navitiaSdk.graphicalIsochroneApi.newCoverageLonLatIsochronesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        graphicalIsochroneRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        graphicalIsochroneRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("from") && (params.getString("from") != null) && (!params.getString("from").isEmpty()) ) {
+                        // Param: from, Type: String
+                        graphicalIsochroneRequestBuilder.withFrom(stringStraightPass(params.getString("from")));
+                    }
+                    if (params.has("to") && (params.getString("to") != null) && (!params.getString("to").isEmpty()) ) {
+                        // Param: to, Type: String
+                        graphicalIsochroneRequestBuilder.withTo(stringStraightPass(params.getString("to")));
+                    }
+                    if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
+                        // Param: datetime, Type: Date
+                        graphicalIsochroneRequestBuilder.withDatetime(stringToDateTime(params.getString("datetime")));
+                    }
+                    if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
+                        // Param: datetimeRepresents, Type: String
+                        graphicalIsochroneRequestBuilder.withDatetimeRepresents(stringStraightPass(params.getString("datetimeRepresents")));
+                    }
+                    if (params.has("maxNbTransfers") && (params.getString("maxNbTransfers") != null) && (!params.getString("maxNbTransfers").isEmpty()) ) {
+                        // Param: maxNbTransfers, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxNbTransfers(integerStraightPass(params.getInt("maxNbTransfers")));
+                    }
+                    if (params.has("minNbTransfers") && (params.getString("minNbTransfers") != null) && (!params.getString("minNbTransfers").isEmpty()) ) {
+                        // Param: minNbTransfers, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMinNbTransfers(integerStraightPass(params.getInt("minNbTransfers")));
+                    }
+                    if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
+                        // Param: firstSectionMode, Type: List
+                        graphicalIsochroneRequestBuilder.withFirstSectionMode(jsonArrayToStringList(params.getJSONArray("firstSectionMode")));
+                    }
+                    if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
+                        // Param: lastSectionMode, Type: List
+                        graphicalIsochroneRequestBuilder.withLastSectionMode(jsonArrayToStringList(params.getJSONArray("lastSectionMode")));
+                    }
+                    if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
+                        // Param: maxDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxDurationToPt(integerStraightPass(params.getInt("maxDurationToPt")));
+                    }
+                    if (params.has("maxWalkingDurationToPt") && (params.getString("maxWalkingDurationToPt") != null) && (!params.getString("maxWalkingDurationToPt").isEmpty()) ) {
+                        // Param: maxWalkingDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxWalkingDurationToPt(integerStraightPass(params.getInt("maxWalkingDurationToPt")));
+                    }
+                    if (params.has("maxBikeDurationToPt") && (params.getString("maxBikeDurationToPt") != null) && (!params.getString("maxBikeDurationToPt").isEmpty()) ) {
+                        // Param: maxBikeDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxBikeDurationToPt(integerStraightPass(params.getInt("maxBikeDurationToPt")));
+                    }
+                    if (params.has("maxBssDurationToPt") && (params.getString("maxBssDurationToPt") != null) && (!params.getString("maxBssDurationToPt").isEmpty()) ) {
+                        // Param: maxBssDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxBssDurationToPt(integerStraightPass(params.getInt("maxBssDurationToPt")));
+                    }
+                    if (params.has("maxCarDurationToPt") && (params.getString("maxCarDurationToPt") != null) && (!params.getString("maxCarDurationToPt").isEmpty()) ) {
+                        // Param: maxCarDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
+                    }
+                    if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
+                        // Param: walkingSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
+                    }
+                    if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
+                        // Param: bikeSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
+                    }
+                    if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
+                        // Param: bssSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
+                    }
+                    if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
+                        // Param: carSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        graphicalIsochroneRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
+                        // Param: allowedId, Type: List
+                        graphicalIsochroneRequestBuilder.withAllowedId(jsonArrayToStringList(params.getJSONArray("allowedId")));
+                    }
+                    if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
+                        // Param: disruptionActive, Type: Boolean
+                        graphicalIsochroneRequestBuilder.withDisruptionActive(booleanStraightPass(params.getBoolean("disruptionActive")));
+                    }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        graphicalIsochroneRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
+                    if (params.has("maxDuration") && (params.getString("maxDuration") != null) && (!params.getString("maxDuration").isEmpty()) ) {
+                        // Param: maxDuration, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxDuration(integerStraightPass(params.getInt("maxDuration")));
+                    }
+                    if (params.has("wheelchair") && (params.getString("wheelchair") != null) && (!params.getString("wheelchair").isEmpty()) ) {
+                        // Param: wheelchair, Type: Boolean
+                        graphicalIsochroneRequestBuilder.withWheelchair(booleanStraightPass(params.getBoolean("wheelchair")));
+                    }
+                    if (params.has("travelerType") && (params.getString("travelerType") != null) && (!params.getString("travelerType").isEmpty()) ) {
+                        // Param: travelerType, Type: String
+                        graphicalIsochroneRequestBuilder.withTravelerType(stringStraightPass(params.getString("travelerType")));
+                    }
+                    if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
+                        // Param: directPath, Type: String
+                        graphicalIsochroneRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
+                    }
+                    if (params.has("minDuration") && (params.getString("minDuration") != null) && (!params.getString("minDuration").isEmpty()) ) {
+                        // Param: minDuration, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMinDuration(integerStraightPass(params.getInt("minDuration")));
+                    }
+                    if (params.has("boundaryDuration") && (params.getString("boundaryDuration") != null) && (!params.getString("boundaryDuration").isEmpty()) ) {
+                        // Param: boundaryDuration, Type: List
+                        graphicalIsochroneRequestBuilder.withBoundaryDuration(jsonArrayToIntegerList(params.getJSONArray("boundaryDuration")));
+                    }
+                    
+                    graphicalIsochroneRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -6282,6 +8416,163 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     
                     graphicalIsochroneRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatHeatMaps(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final HeatMapApi.CoverageLonLatHeatMapsRequestBuilder heatMapRequestBuilder = this.navitiaSdk.heatMapApi.newCoverageLonLatHeatMapsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        heatMapRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        heatMapRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("from") && (params.getString("from") != null) && (!params.getString("from").isEmpty()) ) {
+                        // Param: from, Type: String
+                        heatMapRequestBuilder.withFrom(stringStraightPass(params.getString("from")));
+                    }
+                    if (params.has("to") && (params.getString("to") != null) && (!params.getString("to").isEmpty()) ) {
+                        // Param: to, Type: String
+                        heatMapRequestBuilder.withTo(stringStraightPass(params.getString("to")));
+                    }
+                    if (params.has("datetime") && (params.getString("datetime") != null) && (!params.getString("datetime").isEmpty()) ) {
+                        // Param: datetime, Type: Date
+                        heatMapRequestBuilder.withDatetime(stringToDateTime(params.getString("datetime")));
+                    }
+                    if (params.has("datetimeRepresents") && (params.getString("datetimeRepresents") != null) && (!params.getString("datetimeRepresents").isEmpty()) ) {
+                        // Param: datetimeRepresents, Type: String
+                        heatMapRequestBuilder.withDatetimeRepresents(stringStraightPass(params.getString("datetimeRepresents")));
+                    }
+                    if (params.has("maxNbTransfers") && (params.getString("maxNbTransfers") != null) && (!params.getString("maxNbTransfers").isEmpty()) ) {
+                        // Param: maxNbTransfers, Type: Integer
+                        heatMapRequestBuilder.withMaxNbTransfers(integerStraightPass(params.getInt("maxNbTransfers")));
+                    }
+                    if (params.has("minNbTransfers") && (params.getString("minNbTransfers") != null) && (!params.getString("minNbTransfers").isEmpty()) ) {
+                        // Param: minNbTransfers, Type: Integer
+                        heatMapRequestBuilder.withMinNbTransfers(integerStraightPass(params.getInt("minNbTransfers")));
+                    }
+                    if (params.has("firstSectionMode") && (params.getString("firstSectionMode") != null) && (!params.getString("firstSectionMode").isEmpty()) ) {
+                        // Param: firstSectionMode, Type: List
+                        heatMapRequestBuilder.withFirstSectionMode(jsonArrayToStringList(params.getJSONArray("firstSectionMode")));
+                    }
+                    if (params.has("lastSectionMode") && (params.getString("lastSectionMode") != null) && (!params.getString("lastSectionMode").isEmpty()) ) {
+                        // Param: lastSectionMode, Type: List
+                        heatMapRequestBuilder.withLastSectionMode(jsonArrayToStringList(params.getJSONArray("lastSectionMode")));
+                    }
+                    if (params.has("maxDurationToPt") && (params.getString("maxDurationToPt") != null) && (!params.getString("maxDurationToPt").isEmpty()) ) {
+                        // Param: maxDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxDurationToPt(integerStraightPass(params.getInt("maxDurationToPt")));
+                    }
+                    if (params.has("maxWalkingDurationToPt") && (params.getString("maxWalkingDurationToPt") != null) && (!params.getString("maxWalkingDurationToPt").isEmpty()) ) {
+                        // Param: maxWalkingDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxWalkingDurationToPt(integerStraightPass(params.getInt("maxWalkingDurationToPt")));
+                    }
+                    if (params.has("maxBikeDurationToPt") && (params.getString("maxBikeDurationToPt") != null) && (!params.getString("maxBikeDurationToPt").isEmpty()) ) {
+                        // Param: maxBikeDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxBikeDurationToPt(integerStraightPass(params.getInt("maxBikeDurationToPt")));
+                    }
+                    if (params.has("maxBssDurationToPt") && (params.getString("maxBssDurationToPt") != null) && (!params.getString("maxBssDurationToPt").isEmpty()) ) {
+                        // Param: maxBssDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxBssDurationToPt(integerStraightPass(params.getInt("maxBssDurationToPt")));
+                    }
+                    if (params.has("maxCarDurationToPt") && (params.getString("maxCarDurationToPt") != null) && (!params.getString("maxCarDurationToPt").isEmpty()) ) {
+                        // Param: maxCarDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
+                    }
+                    if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
+                        // Param: walkingSpeed, Type: Float
+                        heatMapRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
+                    }
+                    if (params.has("bikeSpeed") && (params.getString("bikeSpeed") != null) && (!params.getString("bikeSpeed").isEmpty()) ) {
+                        // Param: bikeSpeed, Type: Float
+                        heatMapRequestBuilder.withBikeSpeed(longToFloat(params.getLong("bikeSpeed")));
+                    }
+                    if (params.has("bssSpeed") && (params.getString("bssSpeed") != null) && (!params.getString("bssSpeed").isEmpty()) ) {
+                        // Param: bssSpeed, Type: Float
+                        heatMapRequestBuilder.withBssSpeed(longToFloat(params.getLong("bssSpeed")));
+                    }
+                    if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
+                        // Param: carSpeed, Type: Float
+                        heatMapRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        heatMapRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("allowedId") && (params.getString("allowedId") != null) && (!params.getString("allowedId").isEmpty()) ) {
+                        // Param: allowedId, Type: List
+                        heatMapRequestBuilder.withAllowedId(jsonArrayToStringList(params.getJSONArray("allowedId")));
+                    }
+                    if (params.has("disruptionActive") && (params.getString("disruptionActive") != null) && (!params.getString("disruptionActive").isEmpty()) ) {
+                        // Param: disruptionActive, Type: Boolean
+                        heatMapRequestBuilder.withDisruptionActive(booleanStraightPass(params.getBoolean("disruptionActive")));
+                    }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        heatMapRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
+                    if (params.has("maxDuration") && (params.getString("maxDuration") != null) && (!params.getString("maxDuration").isEmpty()) ) {
+                        // Param: maxDuration, Type: Integer
+                        heatMapRequestBuilder.withMaxDuration(integerStraightPass(params.getInt("maxDuration")));
+                    }
+                    if (params.has("wheelchair") && (params.getString("wheelchair") != null) && (!params.getString("wheelchair").isEmpty()) ) {
+                        // Param: wheelchair, Type: Boolean
+                        heatMapRequestBuilder.withWheelchair(booleanStraightPass(params.getBoolean("wheelchair")));
+                    }
+                    if (params.has("travelerType") && (params.getString("travelerType") != null) && (!params.getString("travelerType").isEmpty()) ) {
+                        // Param: travelerType, Type: String
+                        heatMapRequestBuilder.withTravelerType(stringStraightPass(params.getString("travelerType")));
+                    }
+                    if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
+                        // Param: directPath, Type: String
+                        heatMapRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
+                    }
+                    if (params.has("resolution") && (params.getString("resolution") != null) && (!params.getString("resolution").isEmpty()) ) {
+                        // Param: resolution, Type: Integer
+                        heatMapRequestBuilder.withResolution(integerStraightPass(params.getInt("resolution")));
+                    }
+                    
+                    heatMapRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -9739,6 +12030,172 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             }
         });
     }
+    final private void coverageLonLatLineReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final LineReportsApi.CoverageLonLatLineReportsRequestBuilder lineReportsRequestBuilder = this.navitiaSdk.lineReportsApi.newCoverageLonLatLineReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        lineReportsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        lineReportsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        lineReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        lineReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        lineReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        lineReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        lineReportsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
+                        // Param: since, Type: Date
+                        lineReportsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
+                    }
+                    if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
+                        // Param: until, Type: Date
+                        lineReportsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
+                    }
+                    
+                    lineReportsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriLineReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final LineReportsApi.CoverageLonLatUriLineReportsRequestBuilder lineReportsRequestBuilder = this.navitiaSdk.lineReportsApi.newCoverageLonLatUriLineReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        lineReportsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        lineReportsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        lineReportsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        lineReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        lineReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        lineReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        lineReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        lineReportsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
+                        // Param: since, Type: Date
+                        lineReportsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
+                    }
+                    if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
+                        // Param: until, Type: Date
+                        lineReportsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
+                    }
+                    
+                    lineReportsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
     final private void coverageRegionLineReports(final JSONObject params, final CallbackContext callbackContext) {
         if (this.navitiaSdk == null) {
             callbackContext.error("NavitiaSDK is not instanciated");
@@ -9773,6 +12230,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         lineReportsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
+                        // Param: since, Type: Date
+                        lineReportsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
+                    }
+                    if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
+                        // Param: until, Type: Date
+                        lineReportsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     
                     lineReportsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9846,6 +12311,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         lineReportsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("since") && (params.getString("since") != null) && (!params.getString("since").isEmpty()) ) {
+                        // Param: since, Type: Date
+                        lineReportsRequestBuilder.withSince(stringToDateTime(params.getString("since")));
+                    }
+                    if (params.has("until") && (params.getString("until") != null) && (!params.getString("until").isEmpty()) ) {
+                        // Param: until, Type: Date
+                        lineReportsRequestBuilder.withUntil(stringToDateTime(params.getString("until")));
                     }
                     
                     lineReportsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -13675,6 +16148,201 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatPlacesId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlaceUriApi.CoverageLonLatPlacesIdRequestBuilder placeUriRequestBuilder = this.navitiaSdk.placeUriApi.newCoverageLonLatPlacesIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        placeUriRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        placeUriRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        placeUriRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placeUriRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placeUriRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placeUriRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placeUriRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionPlacesId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlaceUriApi.CoverageRegionPlacesIdRequestBuilder placeUriRequestBuilder = this.navitiaSdk.placeUriApi.newCoverageRegionPlacesIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        placeUriRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        placeUriRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placeUriRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placeUriRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placeUriRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placeUriRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void placesId(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final PlaceUriApi.PlacesIdRequestBuilder placeUriRequestBuilder = this.navitiaSdk.placeUriApi.newPlacesIdRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("id") && (params.getString("id") != null) && (!params.getString("id").isEmpty()) ) {
+                        // Param: id, Type: String
+                        placeUriRequestBuilder.withId(stringStraightPass(params.getString("id")));
+                    }
+                    if (params.has("bssStands") && (params.getString("bssStands") != null) && (!params.getString("bssStands").isEmpty()) ) {
+                        // Param: bssStands, Type: Boolean
+                        placeUriRequestBuilder.withBssStands(booleanStraightPass(params.getBoolean("bssStands")));
+                    }
+                    if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
+                        // Param: addPoiInfos, Type: List
+                        placeUriRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        placeUriRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    placeUriRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -17830,55 +20498,6 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             }
         });
     }
-    final private void coverageRegionStatus(final JSONObject params, final CallbackContext callbackContext) {
-        if (this.navitiaSdk == null) {
-            callbackContext.error("NavitiaSDK is not instanciated");
-            return;
-        }
-
-        final StatusApi.CoverageRegionStatusRequestBuilder statusRequestBuilder = this.navitiaSdk.statusApi.newCoverageRegionStatusRequestBuilder();
-        cordova.getThreadPool().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
-                        // Param: region, Type: String
-                        statusRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
-                    }
-                    
-                    statusRequestBuilder.rawGet(new ApiCallback<String>() {
-                        @Override
-                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
-                            callbackContext.error("Problem during request call | " + e.getMessage());
-                        }
-
-                        @Override
-                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(result);
-                                callbackContext.success(jsonObject);
-                            } catch (Exception e) {
-                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
-                                callbackContext.error(errorMessage);
-                            }
-                        }
-
-                        @Override
-                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
-                        }
-
-                        @Override
-                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
-                        }
-                    });
-                } catch (Exception e) {
-                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
-                    callbackContext.error(errorMessage);
-                }
-            }
-        });
-    }
     final private void coverageLonLatStopAreas(final JSONObject params, final CallbackContext callbackContext) {
         if (this.navitiaSdk == null) {
             callbackContext.error("NavitiaSDK is not instanciated");
@@ -20212,6 +22831,172 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     }
                     
                     stopSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatTrafficReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final TrafficReportApi.CoverageLonLatTrafficReportsRequestBuilder trafficReportRequestBuilder = this.navitiaSdk.trafficReportApi.newCoverageLonLatTrafficReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        trafficReportRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        trafficReportRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        trafficReportRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        trafficReportRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        trafficReportRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        trafficReportRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        trafficReportRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        trafficReportRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        trafficReportRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    trafficReportRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriTrafficReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final TrafficReportApi.CoverageLonLatUriTrafficReportsRequestBuilder trafficReportRequestBuilder = this.navitiaSdk.trafficReportApi.newCoverageLonLatUriTrafficReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        trafficReportRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        trafficReportRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        trafficReportRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        trafficReportRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        trafficReportRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        trafficReportRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        trafficReportRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        trafficReportRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        trafficReportRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        trafficReportRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    
+                    trafficReportRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
