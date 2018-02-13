@@ -5563,6 +5563,9 @@ import NavitiaSDK
                 if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
+                    queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -5574,6 +5577,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "ridesharingSpeed") != nil {
+                    queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -5694,6 +5700,9 @@ import NavitiaSDK
                 if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
+                    queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -5705,6 +5714,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "ridesharingSpeed") != nil {
+                    queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -5828,6 +5840,9 @@ import NavitiaSDK
                 if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
+                    queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -5839,6 +5854,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "ridesharingSpeed") != nil {
+                    queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -5956,6 +5974,9 @@ import NavitiaSDK
                 if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
+                    queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -5967,6 +5988,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "ridesharingSpeed") != nil {
+                    queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -7511,6 +7535,9 @@ import NavitiaSDK
                 if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
+                    queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -7522,6 +7549,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "ridesharingSpeed") != nil {
+                    queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -7654,6 +7684,9 @@ import NavitiaSDK
                 if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
+                    queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -7665,6 +7698,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "ridesharingSpeed") != nil {
+                    queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -7794,6 +7830,9 @@ import NavitiaSDK
                 if params?.index(forKey: "maxCarDurationToPt") != nil {
                     queryBuilder.withMaxCarDurationToPt(anyToInt(params!["maxCarDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
+                    queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -7805,6 +7844,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "carSpeed") != nil {
                     queryBuilder.withCarSpeed(anyToFloat(params!["carSpeed"]!))
+                }
+                if params?.index(forKey: "ridesharingSpeed") != nil {
+                    queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
