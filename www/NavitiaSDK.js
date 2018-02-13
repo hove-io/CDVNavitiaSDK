@@ -5327,10 +5327,12 @@ var request_builders = {
             this.maxBikeDurationToPt = null;
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
+            this.maxRidesharingDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
+            this.ridesharingSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -5402,6 +5404,10 @@ var request_builders = {
             this.maxCarDurationToPt = maxCarDurationToPt;
             return this;
         };
+        this.withMaxRidesharingDurationToPt = function (maxRidesharingDurationToPt) {
+            this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -5416,6 +5422,10 @@ var request_builders = {
         };
         this.withCarSpeed = function (carSpeed) {
             this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withRidesharingSpeed = function (ridesharingSpeed) {
+            this.ridesharingSpeed = ridesharingSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -5475,10 +5485,12 @@ var request_builders = {
                 maxBikeDurationToPt: this.maxBikeDurationToPt,
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
+                maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
+                ridesharingSpeed: this.ridesharingSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -5508,10 +5520,12 @@ var request_builders = {
             this.maxBikeDurationToPt = null;
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
+            this.maxRidesharingDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
+            this.ridesharingSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -5579,6 +5593,10 @@ var request_builders = {
             this.maxCarDurationToPt = maxCarDurationToPt;
             return this;
         };
+        this.withMaxRidesharingDurationToPt = function (maxRidesharingDurationToPt) {
+            this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -5593,6 +5611,10 @@ var request_builders = {
         };
         this.withCarSpeed = function (carSpeed) {
             this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withRidesharingSpeed = function (ridesharingSpeed) {
+            this.ridesharingSpeed = ridesharingSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -5651,10 +5673,12 @@ var request_builders = {
                 maxBikeDurationToPt: this.maxBikeDurationToPt,
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
+                maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
+                ridesharingSpeed: this.ridesharingSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -5685,10 +5709,12 @@ var request_builders = {
             this.maxBikeDurationToPt = null;
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
+            this.maxRidesharingDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
+            this.ridesharingSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -5759,6 +5785,10 @@ var request_builders = {
             this.maxCarDurationToPt = maxCarDurationToPt;
             return this;
         };
+        this.withMaxRidesharingDurationToPt = function (maxRidesharingDurationToPt) {
+            this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -5773,6 +5803,10 @@ var request_builders = {
         };
         this.withCarSpeed = function (carSpeed) {
             this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withRidesharingSpeed = function (ridesharingSpeed) {
+            this.ridesharingSpeed = ridesharingSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -5828,10 +5862,12 @@ var request_builders = {
                 maxBikeDurationToPt: this.maxBikeDurationToPt,
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
+                maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
+                ridesharingSpeed: this.ridesharingSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -5860,10 +5896,12 @@ var request_builders = {
             this.maxBikeDurationToPt = null;
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
+            this.maxRidesharingDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
+            this.ridesharingSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -5930,6 +5968,10 @@ var request_builders = {
             this.maxCarDurationToPt = maxCarDurationToPt;
             return this;
         };
+        this.withMaxRidesharingDurationToPt = function (maxRidesharingDurationToPt) {
+            this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -5944,6 +5986,10 @@ var request_builders = {
         };
         this.withCarSpeed = function (carSpeed) {
             this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withRidesharingSpeed = function (ridesharingSpeed) {
+            this.ridesharingSpeed = ridesharingSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -5998,10 +6044,12 @@ var request_builders = {
                 maxBikeDurationToPt: this.maxBikeDurationToPt,
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
+                maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
+                ridesharingSpeed: this.ridesharingSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -7695,10 +7743,12 @@ var request_builders = {
             this.maxBikeDurationToPt = null;
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
+            this.maxRidesharingDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
+            this.ridesharingSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -7774,6 +7824,10 @@ var request_builders = {
             this.maxCarDurationToPt = maxCarDurationToPt;
             return this;
         };
+        this.withMaxRidesharingDurationToPt = function (maxRidesharingDurationToPt) {
+            this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -7788,6 +7842,10 @@ var request_builders = {
         };
         this.withCarSpeed = function (carSpeed) {
             this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withRidesharingSpeed = function (ridesharingSpeed) {
+            this.ridesharingSpeed = ridesharingSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -7863,10 +7921,12 @@ var request_builders = {
                 maxBikeDurationToPt: this.maxBikeDurationToPt,
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
+                maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
+                ridesharingSpeed: this.ridesharingSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -7900,10 +7960,12 @@ var request_builders = {
             this.maxBikeDurationToPt = null;
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
+            this.maxRidesharingDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
+            this.ridesharingSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -7975,6 +8037,10 @@ var request_builders = {
             this.maxCarDurationToPt = maxCarDurationToPt;
             return this;
         };
+        this.withMaxRidesharingDurationToPt = function (maxRidesharingDurationToPt) {
+            this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -7989,6 +8055,10 @@ var request_builders = {
         };
         this.withCarSpeed = function (carSpeed) {
             this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withRidesharingSpeed = function (ridesharingSpeed) {
+            this.ridesharingSpeed = ridesharingSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -8063,10 +8133,12 @@ var request_builders = {
                 maxBikeDurationToPt: this.maxBikeDurationToPt,
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
+                maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
+                ridesharingSpeed: this.ridesharingSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -8099,10 +8171,12 @@ var request_builders = {
             this.maxBikeDurationToPt = null;
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
+            this.maxRidesharingDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
+            this.ridesharingSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -8170,6 +8244,10 @@ var request_builders = {
             this.maxCarDurationToPt = maxCarDurationToPt;
             return this;
         };
+        this.withMaxRidesharingDurationToPt = function (maxRidesharingDurationToPt) {
+            this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -8184,6 +8262,10 @@ var request_builders = {
         };
         this.withCarSpeed = function (carSpeed) {
             this.carSpeed = carSpeed;
+            return this;
+        };
+        this.withRidesharingSpeed = function (ridesharingSpeed) {
+            this.ridesharingSpeed = ridesharingSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -8257,10 +8339,12 @@ var request_builders = {
                 maxBikeDurationToPt: this.maxBikeDurationToPt,
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
+                maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
+                ridesharingSpeed: this.ridesharingSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,

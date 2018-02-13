@@ -8201,6 +8201,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxCarDurationToPt, Type: Integer
                         graphicalIsochroneRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
                     }
+                    if (params.has("maxRidesharingDurationToPt") && (params.getString("maxRidesharingDurationToPt") != null) && (!params.getString("maxRidesharingDurationToPt").isEmpty()) ) {
+                        // Param: maxRidesharingDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         graphicalIsochroneRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -8216,6 +8220,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
                         graphicalIsochroneRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
+                        // Param: ridesharingSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8358,6 +8366,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxCarDurationToPt, Type: Integer
                         graphicalIsochroneRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
                     }
+                    if (params.has("maxRidesharingDurationToPt") && (params.getString("maxRidesharingDurationToPt") != null) && (!params.getString("maxRidesharingDurationToPt").isEmpty()) ) {
+                        // Param: maxRidesharingDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         graphicalIsochroneRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -8373,6 +8385,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
                         graphicalIsochroneRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
+                        // Param: ridesharingSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8519,6 +8535,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxCarDurationToPt, Type: Integer
                         heatMapRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
                     }
+                    if (params.has("maxRidesharingDurationToPt") && (params.getString("maxRidesharingDurationToPt") != null) && (!params.getString("maxRidesharingDurationToPt").isEmpty()) ) {
+                        // Param: maxRidesharingDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         heatMapRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -8534,6 +8554,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
                         heatMapRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
+                        // Param: ridesharingSpeed, Type: Float
+                        heatMapRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8672,6 +8696,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxCarDurationToPt, Type: Integer
                         heatMapRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
                     }
+                    if (params.has("maxRidesharingDurationToPt") && (params.getString("maxRidesharingDurationToPt") != null) && (!params.getString("maxRidesharingDurationToPt").isEmpty()) ) {
+                        // Param: maxRidesharingDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         heatMapRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -8687,6 +8715,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
                         heatMapRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
+                        // Param: ridesharingSpeed, Type: Float
+                        heatMapRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -10573,6 +10605,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxCarDurationToPt, Type: Integer
                         journeysRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
                     }
+                    if (params.has("maxRidesharingDurationToPt") && (params.getString("maxRidesharingDurationToPt") != null) && (!params.getString("maxRidesharingDurationToPt").isEmpty()) ) {
+                        // Param: maxRidesharingDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -10588,6 +10624,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
                         journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
+                        // Param: ridesharingSpeed, Type: Float
+                        journeysRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -10746,6 +10786,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxCarDurationToPt, Type: Integer
                         journeysRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
                     }
+                    if (params.has("maxRidesharingDurationToPt") && (params.getString("maxRidesharingDurationToPt") != null) && (!params.getString("maxRidesharingDurationToPt").isEmpty()) ) {
+                        // Param: maxRidesharingDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -10761,6 +10805,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
                         journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
+                        // Param: ridesharingSpeed, Type: Float
+                        journeysRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -10915,6 +10963,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxCarDurationToPt, Type: Integer
                         journeysRequestBuilder.withMaxCarDurationToPt(integerStraightPass(params.getInt("maxCarDurationToPt")));
                     }
+                    if (params.has("maxRidesharingDurationToPt") && (params.getString("maxRidesharingDurationToPt") != null) && (!params.getString("maxRidesharingDurationToPt").isEmpty()) ) {
+                        // Param: maxRidesharingDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -10930,6 +10982,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("carSpeed") && (params.getString("carSpeed") != null) && (!params.getString("carSpeed").isEmpty()) ) {
                         // Param: carSpeed, Type: Float
                         journeysRequestBuilder.withCarSpeed(longToFloat(params.getLong("carSpeed")));
+                    }
+                    if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
+                        // Param: ridesharingSpeed, Type: Float
+                        journeysRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
