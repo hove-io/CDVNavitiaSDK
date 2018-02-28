@@ -1,1 +1,1 @@
-github "CanalTP/NavitiaSDK_ios" ~> 1.1.1
+github "CanalTP/NavitiaSDK_ios" == 1.1.2
