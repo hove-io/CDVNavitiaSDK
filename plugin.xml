@@ -7,8 +7,6 @@
     </js-module>
 
     <platform name="ios">
-        <dependency id="cordova-plugin-add-swift-support" version="1.7.1" />
-
         <hook type="before_plugin_install" src="scripts/ios/carthage.js" />
 
         <config-file target="config.xml" parent="/*">
