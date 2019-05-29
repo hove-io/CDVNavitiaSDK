@@ -9,8 +9,8 @@ module.exports = function(ctx) {
     console.log('*****************************************************');
     console.log();
 
-    const deferral = ctx.requireCordovaModule('q').defer();
-    const spawn = ctx.requireCordovaModule('child_process').spawn;
+    const deferral = require('q').defer();
+    const spawn = require('child_process').spawn;
     const child = spawn('carthage', ['update', '--cache-builds', '--platform', 'iOS'], {
         cwd: ctx.opts.plugin.dir,
     });
