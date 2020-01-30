@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-navitia-sdk" version="1.3.3" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-navitia-sdk" version="2.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>NavitiaSDK</name>
 
     <js-module name="NavitiaSDK" src="www/NavitiaSDK.js">
@@ -22,12 +22,12 @@
     <platform name="android">
         <config-file target="config.xml" parent="/*">
             <feature name="NavitiaSDK">
-                <param name="android-package" value="org.kisio.CDVNavitiaSDK.CDVNavitiaSDK"/>
+                <param name="android-package" value="com.kisio.navitia.sdk.data.expert.CDVNavitiaSDK"/>
             </feature>
         </config-file>
 
         <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
 
-        <source-file src="src/android/org/kisio/CDVNavitiaSDK/CDVNavitiaSDK.java" target-dir="src/org/kisio/CDVNavitiaSDK" />
+        <source-file src="src/android/com/kisio/navitia/sdk/data/expert/CDVNavitiaSDK.java" target-dir="com/kisio/navitia/sdk/data/expert/CDVNavitiaSDK" />
     </platform>
 </plugin>
