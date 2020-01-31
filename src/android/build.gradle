@@ -9,7 +9,7 @@ repositories {
     jcenter()
     mavenLocal()
     maven {
-        url("https://dl.bintray.com/navitiasdkteam/NavitiaSDK")
+        url("https://dl.bintray.com/kisio/maven/")
     }
 
     if (project.hasProperty("kisio_artifactory_url")) {
@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.kisio.navitia.sdk.data:expert:2.0.1")
+    implementation("com.kisio.navitia.sdk.data:expert:2.0.2")
     implementation("org.jacoco:org.jacoco.agent:${android.jacoco.version}:runtime")
 
     implementation("joda-time:joda-time:2.10.5")
