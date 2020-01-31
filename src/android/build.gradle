@@ -32,6 +32,7 @@ repositories {
 
 dependencies {
     implementation("com.kisio.navitia.sdk.data:expert:2.0.1")
+    implementation("org.jacoco:org.jacoco.agent:${android.jacoco.version}:runtime")
 
     implementation("joda-time:joda-time:2.10.5")
     implementation("com.google.code.gson:gson:2.8.6")
