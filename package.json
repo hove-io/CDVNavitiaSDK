@@ -16,5 +16,9 @@
     "navitia"
   ],
   "author": "Kisio Digital",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "elementtree": "0.1.7",
+    "xcode": "2.0.0"
+  }
 }
