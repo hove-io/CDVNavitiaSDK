@@ -23,6 +23,8 @@
                 <pod name="NavitiaSDK" spec="1.4.3"/>
             </pods>
         </podspec>
+
+		<hook src="hooks/add_buildPhase.js" type="after_platform_add" />
     </platform>
 
     <platform name="android">
