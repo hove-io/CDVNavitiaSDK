@@ -1,7 +1,7 @@
 import NavitiaSDK
 
 @objc(CDVNavitiaSDK) class CDVNavitiaSDK : CDVPlugin {
-    var sdk: NavitiaSDK? = nil
+    var sdk: Expert? = nil
 
     func anyToDateTime(_ value: Any) -> Date {
         let isoFormatter = DateFormatter()
@@ -62,7 +62,7 @@ import NavitiaSDK
         if token == nil || token!.isEmpty {
             pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "No token provided")
         } else {
-            self.sdk = NavitiaSDK.init(configuration: NavitiaConfiguration.init(token: token!))
+            self.sdk = Expert.init(configuration: NavitiaConfiguration.init(token: token!))
             let message = String(format: "SDK initialized with token %@", token!)
             pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
         }
