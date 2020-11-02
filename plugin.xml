@@ -1,13 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-navitia-sdk" version="2.3.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-navitia-sdk" version="2.3.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>NavitiaSDK</name>
 
-	<preference name="ARTIFACTORY_USERNAME"/>
-	<preference name="ARTIFACTORY_PASSWORD" />
-	<preference name="ARTIFACTORY_URL" default="https://kisiodigital.jfrog.io/kisiodigital/" />
-	<preference name="ARTIFACTORY_ANDROID_REPO_RELEASE" default="android-release" />
-	<preference name="ARTIFACTORY_ANDROID_REPO_SNAPSHOT" default="android-snapshot" />
-	<hook src="hooks/add_artifactory_conf.js" type="before_prepare" />
+	<preference name="KISIO_ARTIFACTORY_URL" default="https://kisiodigital.jfrog.io/kisiodigital/" />
+	<preference name="KISIO_ARTIFACTORY_ANDROID_REPO_RELEASE" default="android-release" />
+	<preference name="KISIO_ARTIFACTORY_ANDROID_REPO_SNAPSHOT" default="android-snapshot" />
+    <hook src="hooks/add_artifactory_conf.js" type="before_plugin_install" />
 
     <js-module name="NavitiaSDK" src="www/NavitiaSDK.js">
         <clobbers target="NavitiaSDK" />
