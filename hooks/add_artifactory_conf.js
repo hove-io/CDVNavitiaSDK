@@ -4,38 +4,89 @@ module.exports = function(ctx) {
 	var package;
 	try {
 		package = require(ctx.opts.projectRoot + '/package.json');
-	} catch (err) { }
+	} catch (err) {
+		console.log(err);
+	}
 
-	var PLUGIN_ID = ctx.opts.plugin.id;
+	var loadConfigXMLFile = function() {
+		try {
+			var fs = require('fs');
+			var xml2js = require('xml2js');
+			var fileData = fs.readFileSync("config.xml", 'ascii');
+			var parser = new xml2js.Parser();
+			var configFileJson = "";
 
-	var _getPreferenceValue = function(key) {
+			parser.parseString(fileData.substring(0, fileData.length), function (err, result) {
+				configFileJson = result;
+			});
+
+			return configFileJson;
+		} catch (ex) {
+			console.log(ex)
+		}
+	}
+
+	var getRequestedPreferenceFromConfig = function(preferencesList, requestedPreferenceName) {
+		for (const preference of preferencesList) {
+			if (preference["$"].name === requestedPreferenceName) {
+				return preference["$"].value;
+			}
+		}
+
+		return null
+	}
+
+	const PLUGIN_ID = ctx.opts.plugin.id;
+	var configFileContent = loadConfigXMLFile();
+	var projectPreferences = configFileContent.widget.preference
+
+	var getRequestedPreference = function(key) {
+		// Check in project preferences
+		var keyConfigPreference = getRequestedPreferenceFromConfig(projectPreferences, key);
+		if (keyConfigPreference) {
+			return keyConfigPreference;
+		}
+
+		// Check in environment variables
+		if (process.env[key]) {
+			return process.env[key]
+		}
+
+		// Check in Package.json (project) file
 		if (package && package.cordova && package.cordova.plugins && package.cordova.plugins[PLUGIN_ID] && package.cordova.plugins[PLUGIN_ID][key]) {
 			return package.cordova.plugins[PLUGIN_ID][key];
 		}
 
+		// Check in Config.xml (project) file
 		var config = fs.readFileSync('config.xml').toString();
 		var confValue = config.match(new RegExp(`"${PLUGIN_ID}"(.(?!<\/plugin>))*?<variable name="${key}" value="(.*?)".*?<\/plugin>`, 'is'));
 		if (confValue && confValue[2]) {
 			return confValue[2];
-		} else {
-			var defaultPreferences = ctx.opts.plugin.pluginInfo.getPreferences();
-			return defaultPreferences[key] || null;
 		}
+
+		// Check in plugin default preferences
+		var defaultPreferences = ctx.opts.plugin.pluginInfo.getPreferences();
+		if (defaultPreferences[key]) {
+			return defaultPreferences[key]
+		}
+		
+		throw key + " is not found. Please make sure to follow instructions in : https://github.com/CanalTP/CDVNavitiaSDKUX#requirements";
 	}
 
-	if (ctx.opts.platforms.includes('android')) {
+	if (ctx.opts.cordova.platforms.includes('android')) {
 		// Android platform: add the authentification informations into the gradle.properties file in the project
+		console.log('➕ Adding authentication credentials to Android platform')
 		var gradlePropertiesPath = './platforms/android/gradle.properties';
-		var gradleProperties = fs.readFileSync(gradlePropertiesPath);
-		gradleProperties = gradleProperties.toString();
+		var gradleProperties = fs.readFileSync(gradlePropertiesPath);		
 		if (gradleProperties) {
 			gradleProperties = gradleProperties.toString();
 			if (!gradleProperties.match('kisio_artifactory_url')) {
-				gradleProperties += `\nkisio_artifactory_url=${_getPreferenceValue('ARTIFACTORY_URL')}`;
-				gradleProperties += `\nkisio_artifactory_username=${_getPreferenceValue('ARTIFACTORY_USERNAME')}`;
-				gradleProperties += `\nkisio_artifactory_password=${_getPreferenceValue('ARTIFACTORY_PASSWORD')}`;
-				gradleProperties += `\nkisio_artifactory_android_repo_release=${_getPreferenceValue('ARTIFACTORY_ANDROID_REPO_RELEASE')}`;
-				gradleProperties += `\nkisio_artifactory_android_repo_snapshot=${_getPreferenceValue('ARTIFACTORY_ANDROID_REPO_SNAPSHOT')}`;
+				gradleProperties += `\nkisio_artifactory_url=${getRequestedPreference('KISIO_ARTIFACTORY_URL')}`;
+				gradleProperties += `\nkisio_artifactory_username=${getRequestedPreference('KISIO_ARTIFACTORY_USERNAME')}`;
+				gradleProperties += `\nkisio_artifactory_password=${getRequestedPreference('KISIO_ARTIFACTORY_PASSWORD')}`;
+				gradleProperties += `\nkisio_artifactory_android_repo_release=${getRequestedPreference('KISIO_ARTIFACTORY_ANDROID_REPO_RELEASE')}`;
+				gradleProperties += `\nkisio_artifactory_android_repo_snapshot=${getRequestedPreference('KISIO_ARTIFACTORY_ANDROID_REPO_SNAPSHOT')}`;
+
 				fs.writeFileSync(gradlePropertiesPath, gradleProperties, 'utf8');
 			}
 		} else {
@@ -43,12 +94,13 @@ module.exports = function(ctx) {
 		}
 	}
 
-	if (ctx.opts.platforms.includes('ios')) {
+	if (ctx.opts.cordova.platforms.includes('ios')) {
 		// IOS platform: add the authentification informations into the .netrc file (on the home directory)
+		console.log('➕ Adding authentication credentials to iOS platform')
 		var netrcPath = os.homedir() + '/.netrc';
-		var machine = _getPreferenceValue('ARTIFACTORY_URL').match(/^https?:\/\/([^:\/?#]*)/)[1];
-		var netrcLine = `machine ${machine} login ${_getPreferenceValue('ARTIFACTORY_USERNAME')} password ${_getPreferenceValue('ARTIFACTORY_PASSWORD')}\n`;
+		var machine = getRequestedPreference('KISIO_ARTIFACTORY_URL').match(/^https?:\/\/([^:\/?#]*)/)[1];
 		if (machine) {
+			var netrcLine = `machine ${machine} login ${getRequestedPreference('KISIO_ARTIFACTORY_USERNAME')} password ${getRequestedPreference('KISIO_ARTIFACTORY_PASSWORD')}\n`;
 			var netrcContent = '';
 			if (fs.existsSync(netrcPath)) {
 				var netrcContent = fs.readFileSync(netrcPath).toString() || '';
@@ -60,6 +112,7 @@ module.exports = function(ctx) {
 			} else {
 				netrcContent += netrcLine;
 			}
+
 			fs.writeFileSync(netrcPath, netrcContent, 'utf8');
 		}
 	}
