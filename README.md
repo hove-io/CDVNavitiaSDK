@@ -4,7 +4,7 @@ Cordova plugin for using Navitia SDK iOS &amp; Android
 
 ## Requirements
 
-This plugin uses native SDKs. Since those SDKs are private, you will need to get access credentials to our [artifactory] (https://kisiodigital.jfrog.io). This plugin uses Cocoapods to manage dependencies for iOS, please install it first: https://cocoapods.org.
+This plugin uses native SDKs. Since those SDKs are private, you will need to get access credentials to our [artifactory](https://kisiodigital.jfrog.io). This plugin uses Cocoapods to manage dependencies for iOS, please install it first: https://cocoapods.org.
 
 ## Credentials configuration
 
