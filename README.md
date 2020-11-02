@@ -38,7 +38,7 @@ KISIO_ARTIFACTORT_PASSWORD=<YOUR_ARTIFACTORY_PASSWORD>
 
 In the Home directory, open `.netrc` file (if not found, create a new file) and add this line:
 ```
-machine kisiodigital.jfrog.io <YOUR_ARTIFACTORY_USERNAME> HELLOWORLD password <YOUR_ARTIFACTORY_PASSWORD>
+machine kisiodigital.jfrog.io login <YOUR_ARTIFACTORY_USERNAME> password <YOUR_ARTIFACTORY_PASSWORD>
 ``````
 
 ##### Android
