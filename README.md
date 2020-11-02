@@ -8,7 +8,7 @@ This plugin uses native SDKs. Since those SDKs are private, you will need to get
 
 ## Credentials configuration
 
-Once you have credentials to access our [artifactory] (https://kisiodigital.jfrog.io), one further step is required before installing the plugin. Please follow one of these steps to configure the credentials properly. 
+Once you have credentials to access our [artifactory](https://kisiodigital.jfrog.io), one further step is required before installing the plugin. Please follow one of these steps to configure the credentials properly. 
 The `<YOUR_ARTIFACTORY_USERNAME>` and `<YOUR_ARTIFACTORY_PASSWORD>` should be replaced with your username and password!
 
 #### Using Config.xml preferences
