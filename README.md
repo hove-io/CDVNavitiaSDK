@@ -29,7 +29,7 @@ In the Config.xml file of your project, add these lines:
 Define two global environment variables as follows:
 ```
 KISIO_ARTIFACTORY_USERNAME=<YOUR_ARTIFACTORY_USERNAME>
-KISIO_ARTIFACTORT_PASSWORD=<YOUR_ARTIFACTORY_PASSWORD>
+KISIO_ARTIFACTORY_PASSWORD=<YOUR_ARTIFACTORY_PASSWORD>
 ```
 
 #### Using global properties files (MacOS users only)
