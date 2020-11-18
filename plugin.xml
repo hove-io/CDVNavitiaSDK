@@ -29,7 +29,7 @@
             </pods>
         </podspec>
 
-		<hook src="hooks/add_buildPhase.js" type="after_platform_add" />
+		<hook src="hooks/add_buildPhase.js" type="after_plugin_install" />
     </platform>
 
     <platform name="android">
