@@ -1,6 +1,7 @@
 module.exports = function(ctx) {
 	var fs = require('fs');
 	var os = require('os');
+	var path = require('path');
 	var package;
 	try {
 		package = require(ctx.opts.projectRoot + '/package.json');
@@ -70,27 +71,59 @@ module.exports = function(ctx) {
 			return defaultPreferences[key]
 		}
 		
-		throw key + " is not found. Please make sure to follow instructions in : https://github.com/CanalTP/CDVNavitiaSDKUX#requirements";
+		throw key + " is not found. Please make sure to follow instructions in : https://github.com/CanalTP/CDVNavitiaSDK#requirements";
 	}
 
 	if (ctx.opts.cordova.platforms.includes('android')) {
 		// Android platform: add the authentification informations into the gradle.properties file in the project
 		console.log('➕ Adding authentication credentials to Android platform')
-		var gradlePropertiesPath = './platforms/android/gradle.properties';
-		var gradleProperties = fs.readFileSync(gradlePropertiesPath);		
-		if (gradleProperties) {
-			gradleProperties = gradleProperties.toString();
-			if (!gradleProperties.match('kisio_artifactory_url')) {
-				gradleProperties += `\nkisio_artifactory_url=${getRequestedPreference('KISIO_ARTIFACTORY_URL')}`;
-				gradleProperties += `\nkisio_artifactory_username=${getRequestedPreference('KISIO_ARTIFACTORY_USERNAME')}`;
-				gradleProperties += `\nkisio_artifactory_password=${getRequestedPreference('KISIO_ARTIFACTORY_PASSWORD')}`;
-				gradleProperties += `\nkisio_artifactory_android_repo_release=${getRequestedPreference('KISIO_ARTIFACTORY_ANDROID_REPO_RELEASE')}`;
-				gradleProperties += `\nkisio_artifactory_android_repo_snapshot=${getRequestedPreference('KISIO_ARTIFACTORY_ANDROID_REPO_SNAPSHOT')}`;
 
-				fs.writeFileSync(gradlePropertiesPath, gradleProperties, 'utf8');
-			}
+		// Check if a global gradle.properties exists with the artifactory credentials
+		var globalGradleArtifactoryCredentials = []
+		var globalGradlePropertiesPath = path.join(process.env.HOME, '.gradle', 'gradle.properties')
+		var globalGradleProperties = fs.readFileSync(globalGradlePropertiesPath, 'utf-8')
+		if (globalGradleProperties) {
+			globalGradleProperties.split(/\r?\n/).forEach(function(line) {
+				if (line.includes('kisio_artifactory_')) {
+					globalGradleArtifactoryCredentials.push(line)
+				}
+			});
+		}
+		
+		// Let's consider that the global config is valid by default
+		// In case there is an issue with the config, we just change its value
+		var globalConfigIsValid = true
+		var checkedProperties = ['kisio_artifactory_url', 'kisio_artifactory_username', 'kisio_artifactory_password', 'kisio_artifactory_android_repo_release', 'kisio_artifactory_android_repo_snapshot']
+		if (globalGradleArtifactoryCredentials.length >= checkedProperties.length) {
+			checkedProperties.forEach(function(checkedProperty) {
+				globalGradleArtifactoryCredentials.filter(property => property.includes(checkedProperty)).forEach(function(globalProperty) {
+					if (globalProperty.split('=')[1].trim().length == 0) {
+						globalConfigIsValid = false
+					}
+				});
+			});
 		} else {
-			console.error('gradle.properties file not found to add the kisio plugins dependencies');
+			globalConfigIsValid = false
+		}
+
+		// If the global config is not set, request credentials
+		if (!globalConfigIsValid) {
+			var gradlePropertiesPath = './platforms/android/gradle.properties';
+			var gradleProperties = fs.readFileSync(gradlePropertiesPath);		
+			if (gradleProperties) {
+				gradleProperties = gradleProperties.toString();
+				if (!gradleProperties.match('kisio_artifactory_url')) {
+					gradleProperties += `\nkisio_artifactory_url=${getRequestedPreference('KISIO_ARTIFACTORY_URL')}`;
+					gradleProperties += `\nkisio_artifactory_username=${getRequestedPreference('KISIO_ARTIFACTORY_USERNAME')}`;
+					gradleProperties += `\nkisio_artifactory_password=${getRequestedPreference('KISIO_ARTIFACTORY_PASSWORD')}`;
+					gradleProperties += `\nkisio_artifactory_android_repo_release=${getRequestedPreference('KISIO_ARTIFACTORY_ANDROID_REPO_RELEASE')}`;
+					gradleProperties += `\nkisio_artifactory_android_repo_snapshot=${getRequestedPreference('KISIO_ARTIFACTORY_ANDROID_REPO_SNAPSHOT')}`;
+
+					fs.writeFileSync(gradlePropertiesPath, gradleProperties, 'utf8');
+				}
+			} else {
+				console.error('gradle.properties file not found to add the kisio plugins dependencies');
+			}
 		}
 	}
 
