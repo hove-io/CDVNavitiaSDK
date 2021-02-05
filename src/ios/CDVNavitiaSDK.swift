@@ -56,21 +56,28 @@ import NavitiaSDK
 
     @objc(init:)
     func `init`(command: CDVInvokedUrlCommand) {
-        var pluginResult: CDVPluginResult?
-        let token = command.arguments[0] as? String
-
-        if token == nil || token!.isEmpty {
-            pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "No token provided")
-        } else {
-            self.sdk = Expert.init(configuration: NavitiaConfiguration.init(token: token!))
-            let message = String(format: "SDK initialized with token %@", token!)
-            pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
+        guard let arguments = command.arguments, let config = arguments[0] as? [String: Any] else {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "No valid plugin config")
+            commandDelegate.send(pluginResult, callbackId: command.callbackId)
+            return
         }
 
-        self.commandDelegate!.send(
-            pluginResult,
-            callbackId: command.callbackId
-        )
+        guard let token = config["token"] as? String, !token.isEmpty else {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "No token provided")
+            commandDelegate.send(pluginResult, callbackId: command.callbackId)
+            return
+        }
+
+        let basePath = config["basePath"] as? String ?? ""
+        if !basePath.isEmpty {
+            NavitiaSDKAPI.basePath = basePath
+        }
+
+        self.sdk = NavitiaSDK.init(configuration: NavitiaConfiguration.init(token: token))
+        
+        let message = String(format: "SDK initialized with token %@", token)
+        let pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: message)
+        commandDelegate.send(pluginResult, callbackId: command.callbackId)
     }
 
     @objc(coverageLonLatAddresses:)
@@ -911,6 +918,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatCommercialModesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -923,8 +935,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1003,6 +1021,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatCommercialModesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1014,6 +1037,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1092,6 +1121,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriCommercialModesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1104,8 +1138,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1187,6 +1227,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriCommercialModesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1198,6 +1243,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1270,6 +1321,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionCommercialModesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1282,8 +1338,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1359,6 +1421,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionCommercialModesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1370,6 +1437,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1445,6 +1518,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriCommercialModesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1457,8 +1535,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1537,6 +1621,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriCommercialModesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1548,6 +1637,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1623,6 +1718,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatCompaniesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1635,8 +1735,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1715,6 +1821,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatCompaniesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1726,6 +1837,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1804,6 +1921,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriCompaniesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1816,8 +1938,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1899,6 +2027,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriCompaniesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1910,6 +2043,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -1982,6 +2121,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionCompaniesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -1994,8 +2138,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2071,6 +2221,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionCompaniesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2082,6 +2237,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2157,6 +2318,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriCompaniesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2169,8 +2335,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2249,6 +2421,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriCompaniesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2260,6 +2437,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2335,6 +2518,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatContributorsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2347,8 +2535,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2427,6 +2621,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatContributorsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2438,6 +2637,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2516,6 +2721,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriContributorsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2528,8 +2738,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2611,6 +2827,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriContributorsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2622,6 +2843,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2694,6 +2921,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionContributorsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2706,8 +2938,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2783,6 +3021,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionContributorsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2794,6 +3037,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2869,6 +3118,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriContributorsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2881,8 +3135,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -2961,6 +3221,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriContributorsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -2972,6 +3237,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -3059,6 +3330,102 @@ import NavitiaSDK
 
                 if params?.index(forKey: "lat") != nil {
                     queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionCoordLonLatAddresses:)
+    func coverageRegionCoordLonLatAddresses(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordApi? = self.sdk?.coordApi {
+                let queryBuilder: CoverageRegionCoordLonLatAddressesRequestBuilder = api!.newCoverageRegionCoordLonLatAddressesRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionCoordsLonLatAddresses:)
+    func coverageRegionCoordsLonLatAddresses(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: CoordApi? = self.sdk?.coordApi {
+                let queryBuilder: CoverageRegionCoordsLonLatAddressesRequestBuilder = api!.newCoverageRegionCoordsLonLatAddressesRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
                 }
                 if params?.index(forKey: "lon") != nil {
                     queryBuilder.withLon(anyToDouble(params!["lon"]!))
@@ -4016,6 +4383,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatDatasetsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4028,8 +4400,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4108,6 +4486,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatDatasetsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4119,6 +4502,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4197,6 +4586,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriDatasetsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4209,8 +4603,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4292,6 +4692,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriDatasetsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4303,6 +4708,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4375,6 +4786,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionDatasetsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4387,8 +4803,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4464,6 +4886,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionDatasetsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4475,6 +4902,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4550,6 +4983,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriDatasetsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4562,8 +5000,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4642,6 +5086,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriDatasetsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4653,6 +5102,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -4728,6 +5183,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatDisruptionsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4740,8 +5200,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -4823,6 +5289,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatDisruptionsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4834,6 +5305,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -4915,6 +5392,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriDisruptionsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -4927,8 +5409,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -5013,6 +5501,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriDisruptionsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -5024,6 +5517,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -5099,6 +5598,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionDisruptionsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -5111,8 +5615,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -5191,6 +5701,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionDisruptionsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -5202,6 +5717,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -5280,6 +5801,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriDisruptionsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -5292,8 +5818,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -5375,6 +5907,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriDisruptionsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -5387,8 +5924,374 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
+                }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coordLonLatEquipmentReports:)
+    func coordLonLatEquipmentReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: EquipmentReportsApi? = self.sdk?.equipmentReportsApi {
+                let queryBuilder: CoordLonLatEquipmentReportsRequestBuilder = api!.newCoordLonLatEquipmentReportsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coordsLonLatEquipmentReports:)
+    func coordsLonLatEquipmentReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: EquipmentReportsApi? = self.sdk?.equipmentReportsApi {
+                let queryBuilder: CoordsLonLatEquipmentReportsRequestBuilder = api!.newCoordsLonLatEquipmentReportsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatEquipmentReports:)
+    func coverageLonLatEquipmentReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: EquipmentReportsApi? = self.sdk?.equipmentReportsApi {
+                let queryBuilder: CoverageLonLatEquipmentReportsRequestBuilder = api!.newCoverageLonLatEquipmentReportsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriEquipmentReports:)
+    func coverageLonLatUriEquipmentReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: EquipmentReportsApi? = self.sdk?.equipmentReportsApi {
+                let queryBuilder: CoverageLonLatUriEquipmentReportsRequestBuilder = api!.newCoverageLonLatUriEquipmentReportsRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionEquipmentReports:)
+    func coverageRegionEquipmentReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: EquipmentReportsApi? = self.sdk?.equipmentReportsApi {
+                let queryBuilder: CoverageRegionEquipmentReportsRequestBuilder = api!.newCoverageRegionEquipmentReportsRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionUriEquipmentReports:)
+    func coverageRegionUriEquipmentReports(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: EquipmentReportsApi? = self.sdk?.equipmentReportsApi {
+                let queryBuilder: CoverageRegionUriEquipmentReportsRequestBuilder = api!.newCoverageRegionUriEquipmentReportsRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -5566,6 +6469,12 @@ import NavitiaSDK
                 if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
                     queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxCarNoParkDurationToPt") != nil {
+                    queryBuilder.withMaxCarNoParkDurationToPt(anyToInt(params!["maxCarNoParkDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxTaxiDurationToPt") != nil {
+                    queryBuilder.withMaxTaxiDurationToPt(anyToInt(params!["maxTaxiDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -5580,6 +6489,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "ridesharingSpeed") != nil {
                     queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
+                }
+                if params?.index(forKey: "carNoParkSpeed") != nil {
+                    queryBuilder.withCarNoParkSpeed(anyToFloat(params!["carNoParkSpeed"]!))
+                }
+                if params?.index(forKey: "taxiSpeed") != nil {
+                    queryBuilder.withTaxiSpeed(anyToFloat(params!["taxiSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -5610,6 +6525,18 @@ import NavitiaSDK
                     if let enumValue = anyToEnum(params!["directPath"]!) as CoverageLonLatIsochronesRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
+                }
+                if params?.index(forKey: "freeRadiusFrom") != nil {
+                    queryBuilder.withFreeRadiusFrom(anyToInt(params!["freeRadiusFrom"]!))
+                }
+                if params?.index(forKey: "freeRadiusTo") != nil {
+                    queryBuilder.withFreeRadiusTo(anyToInt(params!["freeRadiusTo"]!))
+                }
+                if params?.index(forKey: "directPathMode") != nil {
+                    queryBuilder.withDirectPathMode(arrayToEnum(params!["directPathMode"]!) as [CoverageLonLatIsochronesRequestBuilder.DirectPathMode])
+                }
+                if params?.index(forKey: "partnerServices") != nil {
+                    queryBuilder.withPartnerServices(arrayToEnum(params!["partnerServices"]!) as [CoverageLonLatIsochronesRequestBuilder.PartnerServices])
                 }
                 if params?.index(forKey: "minDuration") != nil {
                     queryBuilder.withMinDuration(anyToInt(params!["minDuration"]!))
@@ -5703,6 +6630,12 @@ import NavitiaSDK
                 if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
                     queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxCarNoParkDurationToPt") != nil {
+                    queryBuilder.withMaxCarNoParkDurationToPt(anyToInt(params!["maxCarNoParkDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxTaxiDurationToPt") != nil {
+                    queryBuilder.withMaxTaxiDurationToPt(anyToInt(params!["maxTaxiDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -5717,6 +6650,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "ridesharingSpeed") != nil {
                     queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
+                }
+                if params?.index(forKey: "carNoParkSpeed") != nil {
+                    queryBuilder.withCarNoParkSpeed(anyToFloat(params!["carNoParkSpeed"]!))
+                }
+                if params?.index(forKey: "taxiSpeed") != nil {
+                    queryBuilder.withTaxiSpeed(anyToFloat(params!["taxiSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -5747,6 +6686,18 @@ import NavitiaSDK
                     if let enumValue = anyToEnum(params!["directPath"]!) as CoverageRegionIsochronesRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
+                }
+                if params?.index(forKey: "freeRadiusFrom") != nil {
+                    queryBuilder.withFreeRadiusFrom(anyToInt(params!["freeRadiusFrom"]!))
+                }
+                if params?.index(forKey: "freeRadiusTo") != nil {
+                    queryBuilder.withFreeRadiusTo(anyToInt(params!["freeRadiusTo"]!))
+                }
+                if params?.index(forKey: "directPathMode") != nil {
+                    queryBuilder.withDirectPathMode(arrayToEnum(params!["directPathMode"]!) as [CoverageRegionIsochronesRequestBuilder.DirectPathMode])
+                }
+                if params?.index(forKey: "partnerServices") != nil {
+                    queryBuilder.withPartnerServices(arrayToEnum(params!["partnerServices"]!) as [CoverageRegionIsochronesRequestBuilder.PartnerServices])
                 }
                 if params?.index(forKey: "minDuration") != nil {
                     queryBuilder.withMinDuration(anyToInt(params!["minDuration"]!))
@@ -5843,6 +6794,12 @@ import NavitiaSDK
                 if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
                     queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxCarNoParkDurationToPt") != nil {
+                    queryBuilder.withMaxCarNoParkDurationToPt(anyToInt(params!["maxCarNoParkDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxTaxiDurationToPt") != nil {
+                    queryBuilder.withMaxTaxiDurationToPt(anyToInt(params!["maxTaxiDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -5857,6 +6814,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "ridesharingSpeed") != nil {
                     queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
+                }
+                if params?.index(forKey: "carNoParkSpeed") != nil {
+                    queryBuilder.withCarNoParkSpeed(anyToFloat(params!["carNoParkSpeed"]!))
+                }
+                if params?.index(forKey: "taxiSpeed") != nil {
+                    queryBuilder.withTaxiSpeed(anyToFloat(params!["taxiSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -5887,6 +6850,18 @@ import NavitiaSDK
                     if let enumValue = anyToEnum(params!["directPath"]!) as CoverageLonLatHeatMapsRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
+                }
+                if params?.index(forKey: "freeRadiusFrom") != nil {
+                    queryBuilder.withFreeRadiusFrom(anyToInt(params!["freeRadiusFrom"]!))
+                }
+                if params?.index(forKey: "freeRadiusTo") != nil {
+                    queryBuilder.withFreeRadiusTo(anyToInt(params!["freeRadiusTo"]!))
+                }
+                if params?.index(forKey: "directPathMode") != nil {
+                    queryBuilder.withDirectPathMode(arrayToEnum(params!["directPathMode"]!) as [CoverageLonLatHeatMapsRequestBuilder.DirectPathMode])
+                }
+                if params?.index(forKey: "partnerServices") != nil {
+                    queryBuilder.withPartnerServices(arrayToEnum(params!["partnerServices"]!) as [CoverageLonLatHeatMapsRequestBuilder.PartnerServices])
                 }
                 if params?.index(forKey: "resolution") != nil {
                     queryBuilder.withResolution(anyToInt(params!["resolution"]!))
@@ -5977,6 +6952,12 @@ import NavitiaSDK
                 if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
                     queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxCarNoParkDurationToPt") != nil {
+                    queryBuilder.withMaxCarNoParkDurationToPt(anyToInt(params!["maxCarNoParkDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxTaxiDurationToPt") != nil {
+                    queryBuilder.withMaxTaxiDurationToPt(anyToInt(params!["maxTaxiDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -5991,6 +6972,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "ridesharingSpeed") != nil {
                     queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
+                }
+                if params?.index(forKey: "carNoParkSpeed") != nil {
+                    queryBuilder.withCarNoParkSpeed(anyToFloat(params!["carNoParkSpeed"]!))
+                }
+                if params?.index(forKey: "taxiSpeed") != nil {
+                    queryBuilder.withTaxiSpeed(anyToFloat(params!["taxiSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -6021,6 +7008,18 @@ import NavitiaSDK
                     if let enumValue = anyToEnum(params!["directPath"]!) as CoverageRegionHeatMapsRequestBuilder.DirectPath? {
                         queryBuilder.withDirectPath(enumValue)
                     }
+                }
+                if params?.index(forKey: "freeRadiusFrom") != nil {
+                    queryBuilder.withFreeRadiusFrom(anyToInt(params!["freeRadiusFrom"]!))
+                }
+                if params?.index(forKey: "freeRadiusTo") != nil {
+                    queryBuilder.withFreeRadiusTo(anyToInt(params!["freeRadiusTo"]!))
+                }
+                if params?.index(forKey: "directPathMode") != nil {
+                    queryBuilder.withDirectPathMode(arrayToEnum(params!["directPathMode"]!) as [CoverageRegionHeatMapsRequestBuilder.DirectPathMode])
+                }
+                if params?.index(forKey: "partnerServices") != nil {
+                    queryBuilder.withPartnerServices(arrayToEnum(params!["partnerServices"]!) as [CoverageRegionHeatMapsRequestBuilder.PartnerServices])
                 }
                 if params?.index(forKey: "resolution") != nil {
                     queryBuilder.withResolution(anyToInt(params!["resolution"]!))
@@ -6099,6 +7098,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatJourneyPatternPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6111,8 +7115,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6191,6 +7201,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatJourneyPatternPointsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6202,6 +7217,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6280,6 +7301,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriJourneyPatternPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6292,8 +7318,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6375,6 +7407,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriJourneyPatternPointsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6386,6 +7423,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6458,6 +7501,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionJourneyPatternPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6470,8 +7518,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6547,6 +7601,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionJourneyPatternPointsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6558,6 +7617,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6633,6 +7698,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriJourneyPatternPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6645,8 +7715,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6725,6 +7801,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriJourneyPatternPointsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6736,6 +7817,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6811,6 +7898,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatJourneyPatternsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6823,8 +7915,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6903,6 +8001,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatJourneyPatternsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -6914,6 +8017,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -6992,6 +8101,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriJourneyPatternsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -7004,8 +8118,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7087,6 +8207,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriJourneyPatternsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -7098,6 +8223,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7170,6 +8301,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionJourneyPatternsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -7182,8 +8318,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7259,6 +8401,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionJourneyPatternsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -7270,6 +8417,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7345,6 +8498,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriJourneyPatternsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -7357,8 +8515,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7437,6 +8601,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriJourneyPatternsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -7448,6 +8617,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7538,6 +8713,12 @@ import NavitiaSDK
                 if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
                     queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxCarNoParkDurationToPt") != nil {
+                    queryBuilder.withMaxCarNoParkDurationToPt(anyToInt(params!["maxCarNoParkDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxTaxiDurationToPt") != nil {
+                    queryBuilder.withMaxTaxiDurationToPt(anyToInt(params!["maxTaxiDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -7552,6 +8733,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "ridesharingSpeed") != nil {
                     queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
+                }
+                if params?.index(forKey: "carNoParkSpeed") != nil {
+                    queryBuilder.withCarNoParkSpeed(anyToFloat(params!["carNoParkSpeed"]!))
+                }
+                if params?.index(forKey: "taxiSpeed") != nil {
+                    queryBuilder.withTaxiSpeed(anyToFloat(params!["taxiSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -7583,6 +8770,18 @@ import NavitiaSDK
                         queryBuilder.withDirectPath(enumValue)
                     }
                 }
+                if params?.index(forKey: "freeRadiusFrom") != nil {
+                    queryBuilder.withFreeRadiusFrom(anyToInt(params!["freeRadiusFrom"]!))
+                }
+                if params?.index(forKey: "freeRadiusTo") != nil {
+                    queryBuilder.withFreeRadiusTo(anyToInt(params!["freeRadiusTo"]!))
+                }
+                if params?.index(forKey: "directPathMode") != nil {
+                    queryBuilder.withDirectPathMode(arrayToEnum(params!["directPathMode"]!) as [CoverageLonLatJourneysRequestBuilder.DirectPathMode])
+                }
+                if params?.index(forKey: "partnerServices") != nil {
+                    queryBuilder.withPartnerServices(arrayToEnum(params!["partnerServices"]!) as [CoverageLonLatJourneysRequestBuilder.PartnerServices])
+                }
                 if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
@@ -7600,6 +8799,36 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "addPoiInfos") != nil {
                     queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageLonLatJourneysRequestBuilder.AddPoiInfos])
+                }
+                if params?.index(forKey: "timeframeDuration") != nil {
+                    queryBuilder.withTimeframeDuration(anyToInt(params!["timeframeDuration"]!))
+                }
+                if params?.index(forKey: "equipmentDetails") != nil {
+                    queryBuilder.withEquipmentDetails(anyToBool(params!["equipmentDetails"]!))
+                }
+                if params?.index(forKey: "maxTaxiDirectPathDuration") != nil {
+                    queryBuilder.withMaxTaxiDirectPathDuration(anyToInt(params!["maxTaxiDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxWalkingDirectPathDuration") != nil {
+                    queryBuilder.withMaxWalkingDirectPathDuration(anyToInt(params!["maxWalkingDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxCarNoParkDirectPathDuration") != nil {
+                    queryBuilder.withMaxCarNoParkDirectPathDuration(anyToInt(params!["maxCarNoParkDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxCarDirectPathDuration") != nil {
+                    queryBuilder.withMaxCarDirectPathDuration(anyToInt(params!["maxCarDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxRidesharingDirectPathDuration") != nil {
+                    queryBuilder.withMaxRidesharingDirectPathDuration(anyToInt(params!["maxRidesharingDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxBssDirectPathDuration") != nil {
+                    queryBuilder.withMaxBssDirectPathDuration(anyToInt(params!["maxBssDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxBikeDirectPathDuration") != nil {
+                    queryBuilder.withMaxBikeDirectPathDuration(anyToInt(params!["maxBikeDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7687,6 +8916,12 @@ import NavitiaSDK
                 if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
                     queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxCarNoParkDurationToPt") != nil {
+                    queryBuilder.withMaxCarNoParkDurationToPt(anyToInt(params!["maxCarNoParkDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxTaxiDurationToPt") != nil {
+                    queryBuilder.withMaxTaxiDurationToPt(anyToInt(params!["maxTaxiDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -7701,6 +8936,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "ridesharingSpeed") != nil {
                     queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
+                }
+                if params?.index(forKey: "carNoParkSpeed") != nil {
+                    queryBuilder.withCarNoParkSpeed(anyToFloat(params!["carNoParkSpeed"]!))
+                }
+                if params?.index(forKey: "taxiSpeed") != nil {
+                    queryBuilder.withTaxiSpeed(anyToFloat(params!["taxiSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -7732,6 +8973,18 @@ import NavitiaSDK
                         queryBuilder.withDirectPath(enumValue)
                     }
                 }
+                if params?.index(forKey: "freeRadiusFrom") != nil {
+                    queryBuilder.withFreeRadiusFrom(anyToInt(params!["freeRadiusFrom"]!))
+                }
+                if params?.index(forKey: "freeRadiusTo") != nil {
+                    queryBuilder.withFreeRadiusTo(anyToInt(params!["freeRadiusTo"]!))
+                }
+                if params?.index(forKey: "directPathMode") != nil {
+                    queryBuilder.withDirectPathMode(arrayToEnum(params!["directPathMode"]!) as [CoverageRegionJourneysRequestBuilder.DirectPathMode])
+                }
+                if params?.index(forKey: "partnerServices") != nil {
+                    queryBuilder.withPartnerServices(arrayToEnum(params!["partnerServices"]!) as [CoverageRegionJourneysRequestBuilder.PartnerServices])
+                }
                 if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
@@ -7749,6 +9002,36 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "addPoiInfos") != nil {
                     queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [CoverageRegionJourneysRequestBuilder.AddPoiInfos])
+                }
+                if params?.index(forKey: "timeframeDuration") != nil {
+                    queryBuilder.withTimeframeDuration(anyToInt(params!["timeframeDuration"]!))
+                }
+                if params?.index(forKey: "equipmentDetails") != nil {
+                    queryBuilder.withEquipmentDetails(anyToBool(params!["equipmentDetails"]!))
+                }
+                if params?.index(forKey: "maxTaxiDirectPathDuration") != nil {
+                    queryBuilder.withMaxTaxiDirectPathDuration(anyToInt(params!["maxTaxiDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxWalkingDirectPathDuration") != nil {
+                    queryBuilder.withMaxWalkingDirectPathDuration(anyToInt(params!["maxWalkingDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxCarNoParkDirectPathDuration") != nil {
+                    queryBuilder.withMaxCarNoParkDirectPathDuration(anyToInt(params!["maxCarNoParkDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxCarDirectPathDuration") != nil {
+                    queryBuilder.withMaxCarDirectPathDuration(anyToInt(params!["maxCarDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxRidesharingDirectPathDuration") != nil {
+                    queryBuilder.withMaxRidesharingDirectPathDuration(anyToInt(params!["maxRidesharingDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxBssDirectPathDuration") != nil {
+                    queryBuilder.withMaxBssDirectPathDuration(anyToInt(params!["maxBssDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxBikeDirectPathDuration") != nil {
+                    queryBuilder.withMaxBikeDirectPathDuration(anyToInt(params!["maxBikeDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7833,6 +9116,12 @@ import NavitiaSDK
                 if params?.index(forKey: "maxRidesharingDurationToPt") != nil {
                     queryBuilder.withMaxRidesharingDurationToPt(anyToInt(params!["maxRidesharingDurationToPt"]!))
                 }
+                if params?.index(forKey: "maxCarNoParkDurationToPt") != nil {
+                    queryBuilder.withMaxCarNoParkDurationToPt(anyToInt(params!["maxCarNoParkDurationToPt"]!))
+                }
+                if params?.index(forKey: "maxTaxiDurationToPt") != nil {
+                    queryBuilder.withMaxTaxiDurationToPt(anyToInt(params!["maxTaxiDurationToPt"]!))
+                }
                 if params?.index(forKey: "walkingSpeed") != nil {
                     queryBuilder.withWalkingSpeed(anyToFloat(params!["walkingSpeed"]!))
                 }
@@ -7847,6 +9136,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "ridesharingSpeed") != nil {
                     queryBuilder.withRidesharingSpeed(anyToFloat(params!["ridesharingSpeed"]!))
+                }
+                if params?.index(forKey: "carNoParkSpeed") != nil {
+                    queryBuilder.withCarNoParkSpeed(anyToFloat(params!["carNoParkSpeed"]!))
+                }
+                if params?.index(forKey: "taxiSpeed") != nil {
+                    queryBuilder.withTaxiSpeed(anyToFloat(params!["taxiSpeed"]!))
                 }
                 if params?.index(forKey: "forbiddenUris") != nil {
                     queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
@@ -7878,6 +9173,18 @@ import NavitiaSDK
                         queryBuilder.withDirectPath(enumValue)
                     }
                 }
+                if params?.index(forKey: "freeRadiusFrom") != nil {
+                    queryBuilder.withFreeRadiusFrom(anyToInt(params!["freeRadiusFrom"]!))
+                }
+                if params?.index(forKey: "freeRadiusTo") != nil {
+                    queryBuilder.withFreeRadiusTo(anyToInt(params!["freeRadiusTo"]!))
+                }
+                if params?.index(forKey: "directPathMode") != nil {
+                    queryBuilder.withDirectPathMode(arrayToEnum(params!["directPathMode"]!) as [JourneysRequestBuilder.DirectPathMode])
+                }
+                if params?.index(forKey: "partnerServices") != nil {
+                    queryBuilder.withPartnerServices(arrayToEnum(params!["partnerServices"]!) as [JourneysRequestBuilder.PartnerServices])
+                }
                 if params?.index(forKey: "count") != nil {
                     queryBuilder.withCount(anyToInt(params!["count"]!))
                 }
@@ -7895,6 +9202,36 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "addPoiInfos") != nil {
                     queryBuilder.withAddPoiInfos(arrayToEnum(params!["addPoiInfos"]!) as [JourneysRequestBuilder.AddPoiInfos])
+                }
+                if params?.index(forKey: "timeframeDuration") != nil {
+                    queryBuilder.withTimeframeDuration(anyToInt(params!["timeframeDuration"]!))
+                }
+                if params?.index(forKey: "equipmentDetails") != nil {
+                    queryBuilder.withEquipmentDetails(anyToBool(params!["equipmentDetails"]!))
+                }
+                if params?.index(forKey: "maxTaxiDirectPathDuration") != nil {
+                    queryBuilder.withMaxTaxiDirectPathDuration(anyToInt(params!["maxTaxiDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxWalkingDirectPathDuration") != nil {
+                    queryBuilder.withMaxWalkingDirectPathDuration(anyToInt(params!["maxWalkingDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxCarNoParkDirectPathDuration") != nil {
+                    queryBuilder.withMaxCarNoParkDirectPathDuration(anyToInt(params!["maxCarNoParkDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxCarDirectPathDuration") != nil {
+                    queryBuilder.withMaxCarDirectPathDuration(anyToInt(params!["maxCarDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxRidesharingDirectPathDuration") != nil {
+                    queryBuilder.withMaxRidesharingDirectPathDuration(anyToInt(params!["maxRidesharingDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxBssDirectPathDuration") != nil {
+                    queryBuilder.withMaxBssDirectPathDuration(anyToInt(params!["maxBssDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "maxBikeDirectPathDuration") != nil {
+                    queryBuilder.withMaxBikeDirectPathDuration(anyToInt(params!["maxBikeDirectPathDuration"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -7970,6 +9307,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatLineGroupsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -7982,8 +9324,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -8065,6 +9413,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatLineGroupsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -8076,6 +9429,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -8157,6 +9516,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriLineGroupsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -8169,8 +9533,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -8255,6 +9625,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriLineGroupsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -8266,6 +9641,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -8341,6 +9722,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionLineGroupsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -8353,8 +9739,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -8433,6 +9825,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionLineGroupsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -8444,6 +9841,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -8522,6 +9925,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriLineGroupsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -8534,8 +9942,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -8617,6 +10031,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriLineGroupsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -8628,6 +10047,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -8700,6 +10125,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as LineGroupsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -8712,8 +10142,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9056,6 +10492,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatLinesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9068,8 +10509,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9151,6 +10598,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatLinesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9162,6 +10614,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9243,6 +10701,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriLinesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9255,8 +10718,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9341,6 +10810,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriLinesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9352,6 +10826,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9427,6 +10907,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionLinesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9439,8 +10924,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9519,6 +11010,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionLinesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9530,6 +11026,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9608,6 +11110,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriLinesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9620,8 +11127,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9703,6 +11216,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriLinesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9714,6 +11232,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9786,6 +11310,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as LinesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9798,8 +11327,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9878,6 +11413,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatNetworksRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9890,8 +11430,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -9973,6 +11519,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatNetworksIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -9984,6 +11535,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -10065,6 +11622,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriNetworksRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -10077,8 +11639,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -10163,6 +11731,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriNetworksIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -10174,6 +11747,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -10249,6 +11828,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionNetworksRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -10261,8 +11845,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -10341,6 +11931,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionNetworksIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -10352,6 +11947,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -10430,6 +12031,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriNetworksRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -10442,8 +12048,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -10525,6 +12137,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriNetworksIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -10536,6 +12153,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -10608,6 +12231,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as NetworksRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -10620,8 +12248,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -10721,6 +12355,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageLonLatArrivalsRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -10819,6 +12458,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageLonLatUriArrivalsRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -10910,6 +12554,11 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageRegionArrivalsRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11006,6 +12655,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageRegionUriArrivalsRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -11100,6 +12754,11 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageLonLatDeparturesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11199,6 +12858,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageLonLatUriDeparturesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -11290,6 +12954,11 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageRegionDeparturesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11386,6 +13055,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageRegionUriDeparturesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -11460,6 +13134,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatPhysicalModesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -11472,8 +13151,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11552,6 +13237,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatPhysicalModesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -11563,6 +13253,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11641,6 +13337,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriPhysicalModesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -11653,8 +13354,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11736,6 +13443,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriPhysicalModesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -11747,6 +13459,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11819,6 +13537,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionPhysicalModesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -11831,8 +13554,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11908,6 +13637,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionPhysicalModesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -11919,6 +13653,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -11994,6 +13734,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriPhysicalModesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -12006,8 +13751,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12086,6 +13837,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriPhysicalModesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -12097,6 +13853,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12155,6 +13917,9 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -12209,6 +13974,9 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -12259,6 +14027,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12530,6 +14301,9 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -12602,6 +14376,9 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -12673,6 +14450,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12749,6 +14529,9 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -12817,6 +14600,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12889,6 +14675,9 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -12964,6 +14753,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatPoiTypesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -12976,8 +14770,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -13056,6 +14856,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatPoiTypesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13067,6 +14872,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -13145,6 +14956,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriPoiTypesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13157,8 +14973,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -13240,6 +15062,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriPoiTypesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13251,6 +15078,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -13323,6 +15156,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionPoiTypesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13335,8 +15173,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -13412,6 +15256,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionPoiTypesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13423,6 +15272,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -13498,6 +15353,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriPoiTypesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13510,8 +15370,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -13590,6 +15456,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriPoiTypesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13601,6 +15472,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -13676,6 +15553,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatPoisRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13688,8 +15570,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -13777,6 +15665,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatPoisIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13788,6 +15681,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -13875,6 +15774,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriPoisRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13887,8 +15791,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -13979,6 +15889,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriPoisIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -13990,6 +15905,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -14071,6 +15992,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionPoisRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -14083,8 +16009,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -14169,6 +16101,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionPoisIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -14180,6 +16117,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -14264,6 +16207,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriPoisRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -14276,8 +16224,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -14365,6 +16319,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriPoisIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -14376,6 +16335,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -14449,6 +16414,12 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -14508,6 +16479,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -14607,6 +16584,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageLonLatUriRouteSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -14702,6 +16684,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageRegionUriRouteSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -14791,6 +16778,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as RouteSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -14865,6 +16857,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatRoutesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -14877,8 +16874,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -14960,6 +16963,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatRoutesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -14971,6 +16979,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15052,6 +17066,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriRoutesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15064,8 +17083,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15150,6 +17175,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriRoutesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15161,6 +17191,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15236,6 +17272,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionRoutesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15248,8 +17289,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15328,6 +17375,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionRoutesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15339,6 +17391,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15417,6 +17475,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriRoutesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15429,8 +17492,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15512,6 +17581,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriRoutesIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15523,6 +17597,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15595,6 +17675,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as RoutesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15607,8 +17692,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15687,6 +17778,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatStopAreasRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15699,8 +17795,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15782,6 +17884,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatStopAreasIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15793,6 +17900,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15874,6 +17987,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriStopAreasRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15886,8 +18004,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -15972,6 +18096,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriStopAreasIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -15983,6 +18112,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16058,6 +18193,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionStopAreasRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16070,8 +18210,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16150,6 +18296,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionStopAreasIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16161,6 +18312,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16239,6 +18396,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriStopAreasRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16251,8 +18413,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16334,6 +18502,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriStopAreasIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16345,6 +18518,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16417,6 +18596,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as StopAreasRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16429,8 +18613,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16509,6 +18699,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatStopPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16521,8 +18716,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16604,6 +18805,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatStopPointsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16615,6 +18821,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16696,6 +18908,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriStopPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16708,8 +18925,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16794,6 +19017,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriStopPointsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16805,6 +19033,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16880,6 +19114,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionStopPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16892,8 +19131,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -16972,6 +19217,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionStopPointsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -16983,6 +19233,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -17061,6 +19317,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriStopPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -17073,8 +19334,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -17156,6 +19423,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriStopPointsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -17167,6 +19439,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -17239,6 +19517,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as StopPointsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -17251,8 +19534,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
                 if params?.index(forKey: "originalId") != nil {
                     queryBuilder.withOriginalId(anyToString(params!["originalId"]!))
@@ -17355,6 +19644,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageLonLatUriStopSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -17450,6 +19744,11 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageRegionUriStopSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
 
                 queryBuilder.rawGet(completion: { results, error in
                     var pluginResult: CDVPluginResult? = nil
@@ -17538,6 +19837,308 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as StopSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageLonLatUriTerminusSchedules:)
+    func coverageLonLatUriTerminusSchedules(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: TerminusSchedulesApi? = self.sdk?.terminusSchedulesApi {
+                let queryBuilder: CoverageLonLatUriTerminusSchedulesRequestBuilder = api!.newCoverageLonLatUriTerminusSchedulesRequestBuilder();
+
+                if params?.index(forKey: "lat") != nil {
+                    queryBuilder.withLat(anyToDouble(params!["lat"]!))
+                }
+                if params?.index(forKey: "lon") != nil {
+                    queryBuilder.withLon(anyToDouble(params!["lon"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "fromDatetime") != nil {
+                    queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
+                }
+                if params?.index(forKey: "untilDatetime") != nil {
+                    queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
+                }
+                if params?.index(forKey: "duration") != nil {
+                    queryBuilder.withDuration(anyToInt(params!["duration"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "maxDateTimes") != nil {
+                    queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
+                }
+                if params?.index(forKey: "forbiddenId") != nil {
+                    queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "calendar") != nil {
+                    queryBuilder.withCalendar(anyToString(params!["calendar"]!))
+                }
+                if params?.index(forKey: "distance") != nil {
+                    queryBuilder.withDistance(anyToInt(params!["distance"]!))
+                }
+                if params?.index(forKey: "showCodes") != nil {
+                    queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
+                }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriTerminusSchedulesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
+                if params?.index(forKey: "itemsPerSchedule") != nil {
+                    queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageLonLatUriTerminusSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(coverageRegionUriTerminusSchedules:)
+    func coverageRegionUriTerminusSchedules(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: TerminusSchedulesApi? = self.sdk?.terminusSchedulesApi {
+                let queryBuilder: CoverageRegionUriTerminusSchedulesRequestBuilder = api!.newCoverageRegionUriTerminusSchedulesRequestBuilder();
+
+                if params?.index(forKey: "region") != nil {
+                    queryBuilder.withRegion(anyToString(params!["region"]!))
+                }
+                if params?.index(forKey: "uri") != nil {
+                    queryBuilder.withUri(anyToString(params!["uri"]!))
+                }
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "fromDatetime") != nil {
+                    queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
+                }
+                if params?.index(forKey: "untilDatetime") != nil {
+                    queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
+                }
+                if params?.index(forKey: "duration") != nil {
+                    queryBuilder.withDuration(anyToInt(params!["duration"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "maxDateTimes") != nil {
+                    queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
+                }
+                if params?.index(forKey: "forbiddenId") != nil {
+                    queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "calendar") != nil {
+                    queryBuilder.withCalendar(anyToString(params!["calendar"]!))
+                }
+                if params?.index(forKey: "distance") != nil {
+                    queryBuilder.withDistance(anyToInt(params!["distance"]!))
+                }
+                if params?.index(forKey: "showCodes") != nil {
+                    queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
+                }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriTerminusSchedulesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
+                if params?.index(forKey: "itemsPerSchedule") != nil {
+                    queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as CoverageRegionUriTerminusSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
+                }
+
+                queryBuilder.rawGet(completion: { results, error in
+                    var pluginResult: CDVPluginResult? = nil
+
+                    if error == nil {
+                        NSLog(String(format: "SDK journeys with query %@", queryBuilder.makeUrl()))
+                        let jsonData = results?.data(using: String.Encoding.utf8)
+                        if jsonData != nil {
+                            do {
+                                let jsonResults = try JSONSerialization.jsonObject(with: jsonData!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String : Any]
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: jsonResults)
+                            } catch {
+                                pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        NSLog(String(format: "SDK journeys fail with query %@", queryBuilder.makeUrl()))
+                        pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error!.localizedDescription)
+                    }
+
+                    self.commandDelegate!.send(pluginResult, callbackId: command.callbackId)
+                })
+            }
+        }
+    }
+    @objc(terminusSchedules:)
+    func terminusSchedules(command: CDVInvokedUrlCommand) {
+        let params = command.arguments[0] as? [String : Any]
+
+        if params == nil || params?.count == 0 {
+            let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Wrong parameters")
+            self.commandDelegate!.send(
+                pluginResult,
+                callbackId: command.callbackId
+            )
+        } else {
+            if let api: TerminusSchedulesApi? = self.sdk?.terminusSchedulesApi {
+                let queryBuilder: TerminusSchedulesRequestBuilder = api!.newTerminusSchedulesRequestBuilder();
+
+                if params?.index(forKey: "filter") != nil {
+                    queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "fromDatetime") != nil {
+                    queryBuilder.withFromDatetime(anyToDateTime(params!["fromDatetime"]!))
+                }
+                if params?.index(forKey: "untilDatetime") != nil {
+                    queryBuilder.withUntilDatetime(anyToDateTime(params!["untilDatetime"]!))
+                }
+                if params?.index(forKey: "duration") != nil {
+                    queryBuilder.withDuration(anyToInt(params!["duration"]!))
+                }
+                if params?.index(forKey: "depth") != nil {
+                    queryBuilder.withDepth(anyToInt(params!["depth"]!))
+                }
+                if params?.index(forKey: "count") != nil {
+                    queryBuilder.withCount(anyToInt(params!["count"]!))
+                }
+                if params?.index(forKey: "startPage") != nil {
+                    queryBuilder.withStartPage(anyToInt(params!["startPage"]!))
+                }
+                if params?.index(forKey: "maxDateTimes") != nil {
+                    queryBuilder.withMaxDateTimes(anyToInt(params!["maxDateTimes"]!))
+                }
+                if params?.index(forKey: "forbiddenId") != nil {
+                    queryBuilder.withForbiddenId(arrayToStringDict(params!["forbiddenId"]!))
+                }
+                if params?.index(forKey: "forbiddenUris") != nil {
+                    queryBuilder.withForbiddenUris(arrayToStringDict(params!["forbiddenUris"]!))
+                }
+                if params?.index(forKey: "calendar") != nil {
+                    queryBuilder.withCalendar(anyToString(params!["calendar"]!))
+                }
+                if params?.index(forKey: "distance") != nil {
+                    queryBuilder.withDistance(anyToInt(params!["distance"]!))
+                }
+                if params?.index(forKey: "showCodes") != nil {
+                    queryBuilder.withShowCodes(anyToBool(params!["showCodes"]!))
+                }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as TerminusSchedulesRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
+                if params?.index(forKey: "itemsPerSchedule") != nil {
+                    queryBuilder.withItemsPerSchedule(anyToInt(params!["itemsPerSchedule"]!))
+                }
+                if params?.index(forKey: "disableGeojson") != nil {
+                    queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "directionType") != nil {
+                    if let enumValue = anyToEnum(params!["directionType"]!) as TerminusSchedulesRequestBuilder.DirectionType? {
+                        queryBuilder.withDirectionType(enumValue)
+                    }
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -17877,6 +20478,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatTripsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -17889,8 +20495,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -17969,6 +20581,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatTripsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -17980,6 +20597,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18058,6 +20681,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriTripsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18070,8 +20698,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18153,6 +20787,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriTripsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18164,6 +20803,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18236,6 +20881,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionTripsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18248,8 +20898,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18325,6 +20981,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionTripsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18336,6 +20997,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18411,6 +21078,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriTripsRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18423,8 +21095,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18503,6 +21181,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriTripsIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18514,6 +21197,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18592,6 +21281,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriVehicleJourneysRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18604,8 +21298,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18687,6 +21387,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatUriVehicleJourneysIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18698,6 +21403,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18773,6 +21484,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatVehicleJourneysRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18785,8 +21501,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18865,6 +21587,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageLonLatVehicleJourneysIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18876,6 +21603,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -18951,6 +21684,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriVehicleJourneysRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -18963,8 +21701,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -19043,6 +21787,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionUriVehicleJourneysIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -19054,6 +21803,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -19126,6 +21881,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionVehicleJourneysRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -19138,8 +21898,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -19215,6 +21981,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as CoverageRegionVehicleJourneysIdRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -19226,6 +21997,12 @@ import NavitiaSDK
                 }
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
+                }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in
@@ -19295,6 +22072,11 @@ import NavitiaSDK
                         queryBuilder.withOdtLevel(enumValue)
                     }
                 }
+                if params?.index(forKey: "dataFreshness") != nil {
+                    if let enumValue = anyToEnum(params!["dataFreshness"]!) as VehicleJourneysRequestBuilder.DataFreshness? {
+                        queryBuilder.withDataFreshness(enumValue)
+                    }
+                }
                 if params?.index(forKey: "distance") != nil {
                     queryBuilder.withDistance(anyToInt(params!["distance"]!))
                 }
@@ -19307,8 +22089,14 @@ import NavitiaSDK
                 if params?.index(forKey: "disableGeojson") != nil {
                     queryBuilder.withDisableGeojson(anyToBool(params!["disableGeojson"]!))
                 }
+                if params?.index(forKey: "disableDisruption") != nil {
+                    queryBuilder.withDisableDisruption(anyToBool(params!["disableDisruption"]!))
+                }
                 if params?.index(forKey: "filter") != nil {
                     queryBuilder.withFilter(anyToString(params!["filter"]!))
+                }
+                if params?.index(forKey: "tags") != nil {
+                    queryBuilder.withTags(arrayToStringDict(params!["tags"]!))
                 }
 
                 queryBuilder.rawGet(completion: { results, error in

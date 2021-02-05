@@ -613,11 +613,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -663,6 +666,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -679,8 +686,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -696,11 +711,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -718,10 +736,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -771,6 +792,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -787,6 +812,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatCommercialModesId', [{
                 lat: this.lat,
@@ -801,10 +834,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -822,11 +858,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -876,6 +915,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -892,8 +935,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -910,11 +961,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -933,10 +987,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -990,6 +1047,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1004,6 +1065,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -1021,10 +1090,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -1040,11 +1112,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -1086,6 +1161,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1102,8 +1181,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -1118,11 +1205,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -1139,10 +1229,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -1188,6 +1281,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1204,6 +1301,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionCommercialModesId', [{
                 region: this.region,
@@ -1217,10 +1322,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -1237,11 +1345,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -1287,6 +1398,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1303,8 +1418,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -1320,11 +1443,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -1342,10 +1468,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -1395,6 +1524,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1411,6 +1544,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriCommercialModesId', [{
                 region: this.region,
@@ -1425,10 +1566,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -1445,11 +1589,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -1495,6 +1642,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1511,8 +1662,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -1528,11 +1687,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -1550,10 +1712,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -1603,6 +1768,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1619,6 +1788,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatCompaniesId', [{
                 lat: this.lat,
@@ -1633,10 +1810,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -1654,11 +1834,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -1708,6 +1891,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1724,8 +1911,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -1742,11 +1937,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -1765,10 +1963,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -1822,6 +2023,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1836,6 +2041,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -1853,10 +2066,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -1872,11 +2088,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -1918,6 +2137,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -1934,8 +2157,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -1950,11 +2181,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -1971,10 +2205,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -2020,6 +2257,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2036,6 +2277,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionCompaniesId', [{
                 region: this.region,
@@ -2049,10 +2298,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -2069,11 +2321,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -2119,6 +2374,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2135,8 +2394,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -2152,11 +2419,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -2174,10 +2444,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -2227,6 +2500,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2243,6 +2520,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriCompaniesId', [{
                 region: this.region,
@@ -2257,10 +2542,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -2277,11 +2565,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -2327,6 +2618,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2343,8 +2638,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -2360,11 +2663,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -2382,10 +2688,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -2435,6 +2744,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2451,6 +2764,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatContributorsId', [{
                 lat: this.lat,
@@ -2465,10 +2786,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -2486,11 +2810,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -2540,6 +2867,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2556,8 +2887,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -2574,11 +2913,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -2597,10 +2939,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -2654,6 +2999,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2668,6 +3017,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -2685,10 +3042,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -2704,11 +3064,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -2750,6 +3113,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2766,8 +3133,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -2782,11 +3157,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -2803,10 +3181,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -2852,6 +3233,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2868,6 +3253,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionContributorsId', [{
                 region: this.region,
@@ -2881,10 +3274,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -2901,11 +3297,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -2951,6 +3350,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -2967,8 +3370,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -2984,11 +3395,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -3006,10 +3420,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -3059,6 +3476,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -3075,6 +3496,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriContributorsId', [{
                 region: this.region,
@@ -3089,10 +3518,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -3132,6 +3564,58 @@ var request_builders = {
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coordsLonLat', [{
                 lat: this.lat,
+                lon: this.lon
+            }]);
+        };
+    },
+    CoverageRegionCoordLonLatAddressesRequestBuilder: function () {
+        this.CoverageRegionCoordLonLatAddressesRequestBuilder = function() {
+            this.lat = null;
+            this.region = null;
+            this.lon = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionCoordLonLatAddresses', [{
+                lat: this.lat,
+                region: this.region,
+                lon: this.lon
+            }]);
+        };
+    },
+    CoverageRegionCoordsLonLatAddressesRequestBuilder: function () {
+        this.CoverageRegionCoordsLonLatAddressesRequestBuilder = function() {
+            this.lat = null;
+            this.region = null;
+            this.lon = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionCoordsLonLatAddresses', [{
+                lat: this.lat,
+                region: this.region,
                 lon: this.lon
             }]);
         };
@@ -3577,11 +4061,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -3627,6 +4114,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -3643,8 +4134,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -3660,11 +4159,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -3682,10 +4184,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -3735,6 +4240,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -3751,6 +4260,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatDatasetsId', [{
                 lat: this.lat,
@@ -3765,10 +4282,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -3786,11 +4306,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -3840,6 +4363,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -3856,8 +4383,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -3874,11 +4409,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -3897,10 +4435,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -3954,6 +4495,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -3968,6 +4513,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -3985,10 +4538,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -4004,11 +4560,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -4050,6 +4609,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4066,8 +4629,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -4082,11 +4653,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -4103,10 +4677,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -4152,6 +4729,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4168,6 +4749,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionDatasetsId', [{
                 region: this.region,
@@ -4181,10 +4770,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -4201,11 +4793,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -4251,6 +4846,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4267,8 +4866,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -4284,11 +4891,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -4306,10 +4916,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -4359,6 +4972,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4375,6 +4992,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriDatasetsId', [{
                 region: this.region,
@@ -4389,10 +5014,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -4409,11 +5037,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -4460,6 +5091,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4476,8 +5111,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -4497,11 +5140,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -4520,10 +5166,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -4574,6 +5223,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4588,6 +5241,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -4608,10 +5269,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -4630,11 +5294,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -4685,6 +5352,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4701,8 +5372,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -4723,11 +5402,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -4747,10 +5429,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -4805,6 +5490,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4819,6 +5508,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -4840,10 +5537,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -4860,11 +5560,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -4907,6 +5610,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -4923,8 +5630,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -4943,11 +5658,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -4965,10 +5683,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -5015,6 +5736,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -5029,6 +5754,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -5048,10 +5781,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -5069,11 +5805,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -5120,6 +5859,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -5136,8 +5879,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -5157,11 +5908,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -5180,10 +5934,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -5234,6 +5991,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -5248,6 +6009,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -5268,11 +6037,314 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
+            }]);
+        };
+    },
+    CoordLonLatEquipmentReportsRequestBuilder: function () {
+        this.CoordLonLatEquipmentReportsRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coordLonLatEquipmentReports', [{
+                lat: this.lat,
+                lon: this.lon,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoordsLonLatEquipmentReportsRequestBuilder: function () {
+        this.CoordsLonLatEquipmentReportsRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coordsLonLatEquipmentReports', [{
+                lat: this.lat,
+                lon: this.lon,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoverageLonLatEquipmentReportsRequestBuilder: function () {
+        this.CoverageLonLatEquipmentReportsRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatEquipmentReports', [{
+                lat: this.lat,
+                lon: this.lon,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoverageLonLatUriEquipmentReportsRequestBuilder: function () {
+        this.CoverageLonLatUriEquipmentReportsRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.uri = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriEquipmentReports', [{
+                lat: this.lat,
+                lon: this.lon,
+                uri: this.uri,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoverageRegionEquipmentReportsRequestBuilder: function () {
+        this.CoverageRegionEquipmentReportsRequestBuilder = function() {
+            this.region = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionEquipmentReports', [{
+                region: this.region,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoverageRegionUriEquipmentReportsRequestBuilder: function () {
+        this.CoverageRegionUriEquipmentReportsRequestBuilder = function() {
+            this.region = null;
+            this.uri = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriEquipmentReports', [{
+                region: this.region,
+                uri: this.uri,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
             }]);
         };
     },
@@ -5328,11 +6400,15 @@ var request_builders = {
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
             this.maxRidesharingDurationToPt = null;
+            this.maxCarNoParkDurationToPt = null;
+            this.maxTaxiDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
             this.ridesharingSpeed = null;
+            this.carNoParkSpeed = null;
+            this.taxiSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -5341,6 +6417,10 @@ var request_builders = {
             this.wheelchair = null;
             this.travelerType = null;
             this.directPath = null;
+            this.freeRadiusFrom = null;
+            this.freeRadiusTo = null;
+            this.directPathMode = null;
+            this.partnerServices = null;
             this.minDuration = null;
             this.boundaryDuration = null;
         };
@@ -5408,6 +6488,14 @@ var request_builders = {
             this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
             return this;
         };
+        this.withMaxCarNoParkDurationToPt = function (maxCarNoParkDurationToPt) {
+            this.maxCarNoParkDurationToPt = maxCarNoParkDurationToPt;
+            return this;
+        };
+        this.withMaxTaxiDurationToPt = function (maxTaxiDurationToPt) {
+            this.maxTaxiDurationToPt = maxTaxiDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -5426,6 +6514,14 @@ var request_builders = {
         };
         this.withRidesharingSpeed = function (ridesharingSpeed) {
             this.ridesharingSpeed = ridesharingSpeed;
+            return this;
+        };
+        this.withCarNoParkSpeed = function (carNoParkSpeed) {
+            this.carNoParkSpeed = carNoParkSpeed;
+            return this;
+        };
+        this.withTaxiSpeed = function (taxiSpeed) {
+            this.taxiSpeed = taxiSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -5458,6 +6554,22 @@ var request_builders = {
         };
         this.withDirectPath = function (directPath) {
             this.directPath = directPath;
+            return this;
+        };
+        this.withFreeRadiusFrom = function (freeRadiusFrom) {
+            this.freeRadiusFrom = freeRadiusFrom;
+            return this;
+        };
+        this.withFreeRadiusTo = function (freeRadiusTo) {
+            this.freeRadiusTo = freeRadiusTo;
+            return this;
+        };
+        this.withDirectPathMode = function (directPathMode) {
+            this.directPathMode = directPathMode;
+            return this;
+        };
+        this.withPartnerServices = function (partnerServices) {
+            this.partnerServices = partnerServices;
             return this;
         };
         this.withMinDuration = function (minDuration) {
@@ -5486,11 +6598,15 @@ var request_builders = {
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
                 maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
+                maxCarNoParkDurationToPt: this.maxCarNoParkDurationToPt,
+                maxTaxiDurationToPt: this.maxTaxiDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
                 ridesharingSpeed: this.ridesharingSpeed,
+                carNoParkSpeed: this.carNoParkSpeed,
+                taxiSpeed: this.taxiSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -5499,6 +6615,10 @@ var request_builders = {
                 wheelchair: this.wheelchair,
                 travelerType: this.travelerType,
                 directPath: this.directPath,
+                freeRadiusFrom: this.freeRadiusFrom,
+                freeRadiusTo: this.freeRadiusTo,
+                directPathMode: this.directPathMode,
+                partnerServices: this.partnerServices,
                 minDuration: this.minDuration,
                 boundaryDuration: this.boundaryDuration
             }]);
@@ -5521,11 +6641,15 @@ var request_builders = {
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
             this.maxRidesharingDurationToPt = null;
+            this.maxCarNoParkDurationToPt = null;
+            this.maxTaxiDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
             this.ridesharingSpeed = null;
+            this.carNoParkSpeed = null;
+            this.taxiSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -5534,6 +6658,10 @@ var request_builders = {
             this.wheelchair = null;
             this.travelerType = null;
             this.directPath = null;
+            this.freeRadiusFrom = null;
+            this.freeRadiusTo = null;
+            this.directPathMode = null;
+            this.partnerServices = null;
             this.minDuration = null;
             this.boundaryDuration = null;
         };
@@ -5597,6 +6725,14 @@ var request_builders = {
             this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
             return this;
         };
+        this.withMaxCarNoParkDurationToPt = function (maxCarNoParkDurationToPt) {
+            this.maxCarNoParkDurationToPt = maxCarNoParkDurationToPt;
+            return this;
+        };
+        this.withMaxTaxiDurationToPt = function (maxTaxiDurationToPt) {
+            this.maxTaxiDurationToPt = maxTaxiDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -5615,6 +6751,14 @@ var request_builders = {
         };
         this.withRidesharingSpeed = function (ridesharingSpeed) {
             this.ridesharingSpeed = ridesharingSpeed;
+            return this;
+        };
+        this.withCarNoParkSpeed = function (carNoParkSpeed) {
+            this.carNoParkSpeed = carNoParkSpeed;
+            return this;
+        };
+        this.withTaxiSpeed = function (taxiSpeed) {
+            this.taxiSpeed = taxiSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -5647,6 +6791,22 @@ var request_builders = {
         };
         this.withDirectPath = function (directPath) {
             this.directPath = directPath;
+            return this;
+        };
+        this.withFreeRadiusFrom = function (freeRadiusFrom) {
+            this.freeRadiusFrom = freeRadiusFrom;
+            return this;
+        };
+        this.withFreeRadiusTo = function (freeRadiusTo) {
+            this.freeRadiusTo = freeRadiusTo;
+            return this;
+        };
+        this.withDirectPathMode = function (directPathMode) {
+            this.directPathMode = directPathMode;
+            return this;
+        };
+        this.withPartnerServices = function (partnerServices) {
+            this.partnerServices = partnerServices;
             return this;
         };
         this.withMinDuration = function (minDuration) {
@@ -5674,11 +6834,15 @@ var request_builders = {
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
                 maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
+                maxCarNoParkDurationToPt: this.maxCarNoParkDurationToPt,
+                maxTaxiDurationToPt: this.maxTaxiDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
                 ridesharingSpeed: this.ridesharingSpeed,
+                carNoParkSpeed: this.carNoParkSpeed,
+                taxiSpeed: this.taxiSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -5687,6 +6851,10 @@ var request_builders = {
                 wheelchair: this.wheelchair,
                 travelerType: this.travelerType,
                 directPath: this.directPath,
+                freeRadiusFrom: this.freeRadiusFrom,
+                freeRadiusTo: this.freeRadiusTo,
+                directPathMode: this.directPathMode,
+                partnerServices: this.partnerServices,
                 minDuration: this.minDuration,
                 boundaryDuration: this.boundaryDuration
             }]);
@@ -5710,11 +6878,15 @@ var request_builders = {
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
             this.maxRidesharingDurationToPt = null;
+            this.maxCarNoParkDurationToPt = null;
+            this.maxTaxiDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
             this.ridesharingSpeed = null;
+            this.carNoParkSpeed = null;
+            this.taxiSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -5723,6 +6895,10 @@ var request_builders = {
             this.wheelchair = null;
             this.travelerType = null;
             this.directPath = null;
+            this.freeRadiusFrom = null;
+            this.freeRadiusTo = null;
+            this.directPathMode = null;
+            this.partnerServices = null;
             this.resolution = null;
         };
         this.withLat = function (lat) {
@@ -5789,6 +6965,14 @@ var request_builders = {
             this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
             return this;
         };
+        this.withMaxCarNoParkDurationToPt = function (maxCarNoParkDurationToPt) {
+            this.maxCarNoParkDurationToPt = maxCarNoParkDurationToPt;
+            return this;
+        };
+        this.withMaxTaxiDurationToPt = function (maxTaxiDurationToPt) {
+            this.maxTaxiDurationToPt = maxTaxiDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -5807,6 +6991,14 @@ var request_builders = {
         };
         this.withRidesharingSpeed = function (ridesharingSpeed) {
             this.ridesharingSpeed = ridesharingSpeed;
+            return this;
+        };
+        this.withCarNoParkSpeed = function (carNoParkSpeed) {
+            this.carNoParkSpeed = carNoParkSpeed;
+            return this;
+        };
+        this.withTaxiSpeed = function (taxiSpeed) {
+            this.taxiSpeed = taxiSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -5839,6 +7031,22 @@ var request_builders = {
         };
         this.withDirectPath = function (directPath) {
             this.directPath = directPath;
+            return this;
+        };
+        this.withFreeRadiusFrom = function (freeRadiusFrom) {
+            this.freeRadiusFrom = freeRadiusFrom;
+            return this;
+        };
+        this.withFreeRadiusTo = function (freeRadiusTo) {
+            this.freeRadiusTo = freeRadiusTo;
+            return this;
+        };
+        this.withDirectPathMode = function (directPathMode) {
+            this.directPathMode = directPathMode;
+            return this;
+        };
+        this.withPartnerServices = function (partnerServices) {
+            this.partnerServices = partnerServices;
             return this;
         };
         this.withResolution = function (resolution) {
@@ -5863,11 +7071,15 @@ var request_builders = {
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
                 maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
+                maxCarNoParkDurationToPt: this.maxCarNoParkDurationToPt,
+                maxTaxiDurationToPt: this.maxTaxiDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
                 ridesharingSpeed: this.ridesharingSpeed,
+                carNoParkSpeed: this.carNoParkSpeed,
+                taxiSpeed: this.taxiSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -5876,6 +7088,10 @@ var request_builders = {
                 wheelchair: this.wheelchair,
                 travelerType: this.travelerType,
                 directPath: this.directPath,
+                freeRadiusFrom: this.freeRadiusFrom,
+                freeRadiusTo: this.freeRadiusTo,
+                directPathMode: this.directPathMode,
+                partnerServices: this.partnerServices,
                 resolution: this.resolution
             }]);
         };
@@ -5897,11 +7113,15 @@ var request_builders = {
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
             this.maxRidesharingDurationToPt = null;
+            this.maxCarNoParkDurationToPt = null;
+            this.maxTaxiDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
             this.ridesharingSpeed = null;
+            this.carNoParkSpeed = null;
+            this.taxiSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -5910,6 +7130,10 @@ var request_builders = {
             this.wheelchair = null;
             this.travelerType = null;
             this.directPath = null;
+            this.freeRadiusFrom = null;
+            this.freeRadiusTo = null;
+            this.directPathMode = null;
+            this.partnerServices = null;
             this.resolution = null;
         };
         this.withRegion = function (region) {
@@ -5972,6 +7196,14 @@ var request_builders = {
             this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
             return this;
         };
+        this.withMaxCarNoParkDurationToPt = function (maxCarNoParkDurationToPt) {
+            this.maxCarNoParkDurationToPt = maxCarNoParkDurationToPt;
+            return this;
+        };
+        this.withMaxTaxiDurationToPt = function (maxTaxiDurationToPt) {
+            this.maxTaxiDurationToPt = maxTaxiDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -5990,6 +7222,14 @@ var request_builders = {
         };
         this.withRidesharingSpeed = function (ridesharingSpeed) {
             this.ridesharingSpeed = ridesharingSpeed;
+            return this;
+        };
+        this.withCarNoParkSpeed = function (carNoParkSpeed) {
+            this.carNoParkSpeed = carNoParkSpeed;
+            return this;
+        };
+        this.withTaxiSpeed = function (taxiSpeed) {
+            this.taxiSpeed = taxiSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -6022,6 +7262,22 @@ var request_builders = {
         };
         this.withDirectPath = function (directPath) {
             this.directPath = directPath;
+            return this;
+        };
+        this.withFreeRadiusFrom = function (freeRadiusFrom) {
+            this.freeRadiusFrom = freeRadiusFrom;
+            return this;
+        };
+        this.withFreeRadiusTo = function (freeRadiusTo) {
+            this.freeRadiusTo = freeRadiusTo;
+            return this;
+        };
+        this.withDirectPathMode = function (directPathMode) {
+            this.directPathMode = directPathMode;
+            return this;
+        };
+        this.withPartnerServices = function (partnerServices) {
+            this.partnerServices = partnerServices;
             return this;
         };
         this.withResolution = function (resolution) {
@@ -6045,11 +7301,15 @@ var request_builders = {
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
                 maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
+                maxCarNoParkDurationToPt: this.maxCarNoParkDurationToPt,
+                maxTaxiDurationToPt: this.maxTaxiDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
                 ridesharingSpeed: this.ridesharingSpeed,
+                carNoParkSpeed: this.carNoParkSpeed,
+                taxiSpeed: this.taxiSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -6058,6 +7318,10 @@ var request_builders = {
                 wheelchair: this.wheelchair,
                 travelerType: this.travelerType,
                 directPath: this.directPath,
+                freeRadiusFrom: this.freeRadiusFrom,
+                freeRadiusTo: this.freeRadiusTo,
+                directPathMode: this.directPathMode,
+                partnerServices: this.partnerServices,
                 resolution: this.resolution
             }]);
         };
@@ -6075,11 +7339,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -6125,6 +7392,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6141,8 +7412,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -6158,11 +7437,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -6180,10 +7462,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -6233,6 +7518,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6249,6 +7538,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatJourneyPatternPointsId', [{
                 lat: this.lat,
@@ -6263,10 +7560,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -6284,11 +7584,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -6338,6 +7641,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6354,8 +7661,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -6372,11 +7687,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -6395,10 +7713,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -6452,6 +7773,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6466,6 +7791,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -6483,10 +7816,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -6502,11 +7838,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -6548,6 +7887,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6564,8 +7907,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -6580,11 +7931,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -6601,10 +7955,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -6650,6 +8007,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6666,6 +8027,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionJourneyPatternPointsId', [{
                 region: this.region,
@@ -6679,10 +8048,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -6699,11 +8071,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -6749,6 +8124,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6765,8 +8144,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -6782,11 +8169,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -6804,10 +8194,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -6857,6 +8250,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6873,6 +8270,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriJourneyPatternPointsId', [{
                 region: this.region,
@@ -6887,10 +8292,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -6907,11 +8315,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -6957,6 +8368,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -6973,8 +8388,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -6990,11 +8413,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -7012,10 +8438,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -7065,6 +8494,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -7081,6 +8514,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatJourneyPatternsId', [{
                 lat: this.lat,
@@ -7095,10 +8536,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -7116,11 +8560,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -7170,6 +8617,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -7186,8 +8637,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -7204,11 +8663,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -7227,10 +8689,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -7284,6 +8749,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -7298,6 +8767,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -7315,10 +8792,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -7334,11 +8814,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -7380,6 +8863,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -7396,8 +8883,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -7412,11 +8907,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -7433,10 +8931,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -7482,6 +8983,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -7498,6 +9003,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionJourneyPatternsId', [{
                 region: this.region,
@@ -7511,10 +9024,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -7531,11 +9047,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -7581,6 +9100,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -7597,8 +9120,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -7614,11 +9145,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -7636,10 +9170,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -7689,6 +9226,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -7705,6 +9246,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriJourneyPatternsId', [{
                 region: this.region,
@@ -7719,10 +9268,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -7744,11 +9296,15 @@ var request_builders = {
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
             this.maxRidesharingDurationToPt = null;
+            this.maxCarNoParkDurationToPt = null;
+            this.maxTaxiDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
             this.ridesharingSpeed = null;
+            this.carNoParkSpeed = null;
+            this.taxiSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -7757,12 +9313,26 @@ var request_builders = {
             this.wheelchair = null;
             this.travelerType = null;
             this.directPath = null;
+            this.freeRadiusFrom = null;
+            this.freeRadiusTo = null;
+            this.directPathMode = null;
+            this.partnerServices = null;
             this.count = null;
             this.isJourneySchedules = null;
             this.minNbJourneys = null;
             this.maxNbJourneys = null;
             this.bssStands = null;
             this.addPoiInfos = null;
+            this.timeframeDuration = null;
+            this.equipmentDetails = null;
+            this.maxTaxiDirectPathDuration = null;
+            this.maxWalkingDirectPathDuration = null;
+            this.maxCarNoParkDirectPathDuration = null;
+            this.maxCarDirectPathDuration = null;
+            this.maxRidesharingDirectPathDuration = null;
+            this.maxBssDirectPathDuration = null;
+            this.maxBikeDirectPathDuration = null;
+            this.depth = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -7828,6 +9398,14 @@ var request_builders = {
             this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
             return this;
         };
+        this.withMaxCarNoParkDurationToPt = function (maxCarNoParkDurationToPt) {
+            this.maxCarNoParkDurationToPt = maxCarNoParkDurationToPt;
+            return this;
+        };
+        this.withMaxTaxiDurationToPt = function (maxTaxiDurationToPt) {
+            this.maxTaxiDurationToPt = maxTaxiDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -7846,6 +9424,14 @@ var request_builders = {
         };
         this.withRidesharingSpeed = function (ridesharingSpeed) {
             this.ridesharingSpeed = ridesharingSpeed;
+            return this;
+        };
+        this.withCarNoParkSpeed = function (carNoParkSpeed) {
+            this.carNoParkSpeed = carNoParkSpeed;
+            return this;
+        };
+        this.withTaxiSpeed = function (taxiSpeed) {
+            this.taxiSpeed = taxiSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -7880,6 +9466,22 @@ var request_builders = {
             this.directPath = directPath;
             return this;
         };
+        this.withFreeRadiusFrom = function (freeRadiusFrom) {
+            this.freeRadiusFrom = freeRadiusFrom;
+            return this;
+        };
+        this.withFreeRadiusTo = function (freeRadiusTo) {
+            this.freeRadiusTo = freeRadiusTo;
+            return this;
+        };
+        this.withDirectPathMode = function (directPathMode) {
+            this.directPathMode = directPathMode;
+            return this;
+        };
+        this.withPartnerServices = function (partnerServices) {
+            this.partnerServices = partnerServices;
+            return this;
+        };
         this.withCount = function (count) {
             this.count = count;
             return this;
@@ -7904,6 +9506,46 @@ var request_builders = {
             this.addPoiInfos = addPoiInfos;
             return this;
         };
+        this.withTimeframeDuration = function (timeframeDuration) {
+            this.timeframeDuration = timeframeDuration;
+            return this;
+        };
+        this.withEquipmentDetails = function (equipmentDetails) {
+            this.equipmentDetails = equipmentDetails;
+            return this;
+        };
+        this.withMaxTaxiDirectPathDuration = function (maxTaxiDirectPathDuration) {
+            this.maxTaxiDirectPathDuration = maxTaxiDirectPathDuration;
+            return this;
+        };
+        this.withMaxWalkingDirectPathDuration = function (maxWalkingDirectPathDuration) {
+            this.maxWalkingDirectPathDuration = maxWalkingDirectPathDuration;
+            return this;
+        };
+        this.withMaxCarNoParkDirectPathDuration = function (maxCarNoParkDirectPathDuration) {
+            this.maxCarNoParkDirectPathDuration = maxCarNoParkDirectPathDuration;
+            return this;
+        };
+        this.withMaxCarDirectPathDuration = function (maxCarDirectPathDuration) {
+            this.maxCarDirectPathDuration = maxCarDirectPathDuration;
+            return this;
+        };
+        this.withMaxRidesharingDirectPathDuration = function (maxRidesharingDirectPathDuration) {
+            this.maxRidesharingDirectPathDuration = maxRidesharingDirectPathDuration;
+            return this;
+        };
+        this.withMaxBssDirectPathDuration = function (maxBssDirectPathDuration) {
+            this.maxBssDirectPathDuration = maxBssDirectPathDuration;
+            return this;
+        };
+        this.withMaxBikeDirectPathDuration = function (maxBikeDirectPathDuration) {
+            this.maxBikeDirectPathDuration = maxBikeDirectPathDuration;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatJourneys', [{
                 lat: this.lat,
@@ -7922,11 +9564,15 @@ var request_builders = {
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
                 maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
+                maxCarNoParkDurationToPt: this.maxCarNoParkDurationToPt,
+                maxTaxiDurationToPt: this.maxTaxiDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
                 ridesharingSpeed: this.ridesharingSpeed,
+                carNoParkSpeed: this.carNoParkSpeed,
+                taxiSpeed: this.taxiSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -7935,12 +9581,26 @@ var request_builders = {
                 wheelchair: this.wheelchair,
                 travelerType: this.travelerType,
                 directPath: this.directPath,
+                freeRadiusFrom: this.freeRadiusFrom,
+                freeRadiusTo: this.freeRadiusTo,
+                directPathMode: this.directPathMode,
+                partnerServices: this.partnerServices,
                 count: this.count,
                 isJourneySchedules: this.isJourneySchedules,
                 minNbJourneys: this.minNbJourneys,
                 maxNbJourneys: this.maxNbJourneys,
                 bssStands: this.bssStands,
-                addPoiInfos: this.addPoiInfos
+                addPoiInfos: this.addPoiInfos,
+                timeframeDuration: this.timeframeDuration,
+                equipmentDetails: this.equipmentDetails,
+                maxTaxiDirectPathDuration: this.maxTaxiDirectPathDuration,
+                maxWalkingDirectPathDuration: this.maxWalkingDirectPathDuration,
+                maxCarNoParkDirectPathDuration: this.maxCarNoParkDirectPathDuration,
+                maxCarDirectPathDuration: this.maxCarDirectPathDuration,
+                maxRidesharingDirectPathDuration: this.maxRidesharingDirectPathDuration,
+                maxBssDirectPathDuration: this.maxBssDirectPathDuration,
+                maxBikeDirectPathDuration: this.maxBikeDirectPathDuration,
+                depth: this.depth
             }]);
         };
     },
@@ -7961,11 +9621,15 @@ var request_builders = {
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
             this.maxRidesharingDurationToPt = null;
+            this.maxCarNoParkDurationToPt = null;
+            this.maxTaxiDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
             this.ridesharingSpeed = null;
+            this.carNoParkSpeed = null;
+            this.taxiSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -7974,12 +9638,26 @@ var request_builders = {
             this.wheelchair = null;
             this.travelerType = null;
             this.directPath = null;
+            this.freeRadiusFrom = null;
+            this.freeRadiusTo = null;
+            this.directPathMode = null;
+            this.partnerServices = null;
             this.count = null;
             this.isJourneySchedules = null;
             this.minNbJourneys = null;
             this.maxNbJourneys = null;
             this.bssStands = null;
             this.addPoiInfos = null;
+            this.timeframeDuration = null;
+            this.equipmentDetails = null;
+            this.maxTaxiDirectPathDuration = null;
+            this.maxWalkingDirectPathDuration = null;
+            this.maxCarNoParkDirectPathDuration = null;
+            this.maxCarDirectPathDuration = null;
+            this.maxRidesharingDirectPathDuration = null;
+            this.maxBssDirectPathDuration = null;
+            this.maxBikeDirectPathDuration = null;
+            this.depth = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -8041,6 +9719,14 @@ var request_builders = {
             this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
             return this;
         };
+        this.withMaxCarNoParkDurationToPt = function (maxCarNoParkDurationToPt) {
+            this.maxCarNoParkDurationToPt = maxCarNoParkDurationToPt;
+            return this;
+        };
+        this.withMaxTaxiDurationToPt = function (maxTaxiDurationToPt) {
+            this.maxTaxiDurationToPt = maxTaxiDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -8059,6 +9745,14 @@ var request_builders = {
         };
         this.withRidesharingSpeed = function (ridesharingSpeed) {
             this.ridesharingSpeed = ridesharingSpeed;
+            return this;
+        };
+        this.withCarNoParkSpeed = function (carNoParkSpeed) {
+            this.carNoParkSpeed = carNoParkSpeed;
+            return this;
+        };
+        this.withTaxiSpeed = function (taxiSpeed) {
+            this.taxiSpeed = taxiSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -8093,6 +9787,22 @@ var request_builders = {
             this.directPath = directPath;
             return this;
         };
+        this.withFreeRadiusFrom = function (freeRadiusFrom) {
+            this.freeRadiusFrom = freeRadiusFrom;
+            return this;
+        };
+        this.withFreeRadiusTo = function (freeRadiusTo) {
+            this.freeRadiusTo = freeRadiusTo;
+            return this;
+        };
+        this.withDirectPathMode = function (directPathMode) {
+            this.directPathMode = directPathMode;
+            return this;
+        };
+        this.withPartnerServices = function (partnerServices) {
+            this.partnerServices = partnerServices;
+            return this;
+        };
         this.withCount = function (count) {
             this.count = count;
             return this;
@@ -8117,6 +9827,46 @@ var request_builders = {
             this.addPoiInfos = addPoiInfos;
             return this;
         };
+        this.withTimeframeDuration = function (timeframeDuration) {
+            this.timeframeDuration = timeframeDuration;
+            return this;
+        };
+        this.withEquipmentDetails = function (equipmentDetails) {
+            this.equipmentDetails = equipmentDetails;
+            return this;
+        };
+        this.withMaxTaxiDirectPathDuration = function (maxTaxiDirectPathDuration) {
+            this.maxTaxiDirectPathDuration = maxTaxiDirectPathDuration;
+            return this;
+        };
+        this.withMaxWalkingDirectPathDuration = function (maxWalkingDirectPathDuration) {
+            this.maxWalkingDirectPathDuration = maxWalkingDirectPathDuration;
+            return this;
+        };
+        this.withMaxCarNoParkDirectPathDuration = function (maxCarNoParkDirectPathDuration) {
+            this.maxCarNoParkDirectPathDuration = maxCarNoParkDirectPathDuration;
+            return this;
+        };
+        this.withMaxCarDirectPathDuration = function (maxCarDirectPathDuration) {
+            this.maxCarDirectPathDuration = maxCarDirectPathDuration;
+            return this;
+        };
+        this.withMaxRidesharingDirectPathDuration = function (maxRidesharingDirectPathDuration) {
+            this.maxRidesharingDirectPathDuration = maxRidesharingDirectPathDuration;
+            return this;
+        };
+        this.withMaxBssDirectPathDuration = function (maxBssDirectPathDuration) {
+            this.maxBssDirectPathDuration = maxBssDirectPathDuration;
+            return this;
+        };
+        this.withMaxBikeDirectPathDuration = function (maxBikeDirectPathDuration) {
+            this.maxBikeDirectPathDuration = maxBikeDirectPathDuration;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionJourneys', [{
                 region: this.region,
@@ -8134,11 +9884,15 @@ var request_builders = {
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
                 maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
+                maxCarNoParkDurationToPt: this.maxCarNoParkDurationToPt,
+                maxTaxiDurationToPt: this.maxTaxiDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
                 ridesharingSpeed: this.ridesharingSpeed,
+                carNoParkSpeed: this.carNoParkSpeed,
+                taxiSpeed: this.taxiSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -8147,12 +9901,26 @@ var request_builders = {
                 wheelchair: this.wheelchair,
                 travelerType: this.travelerType,
                 directPath: this.directPath,
+                freeRadiusFrom: this.freeRadiusFrom,
+                freeRadiusTo: this.freeRadiusTo,
+                directPathMode: this.directPathMode,
+                partnerServices: this.partnerServices,
                 count: this.count,
                 isJourneySchedules: this.isJourneySchedules,
                 minNbJourneys: this.minNbJourneys,
                 maxNbJourneys: this.maxNbJourneys,
                 bssStands: this.bssStands,
-                addPoiInfos: this.addPoiInfos
+                addPoiInfos: this.addPoiInfos,
+                timeframeDuration: this.timeframeDuration,
+                equipmentDetails: this.equipmentDetails,
+                maxTaxiDirectPathDuration: this.maxTaxiDirectPathDuration,
+                maxWalkingDirectPathDuration: this.maxWalkingDirectPathDuration,
+                maxCarNoParkDirectPathDuration: this.maxCarNoParkDirectPathDuration,
+                maxCarDirectPathDuration: this.maxCarDirectPathDuration,
+                maxRidesharingDirectPathDuration: this.maxRidesharingDirectPathDuration,
+                maxBssDirectPathDuration: this.maxBssDirectPathDuration,
+                maxBikeDirectPathDuration: this.maxBikeDirectPathDuration,
+                depth: this.depth
             }]);
         };
     },
@@ -8172,11 +9940,15 @@ var request_builders = {
             this.maxBssDurationToPt = null;
             this.maxCarDurationToPt = null;
             this.maxRidesharingDurationToPt = null;
+            this.maxCarNoParkDurationToPt = null;
+            this.maxTaxiDurationToPt = null;
             this.walkingSpeed = null;
             this.bikeSpeed = null;
             this.bssSpeed = null;
             this.carSpeed = null;
             this.ridesharingSpeed = null;
+            this.carNoParkSpeed = null;
+            this.taxiSpeed = null;
             this.forbiddenUris = null;
             this.allowedId = null;
             this.disruptionActive = null;
@@ -8185,12 +9957,26 @@ var request_builders = {
             this.wheelchair = null;
             this.travelerType = null;
             this.directPath = null;
+            this.freeRadiusFrom = null;
+            this.freeRadiusTo = null;
+            this.directPathMode = null;
+            this.partnerServices = null;
             this.count = null;
             this.isJourneySchedules = null;
             this.minNbJourneys = null;
             this.maxNbJourneys = null;
             this.bssStands = null;
             this.addPoiInfos = null;
+            this.timeframeDuration = null;
+            this.equipmentDetails = null;
+            this.maxTaxiDirectPathDuration = null;
+            this.maxWalkingDirectPathDuration = null;
+            this.maxCarNoParkDirectPathDuration = null;
+            this.maxCarDirectPathDuration = null;
+            this.maxRidesharingDirectPathDuration = null;
+            this.maxBssDirectPathDuration = null;
+            this.maxBikeDirectPathDuration = null;
+            this.depth = null;
         };
         this.withFrom = function (from) {
             this.from = from;
@@ -8248,6 +10034,14 @@ var request_builders = {
             this.maxRidesharingDurationToPt = maxRidesharingDurationToPt;
             return this;
         };
+        this.withMaxCarNoParkDurationToPt = function (maxCarNoParkDurationToPt) {
+            this.maxCarNoParkDurationToPt = maxCarNoParkDurationToPt;
+            return this;
+        };
+        this.withMaxTaxiDurationToPt = function (maxTaxiDurationToPt) {
+            this.maxTaxiDurationToPt = maxTaxiDurationToPt;
+            return this;
+        };
         this.withWalkingSpeed = function (walkingSpeed) {
             this.walkingSpeed = walkingSpeed;
             return this;
@@ -8266,6 +10060,14 @@ var request_builders = {
         };
         this.withRidesharingSpeed = function (ridesharingSpeed) {
             this.ridesharingSpeed = ridesharingSpeed;
+            return this;
+        };
+        this.withCarNoParkSpeed = function (carNoParkSpeed) {
+            this.carNoParkSpeed = carNoParkSpeed;
+            return this;
+        };
+        this.withTaxiSpeed = function (taxiSpeed) {
+            this.taxiSpeed = taxiSpeed;
             return this;
         };
         this.withForbiddenUris = function (forbiddenUris) {
@@ -8300,6 +10102,22 @@ var request_builders = {
             this.directPath = directPath;
             return this;
         };
+        this.withFreeRadiusFrom = function (freeRadiusFrom) {
+            this.freeRadiusFrom = freeRadiusFrom;
+            return this;
+        };
+        this.withFreeRadiusTo = function (freeRadiusTo) {
+            this.freeRadiusTo = freeRadiusTo;
+            return this;
+        };
+        this.withDirectPathMode = function (directPathMode) {
+            this.directPathMode = directPathMode;
+            return this;
+        };
+        this.withPartnerServices = function (partnerServices) {
+            this.partnerServices = partnerServices;
+            return this;
+        };
         this.withCount = function (count) {
             this.count = count;
             return this;
@@ -8324,6 +10142,46 @@ var request_builders = {
             this.addPoiInfos = addPoiInfos;
             return this;
         };
+        this.withTimeframeDuration = function (timeframeDuration) {
+            this.timeframeDuration = timeframeDuration;
+            return this;
+        };
+        this.withEquipmentDetails = function (equipmentDetails) {
+            this.equipmentDetails = equipmentDetails;
+            return this;
+        };
+        this.withMaxTaxiDirectPathDuration = function (maxTaxiDirectPathDuration) {
+            this.maxTaxiDirectPathDuration = maxTaxiDirectPathDuration;
+            return this;
+        };
+        this.withMaxWalkingDirectPathDuration = function (maxWalkingDirectPathDuration) {
+            this.maxWalkingDirectPathDuration = maxWalkingDirectPathDuration;
+            return this;
+        };
+        this.withMaxCarNoParkDirectPathDuration = function (maxCarNoParkDirectPathDuration) {
+            this.maxCarNoParkDirectPathDuration = maxCarNoParkDirectPathDuration;
+            return this;
+        };
+        this.withMaxCarDirectPathDuration = function (maxCarDirectPathDuration) {
+            this.maxCarDirectPathDuration = maxCarDirectPathDuration;
+            return this;
+        };
+        this.withMaxRidesharingDirectPathDuration = function (maxRidesharingDirectPathDuration) {
+            this.maxRidesharingDirectPathDuration = maxRidesharingDirectPathDuration;
+            return this;
+        };
+        this.withMaxBssDirectPathDuration = function (maxBssDirectPathDuration) {
+            this.maxBssDirectPathDuration = maxBssDirectPathDuration;
+            return this;
+        };
+        this.withMaxBikeDirectPathDuration = function (maxBikeDirectPathDuration) {
+            this.maxBikeDirectPathDuration = maxBikeDirectPathDuration;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'journeys', [{
                 from: this.from,
@@ -8340,11 +10198,15 @@ var request_builders = {
                 maxBssDurationToPt: this.maxBssDurationToPt,
                 maxCarDurationToPt: this.maxCarDurationToPt,
                 maxRidesharingDurationToPt: this.maxRidesharingDurationToPt,
+                maxCarNoParkDurationToPt: this.maxCarNoParkDurationToPt,
+                maxTaxiDurationToPt: this.maxTaxiDurationToPt,
                 walkingSpeed: this.walkingSpeed,
                 bikeSpeed: this.bikeSpeed,
                 bssSpeed: this.bssSpeed,
                 carSpeed: this.carSpeed,
                 ridesharingSpeed: this.ridesharingSpeed,
+                carNoParkSpeed: this.carNoParkSpeed,
+                taxiSpeed: this.taxiSpeed,
                 forbiddenUris: this.forbiddenUris,
                 allowedId: this.allowedId,
                 disruptionActive: this.disruptionActive,
@@ -8353,12 +10215,26 @@ var request_builders = {
                 wheelchair: this.wheelchair,
                 travelerType: this.travelerType,
                 directPath: this.directPath,
+                freeRadiusFrom: this.freeRadiusFrom,
+                freeRadiusTo: this.freeRadiusTo,
+                directPathMode: this.directPathMode,
+                partnerServices: this.partnerServices,
                 count: this.count,
                 isJourneySchedules: this.isJourneySchedules,
                 minNbJourneys: this.minNbJourneys,
                 maxNbJourneys: this.maxNbJourneys,
                 bssStands: this.bssStands,
-                addPoiInfos: this.addPoiInfos
+                addPoiInfos: this.addPoiInfos,
+                timeframeDuration: this.timeframeDuration,
+                equipmentDetails: this.equipmentDetails,
+                maxTaxiDirectPathDuration: this.maxTaxiDirectPathDuration,
+                maxWalkingDirectPathDuration: this.maxWalkingDirectPathDuration,
+                maxCarNoParkDirectPathDuration: this.maxCarNoParkDirectPathDuration,
+                maxCarDirectPathDuration: this.maxCarDirectPathDuration,
+                maxRidesharingDirectPathDuration: this.maxRidesharingDirectPathDuration,
+                maxBssDirectPathDuration: this.maxBssDirectPathDuration,
+                maxBikeDirectPathDuration: this.maxBikeDirectPathDuration,
+                depth: this.depth
             }]);
         };
     },
@@ -8375,11 +10251,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -8426,6 +10305,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -8442,8 +10325,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -8463,11 +10354,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -8486,10 +10380,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -8540,6 +10437,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -8554,6 +10455,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -8574,10 +10483,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -8596,11 +10508,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -8651,6 +10566,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -8667,8 +10586,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -8689,11 +10616,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -8713,10 +10643,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -8771,6 +10704,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -8785,6 +10722,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -8806,10 +10751,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -8826,11 +10774,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -8873,6 +10824,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -8889,8 +10844,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -8909,11 +10872,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -8931,10 +10897,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -8981,6 +10950,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -8995,6 +10968,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -9014,10 +10995,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -9035,11 +11019,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -9086,6 +11073,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -9102,8 +11093,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -9123,11 +11122,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -9146,10 +11148,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -9200,6 +11205,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -9214,6 +11223,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -9234,10 +11251,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -9253,11 +11273,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withExternalCode = function (externalCode) {
@@ -9296,6 +11319,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -9312,8 +11339,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -9331,11 +11366,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -9601,11 +11639,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -9652,6 +11693,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -9668,8 +11713,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -9689,11 +11742,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -9712,10 +11768,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -9766,6 +11825,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -9780,6 +11843,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -9800,10 +11871,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -9822,11 +11896,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -9877,6 +11954,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -9893,8 +11974,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -9915,11 +12004,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -9939,10 +12031,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -9997,6 +12092,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10011,6 +12110,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10032,10 +12139,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10052,11 +12162,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -10099,6 +12212,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10115,8 +12232,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10135,11 +12260,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10157,10 +12285,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -10207,6 +12338,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10221,6 +12356,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10240,10 +12383,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10261,11 +12407,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -10312,6 +12461,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10328,8 +12481,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10349,11 +12510,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10372,10 +12536,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -10426,6 +12593,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10440,6 +12611,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10460,10 +12639,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10479,11 +12661,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withExternalCode = function (externalCode) {
@@ -10522,6 +12707,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10538,8 +12727,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10557,11 +12754,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10579,11 +12779,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -10630,6 +12833,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10646,8 +12853,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10667,11 +12882,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10690,10 +12908,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -10744,6 +12965,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10758,6 +12983,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10778,10 +13011,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10800,11 +13036,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -10855,6 +13094,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10871,8 +13114,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -10893,11 +13144,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -10917,10 +13171,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -10975,6 +13232,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -10989,6 +13250,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -11010,10 +13279,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -11030,11 +13302,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -11077,6 +13352,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -11093,8 +13372,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -11113,11 +13400,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -11135,10 +13425,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -11185,6 +13478,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -11199,6 +13496,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -11218,10 +13523,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -11239,11 +13547,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -11290,6 +13601,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -11306,8 +13621,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -11327,11 +13650,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -11350,10 +13676,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -11404,6 +13733,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -11418,6 +13751,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -11438,10 +13779,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -11457,11 +13801,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withExternalCode = function (externalCode) {
@@ -11500,6 +13847,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -11516,8 +13867,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -11535,11 +13894,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -11564,6 +13926,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -11637,6 +14000,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatArrivals', [{
                 lat: this.lat,
@@ -11656,7 +14023,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -11681,6 +14049,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -11758,6 +14127,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriArrivals', [{
                 lat: this.lat,
@@ -11778,7 +14151,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -11801,6 +14175,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -11870,6 +14245,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionArrivals', [{
                 region: this.region,
@@ -11888,7 +14267,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -11912,6 +14292,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -11985,6 +14366,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriArrivals', [{
                 region: this.region,
@@ -12004,7 +14389,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -12028,6 +14414,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12101,6 +14488,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatDepartures', [{
                 lat: this.lat,
@@ -12120,7 +14511,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -12145,6 +14537,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12222,6 +14615,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriDepartures', [{
                 lat: this.lat,
@@ -12242,7 +14639,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -12265,6 +14663,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -12334,6 +14733,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionDepartures', [{
                 region: this.region,
@@ -12352,7 +14755,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -12376,6 +14780,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -12449,6 +14854,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriDepartures', [{
                 region: this.region,
@@ -12468,7 +14877,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -12485,11 +14895,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12535,6 +14948,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -12551,8 +14968,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -12568,11 +14993,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -12590,10 +15018,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12643,6 +15074,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -12659,6 +15094,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPhysicalModesId', [{
                 lat: this.lat,
@@ -12673,10 +15116,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -12694,11 +15140,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12748,6 +15197,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -12764,8 +15217,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -12782,11 +15243,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -12805,10 +15269,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -12862,6 +15329,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -12876,6 +15347,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -12893,10 +15372,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -12912,11 +15394,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -12958,6 +15443,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -12974,8 +15463,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -12990,11 +15487,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -13011,10 +15511,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13060,6 +15563,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -13076,6 +15583,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPhysicalModesId', [{
                 region: this.region,
@@ -13089,10 +15604,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -13109,11 +15627,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13159,6 +15680,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -13175,8 +15700,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -13192,11 +15725,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -13214,10 +15750,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13267,6 +15806,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -13283,6 +15826,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriPhysicalModesId', [{
                 region: this.region,
@@ -13297,10 +15848,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -13312,6 +15866,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -13337,6 +15892,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPlacesId', [{
                 lat: this.lat,
@@ -13344,7 +15903,8 @@ var request_builders = {
                 id: this.id,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -13355,6 +15915,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13376,13 +15937,18 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPlacesId', [{
                 region: this.region,
                 id: this.id,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -13392,6 +15958,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withId = function (id) {
             this.id = id;
@@ -13409,12 +15976,17 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'placesId', [{
                 id: this.id,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -13617,6 +16189,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -13662,6 +16235,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coordLonLatPlacesNearby', [{
                 lat: this.lat,
@@ -13674,7 +16251,8 @@ var request_builders = {
                 startPage: this.startPage,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -13691,6 +16269,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -13736,6 +16315,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coordsLonLatPlacesNearby', [{
                 lat: this.lat,
@@ -13748,7 +16331,8 @@ var request_builders = {
                 startPage: this.startPage,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -13765,6 +16349,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -13810,6 +16395,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPlacesNearby', [{
                 lat: this.lat,
@@ -13822,7 +16411,8 @@ var request_builders = {
                 startPage: this.startPage,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -13840,6 +16430,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -13889,6 +16480,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriPlacesNearby', [{
                 lat: this.lat,
@@ -13902,7 +16497,8 @@ var request_builders = {
                 startPage: this.startPage,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -13918,6 +16514,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -13959,6 +16556,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPlacesNearby', [{
                 region: this.region,
@@ -13970,7 +16571,8 @@ var request_builders = {
                 startPage: this.startPage,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -13987,6 +16589,7 @@ var request_builders = {
             this.bssStands = null;
             this.addPoiInfos = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -14032,6 +16635,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriPlacesNearby', [{
                 region: this.region,
@@ -14044,7 +16651,8 @@ var request_builders = {
                 startPage: this.startPage,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption
             }]);
         };
     },
@@ -14061,11 +16669,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -14111,6 +16722,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14127,8 +16742,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -14144,11 +16767,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -14166,10 +16792,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -14219,6 +16848,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14235,6 +16868,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPoiTypesId', [{
                 lat: this.lat,
@@ -14249,10 +16890,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -14270,11 +16914,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -14324,6 +16971,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14340,8 +16991,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -14358,11 +17017,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -14381,10 +17043,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -14438,6 +17103,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14452,6 +17121,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -14469,10 +17146,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -14488,11 +17168,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -14534,6 +17217,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14550,8 +17237,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -14566,11 +17261,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -14587,10 +17285,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -14636,6 +17337,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14652,6 +17357,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPoiTypesId', [{
                 region: this.region,
@@ -14665,10 +17378,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -14685,11 +17401,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -14735,6 +17454,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14751,8 +17474,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -14768,11 +17499,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -14790,10 +17524,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -14843,6 +17580,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14859,6 +17600,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriPoiTypesId', [{
                 region: this.region,
@@ -14873,10 +17622,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -14893,11 +17645,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
             this.bssStands = null;
             this.addPoiInfos = null;
@@ -14946,6 +17701,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -14962,8 +17721,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -14991,11 +17758,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos
@@ -15016,10 +17786,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
             this.bssStands = null;
             this.addPoiInfos = null;
@@ -15072,6 +17845,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -15086,6 +17863,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -15114,10 +17899,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos
@@ -15138,11 +17926,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
             this.bssStands = null;
             this.addPoiInfos = null;
@@ -15195,6 +17986,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -15211,8 +18006,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -15241,11 +18044,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos
@@ -15267,10 +18073,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
             this.bssStands = null;
             this.addPoiInfos = null;
@@ -15327,6 +18136,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -15341,6 +18154,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -15370,10 +18191,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos
@@ -15392,11 +18216,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
             this.bssStands = null;
             this.addPoiInfos = null;
@@ -15441,6 +18268,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -15457,8 +18288,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -15485,11 +18324,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos
@@ -15509,10 +18351,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
             this.bssStands = null;
             this.addPoiInfos = null;
@@ -15561,6 +18406,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -15575,6 +18424,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -15602,10 +18459,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos
@@ -15625,11 +18485,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
             this.bssStands = null;
             this.addPoiInfos = null;
@@ -15678,6 +18541,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -15694,8 +18561,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -15723,11 +18598,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos
@@ -15748,10 +18626,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
             this.bssStands = null;
             this.addPoiInfos = null;
@@ -15804,6 +18685,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -15818,6 +18703,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -15846,10 +18739,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId,
                 bssStands: this.bssStands,
                 addPoiInfos: this.addPoiInfos
@@ -15866,6 +18762,8 @@ var request_builders = {
             this.adminUri = null;
             this.depth = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.filter = null;
         };
         this.withQ = function (q) {
             this.q = q;
@@ -15899,6 +18797,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPtObjects', [{
                 q: this.q,
@@ -15908,7 +18814,9 @@ var request_builders = {
                 count: this.count,
                 adminUri: this.adminUri,
                 depth: this.depth,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                filter: this.filter
             }]);
         };
     },
@@ -15921,6 +18829,8 @@ var request_builders = {
             this.adminUri = null;
             this.depth = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.filter = null;
         };
         this.withQ = function (q) {
             this.q = q;
@@ -15950,6 +18860,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPtObjects', [{
                 q: this.q,
@@ -15958,7 +18876,9 @@ var request_builders = {
                 count: this.count,
                 adminUri: this.adminUri,
                 depth: this.depth,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                filter: this.filter
             }]);
         };
     },
@@ -15983,6 +18903,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -16060,6 +18981,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriRouteSchedules', [{
                 lat: this.lat,
@@ -16080,7 +19005,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -16104,6 +19030,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -16175,6 +19102,10 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -16196,7 +19127,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -16218,6 +19150,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withFilter = function (filter) {
             this.filter = filter;
@@ -16283,6 +19216,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'routeSchedules', [{
                 filter: this.filter,
@@ -16300,7 +19237,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -16317,11 +19255,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -16368,6 +19309,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -16384,8 +19329,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -16405,11 +19358,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -16428,10 +19384,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -16482,6 +19441,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -16496,6 +19459,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -16516,10 +19487,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -16538,11 +19512,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -16593,6 +19570,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -16609,8 +19590,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -16631,11 +19620,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -16655,10 +19647,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -16713,6 +19708,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -16727,6 +19726,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -16748,10 +19755,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -16768,11 +19778,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -16815,6 +19828,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -16831,8 +19848,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -16851,11 +19876,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -16873,10 +19901,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -16923,6 +19954,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -16937,6 +19972,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -16956,10 +19999,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -16977,11 +20023,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -17028,6 +20077,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17044,8 +20097,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17065,11 +20126,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17088,10 +20152,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -17142,6 +20209,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17156,6 +20227,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17176,10 +20255,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17195,11 +20277,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withExternalCode = function (externalCode) {
@@ -17238,6 +20323,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17254,8 +20343,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17273,11 +20370,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17295,11 +20395,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -17346,6 +20449,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17362,8 +20469,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17383,11 +20498,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17406,10 +20524,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -17460,6 +20581,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17474,6 +20599,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17494,10 +20627,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17516,11 +20652,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -17571,6 +20710,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17587,8 +20730,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17609,11 +20760,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17633,10 +20787,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -17691,6 +20848,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17705,6 +20866,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17726,10 +20895,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17746,11 +20918,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -17793,6 +20968,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17809,8 +20988,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17829,11 +21016,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17851,10 +21041,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -17901,6 +21094,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -17915,6 +21112,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -17934,10 +21139,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -17955,11 +21163,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -18006,6 +21217,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18022,8 +21237,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18043,11 +21266,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18066,10 +21292,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -18120,6 +21349,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18134,6 +21367,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18154,10 +21395,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18173,11 +21417,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withExternalCode = function (externalCode) {
@@ -18216,6 +21463,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18232,8 +21483,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18251,11 +21510,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18273,11 +21535,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -18324,6 +21589,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18340,8 +21609,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18361,11 +21638,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18384,10 +21664,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -18438,6 +21721,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18452,6 +21739,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18472,10 +21767,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18494,11 +21792,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -18549,6 +21850,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18565,8 +21870,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18587,11 +21900,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18611,10 +21927,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withLat = function (lat) {
@@ -18669,6 +21988,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18683,6 +22006,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18704,10 +22035,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18724,11 +22058,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -18771,6 +22108,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18787,8 +22128,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18807,11 +22156,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18829,10 +22181,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -18879,6 +22234,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -18893,6 +22252,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -18912,10 +22279,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -18933,11 +22303,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -18984,6 +22357,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -19000,8 +22377,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -19021,11 +22406,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -19044,10 +22432,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withRegion = function (region) {
@@ -19098,6 +22489,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -19112,6 +22507,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -19132,10 +22535,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -19151,11 +22557,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
             this.originalId = null;
         };
         this.withExternalCode = function (externalCode) {
@@ -19194,6 +22603,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -19210,8 +22623,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.withOriginalId = function (originalId) {
@@ -19229,11 +22650,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
                 filter: this.filter,
+                tags: this.tags,
                 originalId: this.originalId
             }]);
         };
@@ -19259,6 +22683,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -19336,6 +22761,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriStopSchedules', [{
                 lat: this.lat,
@@ -19356,7 +22785,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -19380,6 +22810,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -19453,6 +22884,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriStopSchedules', [{
                 region: this.region,
@@ -19472,7 +22907,8 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -19494,6 +22930,7 @@ var request_builders = {
             this.dataFreshness = null;
             this.itemsPerSchedule = null;
             this.disableGeojson = null;
+            this.directionType = null;
         };
         this.withFilter = function (filter) {
             this.filter = filter;
@@ -19559,6 +22996,10 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'stopSchedules', [{
                 filter: this.filter,
@@ -19576,7 +23017,368 @@ var request_builders = {
                 showCodes: this.showCodes,
                 dataFreshness: this.dataFreshness,
                 itemsPerSchedule: this.itemsPerSchedule,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
+            }]);
+        };
+    },
+    CoverageLonLatUriTerminusSchedulesRequestBuilder: function () {
+        this.CoverageLonLatUriTerminusSchedulesRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.uri = null;
+            this.filter = null;
+            this.fromDatetime = null;
+            this.untilDatetime = null;
+            this.duration = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.maxDateTimes = null;
+            this.forbiddenId = null;
+            this.forbiddenUris = null;
+            this.calendar = null;
+            this.distance = null;
+            this.showCodes = null;
+            this.dataFreshness = null;
+            this.itemsPerSchedule = null;
+            this.disableGeojson = null;
+            this.directionType = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withFromDatetime = function (fromDatetime) {
+            this.fromDatetime = fromDatetime;
+            return this;
+        };
+        this.withUntilDatetime = function (untilDatetime) {
+            this.untilDatetime = untilDatetime;
+            return this;
+        };
+        this.withDuration = function (duration) {
+            this.duration = duration;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withMaxDateTimes = function (maxDateTimes) {
+            this.maxDateTimes = maxDateTimes;
+            return this;
+        };
+        this.withForbiddenId = function (forbiddenId) {
+            this.forbiddenId = forbiddenId;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withCalendar = function (calendar) {
+            this.calendar = calendar;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withShowCodes = function (showCodes) {
+            this.showCodes = showCodes;
+            return this;
+        };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
+        this.withItemsPerSchedule = function (itemsPerSchedule) {
+            this.itemsPerSchedule = itemsPerSchedule;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriTerminusSchedules', [{
+                lat: this.lat,
+                lon: this.lon,
+                uri: this.uri,
+                filter: this.filter,
+                fromDatetime: this.fromDatetime,
+                untilDatetime: this.untilDatetime,
+                duration: this.duration,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                maxDateTimes: this.maxDateTimes,
+                forbiddenId: this.forbiddenId,
+                forbiddenUris: this.forbiddenUris,
+                calendar: this.calendar,
+                distance: this.distance,
+                showCodes: this.showCodes,
+                dataFreshness: this.dataFreshness,
+                itemsPerSchedule: this.itemsPerSchedule,
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
+            }]);
+        };
+    },
+    CoverageRegionUriTerminusSchedulesRequestBuilder: function () {
+        this.CoverageRegionUriTerminusSchedulesRequestBuilder = function() {
+            this.region = null;
+            this.uri = null;
+            this.filter = null;
+            this.fromDatetime = null;
+            this.untilDatetime = null;
+            this.duration = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.maxDateTimes = null;
+            this.forbiddenId = null;
+            this.forbiddenUris = null;
+            this.calendar = null;
+            this.distance = null;
+            this.showCodes = null;
+            this.dataFreshness = null;
+            this.itemsPerSchedule = null;
+            this.disableGeojson = null;
+            this.directionType = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withFromDatetime = function (fromDatetime) {
+            this.fromDatetime = fromDatetime;
+            return this;
+        };
+        this.withUntilDatetime = function (untilDatetime) {
+            this.untilDatetime = untilDatetime;
+            return this;
+        };
+        this.withDuration = function (duration) {
+            this.duration = duration;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withMaxDateTimes = function (maxDateTimes) {
+            this.maxDateTimes = maxDateTimes;
+            return this;
+        };
+        this.withForbiddenId = function (forbiddenId) {
+            this.forbiddenId = forbiddenId;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withCalendar = function (calendar) {
+            this.calendar = calendar;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withShowCodes = function (showCodes) {
+            this.showCodes = showCodes;
+            return this;
+        };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
+        this.withItemsPerSchedule = function (itemsPerSchedule) {
+            this.itemsPerSchedule = itemsPerSchedule;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriTerminusSchedules', [{
+                region: this.region,
+                uri: this.uri,
+                filter: this.filter,
+                fromDatetime: this.fromDatetime,
+                untilDatetime: this.untilDatetime,
+                duration: this.duration,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                maxDateTimes: this.maxDateTimes,
+                forbiddenId: this.forbiddenId,
+                forbiddenUris: this.forbiddenUris,
+                calendar: this.calendar,
+                distance: this.distance,
+                showCodes: this.showCodes,
+                dataFreshness: this.dataFreshness,
+                itemsPerSchedule: this.itemsPerSchedule,
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
+            }]);
+        };
+    },
+    TerminusSchedulesRequestBuilder: function () {
+        this.TerminusSchedulesRequestBuilder = function() {
+            this.filter = null;
+            this.fromDatetime = null;
+            this.untilDatetime = null;
+            this.duration = null;
+            this.depth = null;
+            this.count = null;
+            this.startPage = null;
+            this.maxDateTimes = null;
+            this.forbiddenId = null;
+            this.forbiddenUris = null;
+            this.calendar = null;
+            this.distance = null;
+            this.showCodes = null;
+            this.dataFreshness = null;
+            this.itemsPerSchedule = null;
+            this.disableGeojson = null;
+            this.directionType = null;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withFromDatetime = function (fromDatetime) {
+            this.fromDatetime = fromDatetime;
+            return this;
+        };
+        this.withUntilDatetime = function (untilDatetime) {
+            this.untilDatetime = untilDatetime;
+            return this;
+        };
+        this.withDuration = function (duration) {
+            this.duration = duration;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withMaxDateTimes = function (maxDateTimes) {
+            this.maxDateTimes = maxDateTimes;
+            return this;
+        };
+        this.withForbiddenId = function (forbiddenId) {
+            this.forbiddenId = forbiddenId;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.withCalendar = function (calendar) {
+            this.calendar = calendar;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withShowCodes = function (showCodes) {
+            this.showCodes = showCodes;
+            return this;
+        };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
+        this.withItemsPerSchedule = function (itemsPerSchedule) {
+            this.itemsPerSchedule = itemsPerSchedule;
+            return this;
+        };
+        this.withDisableGeojson = function (disableGeojson) {
+            this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDirectionType = function (directionType) {
+            this.directionType = directionType;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'terminusSchedules', [{
+                filter: this.filter,
+                fromDatetime: this.fromDatetime,
+                untilDatetime: this.untilDatetime,
+                duration: this.duration,
+                depth: this.depth,
+                count: this.count,
+                startPage: this.startPage,
+                maxDateTimes: this.maxDateTimes,
+                forbiddenId: this.forbiddenId,
+                forbiddenUris: this.forbiddenUris,
+                calendar: this.calendar,
+                distance: this.distance,
+                showCodes: this.showCodes,
+                dataFreshness: this.dataFreshness,
+                itemsPerSchedule: this.itemsPerSchedule,
+                disableGeojson: this.disableGeojson,
+                directionType: this.directionType
             }]);
         };
     },
@@ -19841,11 +23643,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -19891,6 +23696,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -19907,8 +23716,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -19924,11 +23741,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -19946,10 +23766,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -19999,6 +23822,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20015,6 +23842,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatTripsId', [{
                 lat: this.lat,
@@ -20029,10 +23864,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -20050,11 +23888,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -20104,6 +23945,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20120,8 +23965,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -20138,11 +23991,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -20161,10 +24017,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -20218,6 +24077,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20232,6 +24095,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -20249,10 +24120,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -20268,11 +24142,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -20314,6 +24191,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20330,8 +24211,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -20346,11 +24235,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -20367,10 +24259,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -20416,6 +24311,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20432,6 +24331,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionTripsId', [{
                 region: this.region,
@@ -20445,10 +24352,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -20465,11 +24375,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -20515,6 +24428,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20531,8 +24448,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -20548,11 +24473,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -20570,10 +24498,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -20623,6 +24554,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20639,6 +24574,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriTripsId', [{
                 region: this.region,
@@ -20653,10 +24596,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -20674,11 +24620,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -20728,6 +24677,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20744,8 +24697,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -20762,11 +24723,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -20785,10 +24749,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -20842,6 +24809,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20856,6 +24827,14 @@ var request_builders = {
         };
         this.withDisableGeojson = function (disableGeojson) {
             this.disableGeojson = disableGeojson;
+            return this;
+        };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -20873,10 +24852,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -20893,11 +24875,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -20943,6 +24928,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -20959,8 +24948,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -20976,11 +24973,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -20998,10 +24998,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -21051,6 +25054,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -21067,6 +25074,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatVehicleJourneysId', [{
                 lat: this.lat,
@@ -21081,10 +25096,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -21101,11 +25119,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -21151,6 +25172,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -21167,8 +25192,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -21184,11 +25217,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -21206,10 +25242,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -21259,6 +25298,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -21275,6 +25318,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriVehicleJourneysId', [{
                 region: this.region,
@@ -21289,10 +25340,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -21308,11 +25362,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -21354,6 +25411,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -21370,8 +25431,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -21386,11 +25455,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     },
@@ -21407,10 +25479,13 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
+            this.tags = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -21456,6 +25531,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -21472,6 +25551,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionVehicleJourneysId', [{
                 region: this.region,
@@ -21485,10 +25572,13 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                disableDisruption: this.disableDisruption,
+                tags: this.tags
             }]);
         };
     },
@@ -21503,11 +25593,14 @@ var request_builders = {
             this.headsign = null;
             this.showCodes = null;
             this.odtLevel = null;
+            this.dataFreshness = null;
             this.distance = null;
             this.since = null;
             this.until = null;
             this.disableGeojson = null;
+            this.disableDisruption = null;
             this.filter = null;
+            this.tags = null;
         };
         this.withExternalCode = function (externalCode) {
             this.externalCode = externalCode;
@@ -21545,6 +25638,10 @@ var request_builders = {
             this.odtLevel = odtLevel;
             return this;
         };
+        this.withDataFreshness = function (dataFreshness) {
+            this.dataFreshness = dataFreshness;
+            return this;
+        };
         this.withDistance = function (distance) {
             this.distance = distance;
             return this;
@@ -21561,8 +25658,16 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withDisableDisruption = function (disableDisruption) {
+            this.disableDisruption = disableDisruption;
+            return this;
+        };
         this.withFilter = function (filter) {
             this.filter = filter;
+            return this;
+        };
+        this.withTags = function (tags) {
+            this.tags = tags;
             return this;
         };
         this.get = function (successCallback, errorCallback) {
@@ -21576,11 +25681,14 @@ var request_builders = {
                 headsign: this.headsign,
                 showCodes: this.showCodes,
                 odtLevel: this.odtLevel,
+                dataFreshness: this.dataFreshness,
                 distance: this.distance,
                 since: this.since,
                 until: this.until,
                 disableGeojson: this.disableGeojson,
-                filter: this.filter
+                disableDisruption: this.disableDisruption,
+                filter: this.filter,
+                tags: this.tags
             }]);
         };
     }
@@ -21717,6 +25825,12 @@ var apis = {
         },
         coordsLonLatRequestBuilder: function () {
             return new request_builders.CoordsLonLatRequestBuilder();
+        },
+        coverageRegionCoordLonLatAddressesRequestBuilder: function () {
+            return new request_builders.CoverageRegionCoordLonLatAddressesRequestBuilder();
+        },
+        coverageRegionCoordsLonLatAddressesRequestBuilder: function () {
+            return new request_builders.CoverageRegionCoordsLonLatAddressesRequestBuilder();
         }
     },
     coords: {
@@ -21830,6 +25944,26 @@ var apis = {
         },
         coverageRegionUriDisruptionsIdRequestBuilder: function () {
             return new request_builders.CoverageRegionUriDisruptionsIdRequestBuilder();
+        }
+    },
+    equipmentReports: {
+        coordLonLatEquipmentReportsRequestBuilder: function () {
+            return new request_builders.CoordLonLatEquipmentReportsRequestBuilder();
+        },
+        coordsLonLatEquipmentReportsRequestBuilder: function () {
+            return new request_builders.CoordsLonLatEquipmentReportsRequestBuilder();
+        },
+        coverageLonLatEquipmentReportsRequestBuilder: function () {
+            return new request_builders.CoverageLonLatEquipmentReportsRequestBuilder();
+        },
+        coverageLonLatUriEquipmentReportsRequestBuilder: function () {
+            return new request_builders.CoverageLonLatUriEquipmentReportsRequestBuilder();
+        },
+        coverageRegionEquipmentReportsRequestBuilder: function () {
+            return new request_builders.CoverageRegionEquipmentReportsRequestBuilder();
+        },
+        coverageRegionUriEquipmentReportsRequestBuilder: function () {
+            return new request_builders.CoverageRegionUriEquipmentReportsRequestBuilder();
         }
     },
     geoStatus: {
@@ -22285,6 +26419,17 @@ var apis = {
             return new request_builders.StopSchedulesRequestBuilder();
         }
     },
+    terminusSchedules: {
+        coverageLonLatUriTerminusSchedulesRequestBuilder: function () {
+            return new request_builders.CoverageLonLatUriTerminusSchedulesRequestBuilder();
+        },
+        coverageRegionUriTerminusSchedulesRequestBuilder: function () {
+            return new request_builders.CoverageRegionUriTerminusSchedulesRequestBuilder();
+        },
+        terminusSchedulesRequestBuilder: function () {
+            return new request_builders.TerminusSchedulesRequestBuilder();
+        }
+    },
     trafficReport: {
         coverageLonLatTrafficReportsRequestBuilder: function () {
             return new request_builders.CoverageLonLatTrafficReportsRequestBuilder();
@@ -22357,13 +26502,13 @@ var apis = {
 };
 
 module.exports = {
-    init: function (token) {
+    init: function (config, successCallback, errorCallback) {
         exec(
-            function(success) { },
-            function(error) { },
+            successCallback,
+            errorCallback,
             'NavitiaSDK',
             'init',
-            [token]
+            [config]
         );
     },
     addresses: apis.addresses,
@@ -22376,6 +26521,7 @@ module.exports = {
     coverage: apis.coverage,
     datasets: apis.datasets,
     disruptions: apis.disruptions,
+    equipmentReports: apis.equipmentReports,
     geoStatus: apis.geoStatus,
     graphicalIsochrone: apis.graphicalIsochrone,
     heatMap: apis.heatMap,
@@ -22400,6 +26546,7 @@ module.exports = {
     stopAreas: apis.stopAreas,
     stopPoints: apis.stopPoints,
     stopSchedules: apis.stopSchedules,
+    terminusSchedules: apis.terminusSchedules,
     trafficReport: apis.trafficReport,
     trips: apis.trips,
     vehicleJourneys: apis.vehicleJourneys

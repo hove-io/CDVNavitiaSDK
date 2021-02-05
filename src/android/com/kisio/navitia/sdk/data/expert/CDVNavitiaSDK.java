@@ -21,6 +21,7 @@ import com.kisio.navitia.sdk.data.expert.apis.CoordsApi;
 import com.kisio.navitia.sdk.data.expert.apis.CoverageApi;
 import com.kisio.navitia.sdk.data.expert.apis.DatasetsApi;
 import com.kisio.navitia.sdk.data.expert.apis.DisruptionsApi;
+import com.kisio.navitia.sdk.data.expert.apis.EquipmentReportsApi;
 import com.kisio.navitia.sdk.data.expert.apis.GeoStatusApi;
 import com.kisio.navitia.sdk.data.expert.apis.GraphicalIsochroneApi;
 import com.kisio.navitia.sdk.data.expert.apis.HeatMapApi;
@@ -45,6 +46,7 @@ import com.kisio.navitia.sdk.data.expert.apis.RoutesApi;
 import com.kisio.navitia.sdk.data.expert.apis.StopAreasApi;
 import com.kisio.navitia.sdk.data.expert.apis.StopPointsApi;
 import com.kisio.navitia.sdk.data.expert.apis.StopSchedulesApi;
+import com.kisio.navitia.sdk.data.expert.apis.TerminusSchedulesApi;
 import com.kisio.navitia.sdk.data.expert.apis.TrafficReportApi;
 import com.kisio.navitia.sdk.data.expert.apis.TripsApi;
 import com.kisio.navitia.sdk.data.expert.apis.VehicleJourneysApi;
@@ -360,6 +362,18 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 coordsLonLat(params, callbackContext);
             }
         });
+        actions.put("coverageRegionCoordLonLatAddresses", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionCoordLonLatAddresses(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionCoordsLonLatAddresses", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionCoordsLonLatAddresses(params, callbackContext);
+            }
+        });
         actions.put("coverageLonLatCoord", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -568,6 +582,42 @@ public class CDVNavitiaSDK extends CordovaPlugin {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
                 coverageRegionUriDisruptionsId(params, callbackContext);
+            }
+        });
+        actions.put("coordLonLatEquipmentReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coordLonLatEquipmentReports(params, callbackContext);
+            }
+        });
+        actions.put("coordsLonLatEquipmentReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coordsLonLatEquipmentReports(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatEquipmentReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatEquipmentReports(params, callbackContext);
+            }
+        });
+        actions.put("coverageLonLatUriEquipmentReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriEquipmentReports(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionEquipmentReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionEquipmentReports(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriEquipmentReports", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriEquipmentReports(params, callbackContext);
             }
         });
         actions.put("coverageLonLatGeoStatus", new Action() {
@@ -1380,6 +1430,24 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 stopSchedules(params, callbackContext);
             }
         });
+        actions.put("coverageLonLatUriTerminusSchedules", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageLonLatUriTerminusSchedules(params, callbackContext);
+            }
+        });
+        actions.put("coverageRegionUriTerminusSchedules", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                coverageRegionUriTerminusSchedules(params, callbackContext);
+            }
+        });
+        actions.put("terminusSchedules", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                terminusSchedules(params, callbackContext);
+            }
+        });
         actions.put("coverageLonLatTrafficReports", new Action() {
             @Override
             public void doAction(JSONObject params, CallbackContext callbackContext) {
@@ -1510,30 +1578,31 @@ public class CDVNavitiaSDK extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("init")) {
-            String token = args.getString(0);
-            this.init(token, callbackContext);
-            return true;
+        if (actions.containsKey(action)) {
+            actions.get(action).doAction(args.getJSONObject(0), callbackContext);
         } else {
-            if (actions.containsKey(action)) {
-                actions.get(action).doAction(args.getJSONObject(0), callbackContext);
-            } else {
-                callbackContext.error("Action " + action + " not found");
-            }
-            return true;
+            callbackContext.error("Action " + action + " not found");
         }
+
+        return true;
     }
 
-    private void init(String token, CallbackContext callbackContext) {
-        if (token != null && token.length() > 0) {
-            try {
-                this.navitiaSdk = new NavitiaSDK(new NavitiaConfiguration(token));
-                callbackContext.success("SDK created with token " + token);
-            } catch (Exception e) {
-                callbackContext.error(e.getMessage());
-            }
-        } else {
-            callbackContext.error("No token provided");
+    private void init(JSONObject config, CallbackContext callbackContext) {
+        String token = config.optString("token");
+        if (token.isEmpty()) {
+            callbackContext.error("No token specified");
+            return;
+        }
+
+        try {
+            String basePath = config.optString("basePath");
+            this.navitiaSdk = basePath.isEmpty ? 
+            new NavitiaSDK(new NavitiaConfiguration(token)) :
+            new NavitiaSDK(new NavitiaConfiguration(token, basePath));
+
+            callbackContext.success("SDK created with token " + token);
+        } catch (Exception e) {
+            callbackContext.error(e.getMessage());
         }
     }
 
@@ -2546,6 +2615,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         commercialModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        commercialModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -2562,9 +2635,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         commercialModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        commercialModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         commercialModesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        commercialModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     commercialModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -2659,6 +2740,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         commercialModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        commercialModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -2674,6 +2759,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         commercialModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        commercialModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        commercialModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     commercialModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -2768,6 +2861,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         commercialModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        commercialModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -2784,9 +2881,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         commercialModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        commercialModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         commercialModesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        commercialModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     commercialModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -2885,6 +2990,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         commercialModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        commercialModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -2900,6 +3009,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         commercialModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        commercialModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        commercialModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     commercialModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -2986,6 +3103,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         commercialModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        commercialModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3002,9 +3123,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         commercialModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        commercialModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         commercialModesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        commercialModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     commercialModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3095,6 +3224,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         commercialModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        commercialModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3110,6 +3243,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         commercialModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        commercialModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        commercialModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     commercialModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3200,6 +3341,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         commercialModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        commercialModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3216,9 +3361,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         commercialModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        commercialModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         commercialModesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        commercialModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     commercialModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3313,6 +3466,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         commercialModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        commercialModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         commercialModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3328,6 +3485,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         commercialModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        commercialModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        commercialModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     commercialModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3418,6 +3583,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         companiesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        companiesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3434,9 +3603,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         companiesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        companiesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         companiesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        companiesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     companiesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3531,6 +3708,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         companiesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        companiesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3546,6 +3727,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         companiesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        companiesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        companiesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     companiesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3640,6 +3829,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         companiesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        companiesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3656,9 +3849,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         companiesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        companiesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         companiesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        companiesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     companiesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3757,6 +3958,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         companiesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        companiesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3772,6 +3977,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         companiesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        companiesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        companiesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     companiesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3858,6 +4071,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         companiesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        companiesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3874,9 +4091,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         companiesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        companiesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         companiesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        companiesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     companiesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -3967,6 +4192,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         companiesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        companiesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -3982,6 +4211,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         companiesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        companiesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        companiesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     companiesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4072,6 +4309,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         companiesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        companiesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4088,9 +4329,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         companiesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        companiesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         companiesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        companiesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     companiesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4185,6 +4434,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         companiesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        companiesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         companiesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4200,6 +4453,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         companiesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        companiesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        companiesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     companiesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4290,6 +4551,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         contributorsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        contributorsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4306,9 +4571,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         contributorsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        contributorsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         contributorsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        contributorsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     contributorsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4403,6 +4676,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         contributorsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        contributorsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4418,6 +4695,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         contributorsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        contributorsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        contributorsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     contributorsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4512,6 +4797,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         contributorsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        contributorsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4528,9 +4817,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         contributorsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        contributorsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         contributorsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        contributorsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     contributorsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4629,6 +4926,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         contributorsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        contributorsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4644,6 +4945,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         contributorsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        contributorsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        contributorsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     contributorsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4730,6 +5039,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         contributorsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        contributorsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4746,9 +5059,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         contributorsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        contributorsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         contributorsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        contributorsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     contributorsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4839,6 +5160,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         contributorsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        contributorsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4854,6 +5179,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         contributorsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        contributorsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        contributorsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     contributorsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -4944,6 +5277,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         contributorsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        contributorsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -4960,9 +5297,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         contributorsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        contributorsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         contributorsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        contributorsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     contributorsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -5057,6 +5402,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         contributorsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        contributorsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         contributorsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -5072,6 +5421,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         contributorsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        contributorsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        contributorsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     contributorsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -5174,6 +5531,120 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
                         // Param: lat, Type: BigDecimal
                         coordRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    
+                    coordRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionCoordLonLatAddresses(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordApi.CoverageRegionCoordLonLatAddressesRequestBuilder coordRequestBuilder = this.navitiaSdk.coordApi.newCoverageRegionCoordLonLatAddressesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        coordRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    
+                    coordRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionCoordsLonLatAddresses(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final CoordApi.CoverageRegionCoordsLonLatAddressesRequestBuilder coordRequestBuilder = this.navitiaSdk.coordApi.newCoverageRegionCoordsLonLatAddressesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        coordRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        coordRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
                     }
                     if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
                         // Param: lon, Type: BigDecimal
@@ -6307,6 +6778,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         datasetsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        datasetsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -6323,9 +6798,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         datasetsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        datasetsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         datasetsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        datasetsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     datasetsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -6420,6 +6903,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         datasetsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        datasetsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -6435,6 +6922,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         datasetsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        datasetsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        datasetsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     datasetsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -6529,6 +7024,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         datasetsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        datasetsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -6545,9 +7044,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         datasetsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        datasetsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         datasetsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        datasetsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     datasetsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -6646,6 +7153,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         datasetsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        datasetsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -6661,6 +7172,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         datasetsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        datasetsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        datasetsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     datasetsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -6747,6 +7266,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         datasetsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        datasetsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -6763,9 +7286,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         datasetsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        datasetsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         datasetsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        datasetsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     datasetsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -6856,6 +7387,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         datasetsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        datasetsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -6871,6 +7406,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         datasetsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        datasetsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        datasetsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     datasetsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -6961,6 +7504,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         datasetsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        datasetsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -6977,9 +7524,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         datasetsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        datasetsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         datasetsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        datasetsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     datasetsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -7074,6 +7629,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         datasetsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        datasetsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         datasetsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7089,6 +7648,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         datasetsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        datasetsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        datasetsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     datasetsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -7179,6 +7746,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         disruptionsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        disruptionsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7195,9 +7766,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         disruptionsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        disruptionsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         disruptionsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        disruptionsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -7296,6 +7875,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         disruptionsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        disruptionsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7311,6 +7894,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         disruptionsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        disruptionsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        disruptionsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -7409,6 +8000,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         disruptionsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        disruptionsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7425,9 +8020,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         disruptionsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        disruptionsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         disruptionsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        disruptionsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -7530,6 +8133,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         disruptionsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        disruptionsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7545,6 +8152,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         disruptionsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        disruptionsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        disruptionsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -7635,6 +8250,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         disruptionsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        disruptionsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7651,9 +8270,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         disruptionsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        disruptionsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         disruptionsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        disruptionsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -7748,6 +8375,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         disruptionsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        disruptionsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7763,6 +8394,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         disruptionsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        disruptionsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        disruptionsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -7857,6 +8496,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         disruptionsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        disruptionsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7873,9 +8516,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         disruptionsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        disruptionsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         disruptionsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        disruptionsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -7974,6 +8625,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         disruptionsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        disruptionsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         disruptionsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -7990,12 +8645,458 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         disruptionsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        disruptionsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        disruptionsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
+                    }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
                         disruptionsRequestBuilder.withOriginalId(stringStraightPass(params.getString("originalId")));
                     }
                     
                     disruptionsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coordLonLatEquipmentReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final EquipmentReportsApi.CoordLonLatEquipmentReportsRequestBuilder equipmentReportsRequestBuilder = this.navitiaSdk.equipmentReportsApi.newCoordLonLatEquipmentReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        equipmentReportsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        equipmentReportsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        equipmentReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        equipmentReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        equipmentReportsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        equipmentReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        equipmentReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    
+                    equipmentReportsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coordsLonLatEquipmentReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final EquipmentReportsApi.CoordsLonLatEquipmentReportsRequestBuilder equipmentReportsRequestBuilder = this.navitiaSdk.equipmentReportsApi.newCoordsLonLatEquipmentReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        equipmentReportsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        equipmentReportsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        equipmentReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        equipmentReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        equipmentReportsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        equipmentReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        equipmentReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    
+                    equipmentReportsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatEquipmentReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final EquipmentReportsApi.CoverageLonLatEquipmentReportsRequestBuilder equipmentReportsRequestBuilder = this.navitiaSdk.equipmentReportsApi.newCoverageLonLatEquipmentReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        equipmentReportsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        equipmentReportsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        equipmentReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        equipmentReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        equipmentReportsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        equipmentReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        equipmentReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    
+                    equipmentReportsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriEquipmentReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final EquipmentReportsApi.CoverageLonLatUriEquipmentReportsRequestBuilder equipmentReportsRequestBuilder = this.navitiaSdk.equipmentReportsApi.newCoverageLonLatUriEquipmentReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        equipmentReportsRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        equipmentReportsRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        equipmentReportsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        equipmentReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        equipmentReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        equipmentReportsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        equipmentReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        equipmentReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    
+                    equipmentReportsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionEquipmentReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final EquipmentReportsApi.CoverageRegionEquipmentReportsRequestBuilder equipmentReportsRequestBuilder = this.navitiaSdk.equipmentReportsApi.newCoverageRegionEquipmentReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        equipmentReportsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        equipmentReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        equipmentReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        equipmentReportsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        equipmentReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        equipmentReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    
+                    equipmentReportsRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriEquipmentReports(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final EquipmentReportsApi.CoverageRegionUriEquipmentReportsRequestBuilder equipmentReportsRequestBuilder = this.navitiaSdk.equipmentReportsApi.newCoverageRegionUriEquipmentReportsRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        equipmentReportsRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        equipmentReportsRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        equipmentReportsRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        equipmentReportsRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        equipmentReportsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        equipmentReportsRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        equipmentReportsRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    
+                    equipmentReportsRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -8205,6 +9306,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxRidesharingDurationToPt, Type: Integer
                         graphicalIsochroneRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
                     }
+                    if (params.has("maxCarNoParkDurationToPt") && (params.getString("maxCarNoParkDurationToPt") != null) && (!params.getString("maxCarNoParkDurationToPt").isEmpty()) ) {
+                        // Param: maxCarNoParkDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxCarNoParkDurationToPt(integerStraightPass(params.getInt("maxCarNoParkDurationToPt")));
+                    }
+                    if (params.has("maxTaxiDurationToPt") && (params.getString("maxTaxiDurationToPt") != null) && (!params.getString("maxTaxiDurationToPt").isEmpty()) ) {
+                        // Param: maxTaxiDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxTaxiDurationToPt(integerStraightPass(params.getInt("maxTaxiDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         graphicalIsochroneRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -8224,6 +9333,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
                         // Param: ridesharingSpeed, Type: Float
                         graphicalIsochroneRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
+                    }
+                    if (params.has("carNoParkSpeed") && (params.getString("carNoParkSpeed") != null) && (!params.getString("carNoParkSpeed").isEmpty()) ) {
+                        // Param: carNoParkSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withCarNoParkSpeed(longToFloat(params.getLong("carNoParkSpeed")));
+                    }
+                    if (params.has("taxiSpeed") && (params.getString("taxiSpeed") != null) && (!params.getString("taxiSpeed").isEmpty()) ) {
+                        // Param: taxiSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withTaxiSpeed(longToFloat(params.getLong("taxiSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8256,6 +9373,22 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
                         // Param: directPath, Type: String
                         graphicalIsochroneRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
+                    }
+                    if (params.has("freeRadiusFrom") && (params.getString("freeRadiusFrom") != null) && (!params.getString("freeRadiusFrom").isEmpty()) ) {
+                        // Param: freeRadiusFrom, Type: Integer
+                        graphicalIsochroneRequestBuilder.withFreeRadiusFrom(integerStraightPass(params.getInt("freeRadiusFrom")));
+                    }
+                    if (params.has("freeRadiusTo") && (params.getString("freeRadiusTo") != null) && (!params.getString("freeRadiusTo").isEmpty()) ) {
+                        // Param: freeRadiusTo, Type: Integer
+                        graphicalIsochroneRequestBuilder.withFreeRadiusTo(integerStraightPass(params.getInt("freeRadiusTo")));
+                    }
+                    if (params.has("directPathMode") && (params.getString("directPathMode") != null) && (!params.getString("directPathMode").isEmpty()) ) {
+                        // Param: directPathMode, Type: List
+                        graphicalIsochroneRequestBuilder.withDirectPathMode(jsonArrayToStringList(params.getJSONArray("directPathMode")));
+                    }
+                    if (params.has("partnerServices") && (params.getString("partnerServices") != null) && (!params.getString("partnerServices").isEmpty()) ) {
+                        // Param: partnerServices, Type: List
+                        graphicalIsochroneRequestBuilder.withPartnerServices(jsonArrayToStringList(params.getJSONArray("partnerServices")));
                     }
                     if (params.has("minDuration") && (params.getString("minDuration") != null) && (!params.getString("minDuration").isEmpty()) ) {
                         // Param: minDuration, Type: Integer
@@ -8370,6 +9503,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxRidesharingDurationToPt, Type: Integer
                         graphicalIsochroneRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
                     }
+                    if (params.has("maxCarNoParkDurationToPt") && (params.getString("maxCarNoParkDurationToPt") != null) && (!params.getString("maxCarNoParkDurationToPt").isEmpty()) ) {
+                        // Param: maxCarNoParkDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxCarNoParkDurationToPt(integerStraightPass(params.getInt("maxCarNoParkDurationToPt")));
+                    }
+                    if (params.has("maxTaxiDurationToPt") && (params.getString("maxTaxiDurationToPt") != null) && (!params.getString("maxTaxiDurationToPt").isEmpty()) ) {
+                        // Param: maxTaxiDurationToPt, Type: Integer
+                        graphicalIsochroneRequestBuilder.withMaxTaxiDurationToPt(integerStraightPass(params.getInt("maxTaxiDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         graphicalIsochroneRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -8389,6 +9530,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
                         // Param: ridesharingSpeed, Type: Float
                         graphicalIsochroneRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
+                    }
+                    if (params.has("carNoParkSpeed") && (params.getString("carNoParkSpeed") != null) && (!params.getString("carNoParkSpeed").isEmpty()) ) {
+                        // Param: carNoParkSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withCarNoParkSpeed(longToFloat(params.getLong("carNoParkSpeed")));
+                    }
+                    if (params.has("taxiSpeed") && (params.getString("taxiSpeed") != null) && (!params.getString("taxiSpeed").isEmpty()) ) {
+                        // Param: taxiSpeed, Type: Float
+                        graphicalIsochroneRequestBuilder.withTaxiSpeed(longToFloat(params.getLong("taxiSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8421,6 +9570,22 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
                         // Param: directPath, Type: String
                         graphicalIsochroneRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
+                    }
+                    if (params.has("freeRadiusFrom") && (params.getString("freeRadiusFrom") != null) && (!params.getString("freeRadiusFrom").isEmpty()) ) {
+                        // Param: freeRadiusFrom, Type: Integer
+                        graphicalIsochroneRequestBuilder.withFreeRadiusFrom(integerStraightPass(params.getInt("freeRadiusFrom")));
+                    }
+                    if (params.has("freeRadiusTo") && (params.getString("freeRadiusTo") != null) && (!params.getString("freeRadiusTo").isEmpty()) ) {
+                        // Param: freeRadiusTo, Type: Integer
+                        graphicalIsochroneRequestBuilder.withFreeRadiusTo(integerStraightPass(params.getInt("freeRadiusTo")));
+                    }
+                    if (params.has("directPathMode") && (params.getString("directPathMode") != null) && (!params.getString("directPathMode").isEmpty()) ) {
+                        // Param: directPathMode, Type: List
+                        graphicalIsochroneRequestBuilder.withDirectPathMode(jsonArrayToStringList(params.getJSONArray("directPathMode")));
+                    }
+                    if (params.has("partnerServices") && (params.getString("partnerServices") != null) && (!params.getString("partnerServices").isEmpty()) ) {
+                        // Param: partnerServices, Type: List
+                        graphicalIsochroneRequestBuilder.withPartnerServices(jsonArrayToStringList(params.getJSONArray("partnerServices")));
                     }
                     if (params.has("minDuration") && (params.getString("minDuration") != null) && (!params.getString("minDuration").isEmpty()) ) {
                         // Param: minDuration, Type: Integer
@@ -8539,6 +9704,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxRidesharingDurationToPt, Type: Integer
                         heatMapRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
                     }
+                    if (params.has("maxCarNoParkDurationToPt") && (params.getString("maxCarNoParkDurationToPt") != null) && (!params.getString("maxCarNoParkDurationToPt").isEmpty()) ) {
+                        // Param: maxCarNoParkDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxCarNoParkDurationToPt(integerStraightPass(params.getInt("maxCarNoParkDurationToPt")));
+                    }
+                    if (params.has("maxTaxiDurationToPt") && (params.getString("maxTaxiDurationToPt") != null) && (!params.getString("maxTaxiDurationToPt").isEmpty()) ) {
+                        // Param: maxTaxiDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxTaxiDurationToPt(integerStraightPass(params.getInt("maxTaxiDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         heatMapRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -8558,6 +9731,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
                         // Param: ridesharingSpeed, Type: Float
                         heatMapRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
+                    }
+                    if (params.has("carNoParkSpeed") && (params.getString("carNoParkSpeed") != null) && (!params.getString("carNoParkSpeed").isEmpty()) ) {
+                        // Param: carNoParkSpeed, Type: Float
+                        heatMapRequestBuilder.withCarNoParkSpeed(longToFloat(params.getLong("carNoParkSpeed")));
+                    }
+                    if (params.has("taxiSpeed") && (params.getString("taxiSpeed") != null) && (!params.getString("taxiSpeed").isEmpty()) ) {
+                        // Param: taxiSpeed, Type: Float
+                        heatMapRequestBuilder.withTaxiSpeed(longToFloat(params.getLong("taxiSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8590,6 +9771,22 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
                         // Param: directPath, Type: String
                         heatMapRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
+                    }
+                    if (params.has("freeRadiusFrom") && (params.getString("freeRadiusFrom") != null) && (!params.getString("freeRadiusFrom").isEmpty()) ) {
+                        // Param: freeRadiusFrom, Type: Integer
+                        heatMapRequestBuilder.withFreeRadiusFrom(integerStraightPass(params.getInt("freeRadiusFrom")));
+                    }
+                    if (params.has("freeRadiusTo") && (params.getString("freeRadiusTo") != null) && (!params.getString("freeRadiusTo").isEmpty()) ) {
+                        // Param: freeRadiusTo, Type: Integer
+                        heatMapRequestBuilder.withFreeRadiusTo(integerStraightPass(params.getInt("freeRadiusTo")));
+                    }
+                    if (params.has("directPathMode") && (params.getString("directPathMode") != null) && (!params.getString("directPathMode").isEmpty()) ) {
+                        // Param: directPathMode, Type: List
+                        heatMapRequestBuilder.withDirectPathMode(jsonArrayToStringList(params.getJSONArray("directPathMode")));
+                    }
+                    if (params.has("partnerServices") && (params.getString("partnerServices") != null) && (!params.getString("partnerServices").isEmpty()) ) {
+                        // Param: partnerServices, Type: List
+                        heatMapRequestBuilder.withPartnerServices(jsonArrayToStringList(params.getJSONArray("partnerServices")));
                     }
                     if (params.has("resolution") && (params.getString("resolution") != null) && (!params.getString("resolution").isEmpty()) ) {
                         // Param: resolution, Type: Integer
@@ -8700,6 +9897,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxRidesharingDurationToPt, Type: Integer
                         heatMapRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
                     }
+                    if (params.has("maxCarNoParkDurationToPt") && (params.getString("maxCarNoParkDurationToPt") != null) && (!params.getString("maxCarNoParkDurationToPt").isEmpty()) ) {
+                        // Param: maxCarNoParkDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxCarNoParkDurationToPt(integerStraightPass(params.getInt("maxCarNoParkDurationToPt")));
+                    }
+                    if (params.has("maxTaxiDurationToPt") && (params.getString("maxTaxiDurationToPt") != null) && (!params.getString("maxTaxiDurationToPt").isEmpty()) ) {
+                        // Param: maxTaxiDurationToPt, Type: Integer
+                        heatMapRequestBuilder.withMaxTaxiDurationToPt(integerStraightPass(params.getInt("maxTaxiDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         heatMapRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -8719,6 +9924,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
                         // Param: ridesharingSpeed, Type: Float
                         heatMapRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
+                    }
+                    if (params.has("carNoParkSpeed") && (params.getString("carNoParkSpeed") != null) && (!params.getString("carNoParkSpeed").isEmpty()) ) {
+                        // Param: carNoParkSpeed, Type: Float
+                        heatMapRequestBuilder.withCarNoParkSpeed(longToFloat(params.getLong("carNoParkSpeed")));
+                    }
+                    if (params.has("taxiSpeed") && (params.getString("taxiSpeed") != null) && (!params.getString("taxiSpeed").isEmpty()) ) {
+                        // Param: taxiSpeed, Type: Float
+                        heatMapRequestBuilder.withTaxiSpeed(longToFloat(params.getLong("taxiSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -8751,6 +9964,22 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("directPath") && (params.getString("directPath") != null) && (!params.getString("directPath").isEmpty()) ) {
                         // Param: directPath, Type: String
                         heatMapRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
+                    }
+                    if (params.has("freeRadiusFrom") && (params.getString("freeRadiusFrom") != null) && (!params.getString("freeRadiusFrom").isEmpty()) ) {
+                        // Param: freeRadiusFrom, Type: Integer
+                        heatMapRequestBuilder.withFreeRadiusFrom(integerStraightPass(params.getInt("freeRadiusFrom")));
+                    }
+                    if (params.has("freeRadiusTo") && (params.getString("freeRadiusTo") != null) && (!params.getString("freeRadiusTo").isEmpty()) ) {
+                        // Param: freeRadiusTo, Type: Integer
+                        heatMapRequestBuilder.withFreeRadiusTo(integerStraightPass(params.getInt("freeRadiusTo")));
+                    }
+                    if (params.has("directPathMode") && (params.getString("directPathMode") != null) && (!params.getString("directPathMode").isEmpty()) ) {
+                        // Param: directPathMode, Type: List
+                        heatMapRequestBuilder.withDirectPathMode(jsonArrayToStringList(params.getJSONArray("directPathMode")));
+                    }
+                    if (params.has("partnerServices") && (params.getString("partnerServices") != null) && (!params.getString("partnerServices").isEmpty()) ) {
+                        // Param: partnerServices, Type: List
+                        heatMapRequestBuilder.withPartnerServices(jsonArrayToStringList(params.getJSONArray("partnerServices")));
                     }
                     if (params.has("resolution") && (params.getString("resolution") != null) && (!params.getString("resolution").isEmpty()) ) {
                         // Param: resolution, Type: Integer
@@ -8845,6 +10074,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -8861,9 +10094,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         journeyPatternPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternPointsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -8958,6 +10199,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -8973,6 +10218,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternPointsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9067,6 +10320,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9083,9 +10340,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         journeyPatternPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternPointsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9184,6 +10449,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9199,6 +10468,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternPointsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9285,6 +10562,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9301,9 +10582,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         journeyPatternPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternPointsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9394,6 +10683,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9409,6 +10702,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternPointsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9499,6 +10800,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9515,9 +10820,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         journeyPatternPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternPointsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9612,6 +10925,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9627,6 +10944,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternPointsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9717,6 +11042,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9733,9 +11062,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         journeyPatternsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9830,6 +11167,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9845,6 +11186,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -9939,6 +11288,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -9955,9 +11308,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         journeyPatternsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -10056,6 +11417,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -10071,6 +11436,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -10157,6 +11530,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -10173,9 +11550,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         journeyPatternsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -10266,6 +11651,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -10281,6 +11670,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -10371,6 +11768,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -10387,9 +11788,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         journeyPatternsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -10484,6 +11893,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         journeyPatternsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        journeyPatternsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         journeyPatternsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -10499,6 +11912,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         journeyPatternsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        journeyPatternsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        journeyPatternsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     journeyPatternsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -10609,6 +12030,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxRidesharingDurationToPt, Type: Integer
                         journeysRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
                     }
+                    if (params.has("maxCarNoParkDurationToPt") && (params.getString("maxCarNoParkDurationToPt") != null) && (!params.getString("maxCarNoParkDurationToPt").isEmpty()) ) {
+                        // Param: maxCarNoParkDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxCarNoParkDurationToPt(integerStraightPass(params.getInt("maxCarNoParkDurationToPt")));
+                    }
+                    if (params.has("maxTaxiDurationToPt") && (params.getString("maxTaxiDurationToPt") != null) && (!params.getString("maxTaxiDurationToPt").isEmpty()) ) {
+                        // Param: maxTaxiDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxTaxiDurationToPt(integerStraightPass(params.getInt("maxTaxiDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -10628,6 +12057,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
                         // Param: ridesharingSpeed, Type: Float
                         journeysRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
+                    }
+                    if (params.has("carNoParkSpeed") && (params.getString("carNoParkSpeed") != null) && (!params.getString("carNoParkSpeed").isEmpty()) ) {
+                        // Param: carNoParkSpeed, Type: Float
+                        journeysRequestBuilder.withCarNoParkSpeed(longToFloat(params.getLong("carNoParkSpeed")));
+                    }
+                    if (params.has("taxiSpeed") && (params.getString("taxiSpeed") != null) && (!params.getString("taxiSpeed").isEmpty()) ) {
+                        // Param: taxiSpeed, Type: Float
+                        journeysRequestBuilder.withTaxiSpeed(longToFloat(params.getLong("taxiSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -10661,6 +12098,22 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: directPath, Type: String
                         journeysRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
                     }
+                    if (params.has("freeRadiusFrom") && (params.getString("freeRadiusFrom") != null) && (!params.getString("freeRadiusFrom").isEmpty()) ) {
+                        // Param: freeRadiusFrom, Type: Integer
+                        journeysRequestBuilder.withFreeRadiusFrom(integerStraightPass(params.getInt("freeRadiusFrom")));
+                    }
+                    if (params.has("freeRadiusTo") && (params.getString("freeRadiusTo") != null) && (!params.getString("freeRadiusTo").isEmpty()) ) {
+                        // Param: freeRadiusTo, Type: Integer
+                        journeysRequestBuilder.withFreeRadiusTo(integerStraightPass(params.getInt("freeRadiusTo")));
+                    }
+                    if (params.has("directPathMode") && (params.getString("directPathMode") != null) && (!params.getString("directPathMode").isEmpty()) ) {
+                        // Param: directPathMode, Type: List
+                        journeysRequestBuilder.withDirectPathMode(jsonArrayToStringList(params.getJSONArray("directPathMode")));
+                    }
+                    if (params.has("partnerServices") && (params.getString("partnerServices") != null) && (!params.getString("partnerServices").isEmpty()) ) {
+                        // Param: partnerServices, Type: List
+                        journeysRequestBuilder.withPartnerServices(jsonArrayToStringList(params.getJSONArray("partnerServices")));
+                    }
                     if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
                         // Param: count, Type: Integer
                         journeysRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
@@ -10684,6 +12137,46 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
                         journeysRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("timeframeDuration") && (params.getString("timeframeDuration") != null) && (!params.getString("timeframeDuration").isEmpty()) ) {
+                        // Param: timeframeDuration, Type: Integer
+                        journeysRequestBuilder.withTimeframeDuration(integerStraightPass(params.getInt("timeframeDuration")));
+                    }
+                    if (params.has("equipmentDetails") && (params.getString("equipmentDetails") != null) && (!params.getString("equipmentDetails").isEmpty()) ) {
+                        // Param: equipmentDetails, Type: Boolean
+                        journeysRequestBuilder.withEquipmentDetails(booleanStraightPass(params.getBoolean("equipmentDetails")));
+                    }
+                    if (params.has("maxTaxiDirectPathDuration") && (params.getString("maxTaxiDirectPathDuration") != null) && (!params.getString("maxTaxiDirectPathDuration").isEmpty()) ) {
+                        // Param: maxTaxiDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxTaxiDirectPathDuration(integerStraightPass(params.getInt("maxTaxiDirectPathDuration")));
+                    }
+                    if (params.has("maxWalkingDirectPathDuration") && (params.getString("maxWalkingDirectPathDuration") != null) && (!params.getString("maxWalkingDirectPathDuration").isEmpty()) ) {
+                        // Param: maxWalkingDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxWalkingDirectPathDuration(integerStraightPass(params.getInt("maxWalkingDirectPathDuration")));
+                    }
+                    if (params.has("maxCarNoParkDirectPathDuration") && (params.getString("maxCarNoParkDirectPathDuration") != null) && (!params.getString("maxCarNoParkDirectPathDuration").isEmpty()) ) {
+                        // Param: maxCarNoParkDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxCarNoParkDirectPathDuration(integerStraightPass(params.getInt("maxCarNoParkDirectPathDuration")));
+                    }
+                    if (params.has("maxCarDirectPathDuration") && (params.getString("maxCarDirectPathDuration") != null) && (!params.getString("maxCarDirectPathDuration").isEmpty()) ) {
+                        // Param: maxCarDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxCarDirectPathDuration(integerStraightPass(params.getInt("maxCarDirectPathDuration")));
+                    }
+                    if (params.has("maxRidesharingDirectPathDuration") && (params.getString("maxRidesharingDirectPathDuration") != null) && (!params.getString("maxRidesharingDirectPathDuration").isEmpty()) ) {
+                        // Param: maxRidesharingDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxRidesharingDirectPathDuration(integerStraightPass(params.getInt("maxRidesharingDirectPathDuration")));
+                    }
+                    if (params.has("maxBssDirectPathDuration") && (params.getString("maxBssDirectPathDuration") != null) && (!params.getString("maxBssDirectPathDuration").isEmpty()) ) {
+                        // Param: maxBssDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxBssDirectPathDuration(integerStraightPass(params.getInt("maxBssDirectPathDuration")));
+                    }
+                    if (params.has("maxBikeDirectPathDuration") && (params.getString("maxBikeDirectPathDuration") != null) && (!params.getString("maxBikeDirectPathDuration").isEmpty()) ) {
+                        // Param: maxBikeDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxBikeDirectPathDuration(integerStraightPass(params.getInt("maxBikeDirectPathDuration")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        journeysRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -10790,6 +12283,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxRidesharingDurationToPt, Type: Integer
                         journeysRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
                     }
+                    if (params.has("maxCarNoParkDurationToPt") && (params.getString("maxCarNoParkDurationToPt") != null) && (!params.getString("maxCarNoParkDurationToPt").isEmpty()) ) {
+                        // Param: maxCarNoParkDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxCarNoParkDurationToPt(integerStraightPass(params.getInt("maxCarNoParkDurationToPt")));
+                    }
+                    if (params.has("maxTaxiDurationToPt") && (params.getString("maxTaxiDurationToPt") != null) && (!params.getString("maxTaxiDurationToPt").isEmpty()) ) {
+                        // Param: maxTaxiDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxTaxiDurationToPt(integerStraightPass(params.getInt("maxTaxiDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -10809,6 +12310,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
                         // Param: ridesharingSpeed, Type: Float
                         journeysRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
+                    }
+                    if (params.has("carNoParkSpeed") && (params.getString("carNoParkSpeed") != null) && (!params.getString("carNoParkSpeed").isEmpty()) ) {
+                        // Param: carNoParkSpeed, Type: Float
+                        journeysRequestBuilder.withCarNoParkSpeed(longToFloat(params.getLong("carNoParkSpeed")));
+                    }
+                    if (params.has("taxiSpeed") && (params.getString("taxiSpeed") != null) && (!params.getString("taxiSpeed").isEmpty()) ) {
+                        // Param: taxiSpeed, Type: Float
+                        journeysRequestBuilder.withTaxiSpeed(longToFloat(params.getLong("taxiSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -10842,6 +12351,22 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: directPath, Type: String
                         journeysRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
                     }
+                    if (params.has("freeRadiusFrom") && (params.getString("freeRadiusFrom") != null) && (!params.getString("freeRadiusFrom").isEmpty()) ) {
+                        // Param: freeRadiusFrom, Type: Integer
+                        journeysRequestBuilder.withFreeRadiusFrom(integerStraightPass(params.getInt("freeRadiusFrom")));
+                    }
+                    if (params.has("freeRadiusTo") && (params.getString("freeRadiusTo") != null) && (!params.getString("freeRadiusTo").isEmpty()) ) {
+                        // Param: freeRadiusTo, Type: Integer
+                        journeysRequestBuilder.withFreeRadiusTo(integerStraightPass(params.getInt("freeRadiusTo")));
+                    }
+                    if (params.has("directPathMode") && (params.getString("directPathMode") != null) && (!params.getString("directPathMode").isEmpty()) ) {
+                        // Param: directPathMode, Type: List
+                        journeysRequestBuilder.withDirectPathMode(jsonArrayToStringList(params.getJSONArray("directPathMode")));
+                    }
+                    if (params.has("partnerServices") && (params.getString("partnerServices") != null) && (!params.getString("partnerServices").isEmpty()) ) {
+                        // Param: partnerServices, Type: List
+                        journeysRequestBuilder.withPartnerServices(jsonArrayToStringList(params.getJSONArray("partnerServices")));
+                    }
                     if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
                         // Param: count, Type: Integer
                         journeysRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
@@ -10865,6 +12390,46 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
                         journeysRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("timeframeDuration") && (params.getString("timeframeDuration") != null) && (!params.getString("timeframeDuration").isEmpty()) ) {
+                        // Param: timeframeDuration, Type: Integer
+                        journeysRequestBuilder.withTimeframeDuration(integerStraightPass(params.getInt("timeframeDuration")));
+                    }
+                    if (params.has("equipmentDetails") && (params.getString("equipmentDetails") != null) && (!params.getString("equipmentDetails").isEmpty()) ) {
+                        // Param: equipmentDetails, Type: Boolean
+                        journeysRequestBuilder.withEquipmentDetails(booleanStraightPass(params.getBoolean("equipmentDetails")));
+                    }
+                    if (params.has("maxTaxiDirectPathDuration") && (params.getString("maxTaxiDirectPathDuration") != null) && (!params.getString("maxTaxiDirectPathDuration").isEmpty()) ) {
+                        // Param: maxTaxiDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxTaxiDirectPathDuration(integerStraightPass(params.getInt("maxTaxiDirectPathDuration")));
+                    }
+                    if (params.has("maxWalkingDirectPathDuration") && (params.getString("maxWalkingDirectPathDuration") != null) && (!params.getString("maxWalkingDirectPathDuration").isEmpty()) ) {
+                        // Param: maxWalkingDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxWalkingDirectPathDuration(integerStraightPass(params.getInt("maxWalkingDirectPathDuration")));
+                    }
+                    if (params.has("maxCarNoParkDirectPathDuration") && (params.getString("maxCarNoParkDirectPathDuration") != null) && (!params.getString("maxCarNoParkDirectPathDuration").isEmpty()) ) {
+                        // Param: maxCarNoParkDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxCarNoParkDirectPathDuration(integerStraightPass(params.getInt("maxCarNoParkDirectPathDuration")));
+                    }
+                    if (params.has("maxCarDirectPathDuration") && (params.getString("maxCarDirectPathDuration") != null) && (!params.getString("maxCarDirectPathDuration").isEmpty()) ) {
+                        // Param: maxCarDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxCarDirectPathDuration(integerStraightPass(params.getInt("maxCarDirectPathDuration")));
+                    }
+                    if (params.has("maxRidesharingDirectPathDuration") && (params.getString("maxRidesharingDirectPathDuration") != null) && (!params.getString("maxRidesharingDirectPathDuration").isEmpty()) ) {
+                        // Param: maxRidesharingDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxRidesharingDirectPathDuration(integerStraightPass(params.getInt("maxRidesharingDirectPathDuration")));
+                    }
+                    if (params.has("maxBssDirectPathDuration") && (params.getString("maxBssDirectPathDuration") != null) && (!params.getString("maxBssDirectPathDuration").isEmpty()) ) {
+                        // Param: maxBssDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxBssDirectPathDuration(integerStraightPass(params.getInt("maxBssDirectPathDuration")));
+                    }
+                    if (params.has("maxBikeDirectPathDuration") && (params.getString("maxBikeDirectPathDuration") != null) && (!params.getString("maxBikeDirectPathDuration").isEmpty()) ) {
+                        // Param: maxBikeDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxBikeDirectPathDuration(integerStraightPass(params.getInt("maxBikeDirectPathDuration")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        journeysRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -10967,6 +12532,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: maxRidesharingDurationToPt, Type: Integer
                         journeysRequestBuilder.withMaxRidesharingDurationToPt(integerStraightPass(params.getInt("maxRidesharingDurationToPt")));
                     }
+                    if (params.has("maxCarNoParkDurationToPt") && (params.getString("maxCarNoParkDurationToPt") != null) && (!params.getString("maxCarNoParkDurationToPt").isEmpty()) ) {
+                        // Param: maxCarNoParkDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxCarNoParkDurationToPt(integerStraightPass(params.getInt("maxCarNoParkDurationToPt")));
+                    }
+                    if (params.has("maxTaxiDurationToPt") && (params.getString("maxTaxiDurationToPt") != null) && (!params.getString("maxTaxiDurationToPt").isEmpty()) ) {
+                        // Param: maxTaxiDurationToPt, Type: Integer
+                        journeysRequestBuilder.withMaxTaxiDurationToPt(integerStraightPass(params.getInt("maxTaxiDurationToPt")));
+                    }
                     if (params.has("walkingSpeed") && (params.getString("walkingSpeed") != null) && (!params.getString("walkingSpeed").isEmpty()) ) {
                         // Param: walkingSpeed, Type: Float
                         journeysRequestBuilder.withWalkingSpeed(longToFloat(params.getLong("walkingSpeed")));
@@ -10986,6 +12559,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("ridesharingSpeed") && (params.getString("ridesharingSpeed") != null) && (!params.getString("ridesharingSpeed").isEmpty()) ) {
                         // Param: ridesharingSpeed, Type: Float
                         journeysRequestBuilder.withRidesharingSpeed(longToFloat(params.getLong("ridesharingSpeed")));
+                    }
+                    if (params.has("carNoParkSpeed") && (params.getString("carNoParkSpeed") != null) && (!params.getString("carNoParkSpeed").isEmpty()) ) {
+                        // Param: carNoParkSpeed, Type: Float
+                        journeysRequestBuilder.withCarNoParkSpeed(longToFloat(params.getLong("carNoParkSpeed")));
+                    }
+                    if (params.has("taxiSpeed") && (params.getString("taxiSpeed") != null) && (!params.getString("taxiSpeed").isEmpty()) ) {
+                        // Param: taxiSpeed, Type: Float
+                        journeysRequestBuilder.withTaxiSpeed(longToFloat(params.getLong("taxiSpeed")));
                     }
                     if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
                         // Param: forbiddenUris, Type: List
@@ -11019,6 +12600,22 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: directPath, Type: String
                         journeysRequestBuilder.withDirectPath(stringStraightPass(params.getString("directPath")));
                     }
+                    if (params.has("freeRadiusFrom") && (params.getString("freeRadiusFrom") != null) && (!params.getString("freeRadiusFrom").isEmpty()) ) {
+                        // Param: freeRadiusFrom, Type: Integer
+                        journeysRequestBuilder.withFreeRadiusFrom(integerStraightPass(params.getInt("freeRadiusFrom")));
+                    }
+                    if (params.has("freeRadiusTo") && (params.getString("freeRadiusTo") != null) && (!params.getString("freeRadiusTo").isEmpty()) ) {
+                        // Param: freeRadiusTo, Type: Integer
+                        journeysRequestBuilder.withFreeRadiusTo(integerStraightPass(params.getInt("freeRadiusTo")));
+                    }
+                    if (params.has("directPathMode") && (params.getString("directPathMode") != null) && (!params.getString("directPathMode").isEmpty()) ) {
+                        // Param: directPathMode, Type: List
+                        journeysRequestBuilder.withDirectPathMode(jsonArrayToStringList(params.getJSONArray("directPathMode")));
+                    }
+                    if (params.has("partnerServices") && (params.getString("partnerServices") != null) && (!params.getString("partnerServices").isEmpty()) ) {
+                        // Param: partnerServices, Type: List
+                        journeysRequestBuilder.withPartnerServices(jsonArrayToStringList(params.getJSONArray("partnerServices")));
+                    }
                     if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
                         // Param: count, Type: Integer
                         journeysRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
@@ -11042,6 +12639,46 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("addPoiInfos") && (params.getString("addPoiInfos") != null) && (!params.getString("addPoiInfos").isEmpty()) ) {
                         // Param: addPoiInfos, Type: List
                         journeysRequestBuilder.withAddPoiInfos(jsonArrayToStringList(params.getJSONArray("addPoiInfos")));
+                    }
+                    if (params.has("timeframeDuration") && (params.getString("timeframeDuration") != null) && (!params.getString("timeframeDuration").isEmpty()) ) {
+                        // Param: timeframeDuration, Type: Integer
+                        journeysRequestBuilder.withTimeframeDuration(integerStraightPass(params.getInt("timeframeDuration")));
+                    }
+                    if (params.has("equipmentDetails") && (params.getString("equipmentDetails") != null) && (!params.getString("equipmentDetails").isEmpty()) ) {
+                        // Param: equipmentDetails, Type: Boolean
+                        journeysRequestBuilder.withEquipmentDetails(booleanStraightPass(params.getBoolean("equipmentDetails")));
+                    }
+                    if (params.has("maxTaxiDirectPathDuration") && (params.getString("maxTaxiDirectPathDuration") != null) && (!params.getString("maxTaxiDirectPathDuration").isEmpty()) ) {
+                        // Param: maxTaxiDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxTaxiDirectPathDuration(integerStraightPass(params.getInt("maxTaxiDirectPathDuration")));
+                    }
+                    if (params.has("maxWalkingDirectPathDuration") && (params.getString("maxWalkingDirectPathDuration") != null) && (!params.getString("maxWalkingDirectPathDuration").isEmpty()) ) {
+                        // Param: maxWalkingDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxWalkingDirectPathDuration(integerStraightPass(params.getInt("maxWalkingDirectPathDuration")));
+                    }
+                    if (params.has("maxCarNoParkDirectPathDuration") && (params.getString("maxCarNoParkDirectPathDuration") != null) && (!params.getString("maxCarNoParkDirectPathDuration").isEmpty()) ) {
+                        // Param: maxCarNoParkDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxCarNoParkDirectPathDuration(integerStraightPass(params.getInt("maxCarNoParkDirectPathDuration")));
+                    }
+                    if (params.has("maxCarDirectPathDuration") && (params.getString("maxCarDirectPathDuration") != null) && (!params.getString("maxCarDirectPathDuration").isEmpty()) ) {
+                        // Param: maxCarDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxCarDirectPathDuration(integerStraightPass(params.getInt("maxCarDirectPathDuration")));
+                    }
+                    if (params.has("maxRidesharingDirectPathDuration") && (params.getString("maxRidesharingDirectPathDuration") != null) && (!params.getString("maxRidesharingDirectPathDuration").isEmpty()) ) {
+                        // Param: maxRidesharingDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxRidesharingDirectPathDuration(integerStraightPass(params.getInt("maxRidesharingDirectPathDuration")));
+                    }
+                    if (params.has("maxBssDirectPathDuration") && (params.getString("maxBssDirectPathDuration") != null) && (!params.getString("maxBssDirectPathDuration").isEmpty()) ) {
+                        // Param: maxBssDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxBssDirectPathDuration(integerStraightPass(params.getInt("maxBssDirectPathDuration")));
+                    }
+                    if (params.has("maxBikeDirectPathDuration") && (params.getString("maxBikeDirectPathDuration") != null) && (!params.getString("maxBikeDirectPathDuration").isEmpty()) ) {
+                        // Param: maxBikeDirectPathDuration, Type: Integer
+                        journeysRequestBuilder.withMaxBikeDirectPathDuration(integerStraightPass(params.getInt("maxBikeDirectPathDuration")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        journeysRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
                     }
                     
                     journeysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -11132,6 +12769,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -11148,9 +12789,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         lineGroupsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -11249,6 +12898,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -11264,6 +12917,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -11362,6 +13023,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -11378,9 +13043,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         lineGroupsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -11483,6 +13156,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -11498,6 +13175,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -11588,6 +13273,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -11604,9 +13293,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         lineGroupsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -11701,6 +13398,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -11716,6 +13417,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -11810,6 +13519,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -11826,9 +13539,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         lineGroupsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -11927,6 +13648,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -11942,6 +13667,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -12028,6 +13761,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         lineGroupsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        lineGroupsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         lineGroupsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -12044,9 +13781,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         lineGroupsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        lineGroupsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         lineGroupsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        lineGroupsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -12465,6 +14210,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -12481,9 +14230,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         linesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -12582,6 +14339,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -12597,6 +14358,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -12695,6 +14464,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -12711,9 +14484,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         linesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -12816,6 +14597,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -12831,6 +14616,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -12921,6 +14714,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -12937,9 +14734,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         linesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13034,6 +14839,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13049,6 +14858,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13143,6 +14960,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13159,9 +14980,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         linesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13260,6 +15089,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13275,6 +15108,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13361,6 +15202,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         linesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        linesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         linesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13377,9 +15222,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         linesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        linesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         linesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        linesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13474,6 +15327,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13490,9 +15347,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         networksRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13591,6 +15456,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13606,6 +15475,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13704,6 +15581,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13720,9 +15601,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         networksRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13825,6 +15714,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13840,6 +15733,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -13930,6 +15831,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -13946,9 +15851,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         networksRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -14043,6 +15956,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -14058,6 +15975,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -14152,6 +16077,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -14168,9 +16097,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         networksRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -14269,6 +16206,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -14284,6 +16225,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -14370,6 +16319,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         networksRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        networksRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         networksRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -14386,9 +16339,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         networksRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        networksRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         networksRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        networksRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -14511,6 +16472,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         nextArrivalsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        nextArrivalsRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     nextArrivalsRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -14632,6 +16597,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         nextArrivalsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        nextArrivalsRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     nextArrivalsRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -14744,6 +16713,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         nextArrivalsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        nextArrivalsRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
                     }
                     
                     nextArrivalsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -14862,6 +16835,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         nextArrivalsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        nextArrivalsRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     nextArrivalsRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -14978,6 +16955,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         nextDeparturesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        nextDeparturesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
                     }
                     
                     nextDeparturesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15100,6 +17081,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         nextDeparturesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        nextDeparturesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     nextDeparturesRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -15212,6 +17197,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         nextDeparturesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        nextDeparturesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
                     }
                     
                     nextDeparturesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15330,6 +17319,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         nextDeparturesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        nextDeparturesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     nextDeparturesRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -15419,6 +17412,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         physicalModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        physicalModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -15435,9 +17432,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         physicalModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        physicalModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         physicalModesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        physicalModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15532,6 +17537,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         physicalModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        physicalModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -15547,6 +17556,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         physicalModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        physicalModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        physicalModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15641,6 +17658,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         physicalModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        physicalModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -15657,9 +17678,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         physicalModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        physicalModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         physicalModesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        physicalModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15758,6 +17787,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         physicalModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        physicalModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -15773,6 +17806,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         physicalModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        physicalModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        physicalModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15859,6 +17900,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         physicalModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        physicalModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -15875,9 +17920,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         physicalModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        physicalModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         physicalModesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        physicalModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -15968,6 +18021,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         physicalModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        physicalModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -15983,6 +18040,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         physicalModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        physicalModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        physicalModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -16073,6 +18138,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         physicalModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        physicalModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -16089,9 +18158,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         physicalModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        physicalModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         physicalModesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        physicalModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -16186,6 +18263,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         physicalModesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        physicalModesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         physicalModesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -16201,6 +18282,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         physicalModesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        physicalModesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        physicalModesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     physicalModesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -16271,6 +18360,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         placeUriRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placeUriRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     
                     placeUriRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -16336,6 +18429,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         placeUriRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placeUriRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     
                     placeUriRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -16396,6 +18493,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         placeUriRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placeUriRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
                     }
                     
                     placeUriRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -16729,6 +18830,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     
                     placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -16818,6 +18923,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     
                     placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -16906,6 +19015,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
                     }
                     
                     placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -17000,6 +19113,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     
                     placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -17084,6 +19201,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
                     }
                     
                     placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -17174,6 +19295,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         placesNearbyRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        placesNearbyRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     
                     placesNearbyRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -17263,6 +19388,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poiTypesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poiTypesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -17279,9 +19408,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         poiTypesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poiTypesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         poiTypesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poiTypesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     poiTypesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -17376,6 +19513,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poiTypesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poiTypesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -17391,6 +19532,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         poiTypesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poiTypesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poiTypesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     poiTypesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -17485,6 +19634,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poiTypesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poiTypesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -17501,9 +19654,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         poiTypesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poiTypesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         poiTypesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poiTypesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     poiTypesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -17602,6 +19763,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poiTypesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poiTypesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -17617,6 +19782,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         poiTypesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poiTypesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poiTypesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     poiTypesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -17703,6 +19876,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poiTypesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poiTypesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -17719,9 +19896,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         poiTypesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poiTypesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         poiTypesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poiTypesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     poiTypesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -17812,6 +19997,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poiTypesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poiTypesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -17827,6 +20016,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         poiTypesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poiTypesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poiTypesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     poiTypesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -17917,6 +20114,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poiTypesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poiTypesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -17933,9 +20134,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         poiTypesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poiTypesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         poiTypesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poiTypesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     poiTypesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -18030,6 +20239,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poiTypesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poiTypesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poiTypesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -18045,6 +20258,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         poiTypesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poiTypesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poiTypesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     poiTypesRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -18135,6 +20356,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poisRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poisRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -18151,9 +20376,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         poisRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poisRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         poisRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poisRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -18260,6 +20493,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poisRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poisRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -18275,6 +20512,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         poisRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poisRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poisRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -18381,6 +20626,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poisRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poisRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -18397,9 +20646,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         poisRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poisRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         poisRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poisRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -18510,6 +20767,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poisRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poisRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -18525,6 +20786,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         poisRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poisRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poisRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -18623,6 +20892,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poisRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poisRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -18639,9 +20912,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         poisRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poisRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         poisRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poisRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -18744,6 +21025,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poisRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poisRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -18759,6 +21044,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         poisRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poisRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poisRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -18861,6 +21154,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poisRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poisRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -18877,9 +21174,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         poisRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poisRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         poisRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poisRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -18986,6 +21291,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         poisRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        poisRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         poisRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -19001,6 +21310,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         poisRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        poisRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        poisRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -19091,6 +21408,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         ptobjectsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        ptobjectsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        ptobjectsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
                     
                     ptobjectsRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -19163,6 +21488,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         ptobjectsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        ptobjectsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        ptobjectsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
                     }
                     
                     ptobjectsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -19285,6 +21618,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         routeSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        routeSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     routeSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -19402,6 +21739,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         routeSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        routeSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     routeSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -19511,6 +21852,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         routeSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        routeSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     routeSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -19600,6 +21945,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -19616,9 +21965,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         routesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -19717,6 +22074,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -19732,6 +22093,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -19830,6 +22199,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -19846,9 +22219,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         routesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -19951,6 +22332,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -19966,6 +22351,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20056,6 +22449,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20072,9 +22469,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         routesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20169,6 +22574,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20184,6 +22593,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20278,6 +22695,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20294,9 +22715,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         routesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20395,6 +22824,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20410,6 +22843,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20496,6 +22937,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         routesRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        routesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         routesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20512,9 +22957,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         routesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        routesRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         routesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        routesRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20609,6 +23062,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20625,9 +23082,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopAreasRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20726,6 +23191,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20741,6 +23210,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20839,6 +23316,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20855,9 +23336,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopAreasRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -20960,6 +23449,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -20975,6 +23468,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21065,6 +23566,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21081,9 +23586,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopAreasRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21178,6 +23691,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21193,6 +23710,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21287,6 +23812,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21303,9 +23832,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopAreasRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21404,6 +23941,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21419,6 +23960,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21505,6 +24054,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopAreasRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopAreasRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopAreasRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21521,9 +24074,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopAreasRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopAreasRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopAreasRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopAreasRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21618,6 +24179,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21634,9 +24199,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21735,6 +24308,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21750,6 +24327,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21848,6 +24433,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21864,9 +24453,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -21969,6 +24566,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -21984,6 +24585,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -22074,6 +24683,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -22090,9 +24703,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -22187,6 +24808,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -22202,6 +24827,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -22296,6 +24929,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -22312,9 +24949,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -22413,6 +25058,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -22428,6 +25077,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -22514,6 +25171,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         stopPointsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        stopPointsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         stopPointsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -22530,9 +25191,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopPointsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        stopPointsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         stopPointsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        stopPointsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     if (params.has("originalId") && (params.getString("originalId") != null) && (!params.getString("originalId").isEmpty()) ) {
                         // Param: originalId, Type: String
@@ -22659,6 +25328,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        stopSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     stopSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -22776,6 +25449,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        stopSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     stopSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
@@ -22885,8 +25562,371 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         stopSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        stopSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
                     
                     stopSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageLonLatUriTerminusSchedules(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final TerminusSchedulesApi.CoverageLonLatUriTerminusSchedulesRequestBuilder terminusSchedulesRequestBuilder = this.navitiaSdk.terminusSchedulesApi.newCoverageLonLatUriTerminusSchedulesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("lat") && (params.getString("lat") != null) && (!params.getString("lat").isEmpty()) ) {
+                        // Param: lat, Type: BigDecimal
+                        terminusSchedulesRequestBuilder.withLat(longToBigDecimal(params.getLong("lat")));
+                    }
+                    if (params.has("lon") && (params.getString("lon") != null) && (!params.getString("lon").isEmpty()) ) {
+                        // Param: lon, Type: BigDecimal
+                        terminusSchedulesRequestBuilder.withLon(longToBigDecimal(params.getLong("lon")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        terminusSchedulesRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        terminusSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
+                        // Param: fromDatetime, Type: Date
+                        terminusSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
+                    }
+                    if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
+                        // Param: untilDatetime, Type: Date
+                        terminusSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
+                    }
+                    if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
+                        // Param: duration, Type: Integer
+                        terminusSchedulesRequestBuilder.withDuration(integerStraightPass(params.getInt("duration")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        terminusSchedulesRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        terminusSchedulesRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        terminusSchedulesRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("maxDateTimes") && (params.getString("maxDateTimes") != null) && (!params.getString("maxDateTimes").isEmpty()) ) {
+                        // Param: maxDateTimes, Type: Integer
+                        terminusSchedulesRequestBuilder.withMaxDateTimes(integerStraightPass(params.getInt("maxDateTimes")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        terminusSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        terminusSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
+                        // Param: calendar, Type: String
+                        terminusSchedulesRequestBuilder.withCalendar(stringStraightPass(params.getString("calendar")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        terminusSchedulesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("showCodes") && (params.getString("showCodes") != null) && (!params.getString("showCodes").isEmpty()) ) {
+                        // Param: showCodes, Type: Boolean
+                        terminusSchedulesRequestBuilder.withShowCodes(booleanStraightPass(params.getBoolean("showCodes")));
+                    }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        terminusSchedulesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
+                    if (params.has("itemsPerSchedule") && (params.getString("itemsPerSchedule") != null) && (!params.getString("itemsPerSchedule").isEmpty()) ) {
+                        // Param: itemsPerSchedule, Type: Integer
+                        terminusSchedulesRequestBuilder.withItemsPerSchedule(integerStraightPass(params.getInt("itemsPerSchedule")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        terminusSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        terminusSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
+                    
+                    terminusSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void coverageRegionUriTerminusSchedules(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final TerminusSchedulesApi.CoverageRegionUriTerminusSchedulesRequestBuilder terminusSchedulesRequestBuilder = this.navitiaSdk.terminusSchedulesApi.newCoverageRegionUriTerminusSchedulesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("region") && (params.getString("region") != null) && (!params.getString("region").isEmpty()) ) {
+                        // Param: region, Type: String
+                        terminusSchedulesRequestBuilder.withRegion(stringStraightPass(params.getString("region")));
+                    }
+                    if (params.has("uri") && (params.getString("uri") != null) && (!params.getString("uri").isEmpty()) ) {
+                        // Param: uri, Type: String
+                        terminusSchedulesRequestBuilder.withUri(stringStraightPass(params.getString("uri")));
+                    }
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        terminusSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
+                        // Param: fromDatetime, Type: Date
+                        terminusSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
+                    }
+                    if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
+                        // Param: untilDatetime, Type: Date
+                        terminusSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
+                    }
+                    if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
+                        // Param: duration, Type: Integer
+                        terminusSchedulesRequestBuilder.withDuration(integerStraightPass(params.getInt("duration")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        terminusSchedulesRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        terminusSchedulesRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        terminusSchedulesRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("maxDateTimes") && (params.getString("maxDateTimes") != null) && (!params.getString("maxDateTimes").isEmpty()) ) {
+                        // Param: maxDateTimes, Type: Integer
+                        terminusSchedulesRequestBuilder.withMaxDateTimes(integerStraightPass(params.getInt("maxDateTimes")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        terminusSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        terminusSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
+                        // Param: calendar, Type: String
+                        terminusSchedulesRequestBuilder.withCalendar(stringStraightPass(params.getString("calendar")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        terminusSchedulesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("showCodes") && (params.getString("showCodes") != null) && (!params.getString("showCodes").isEmpty()) ) {
+                        // Param: showCodes, Type: Boolean
+                        terminusSchedulesRequestBuilder.withShowCodes(booleanStraightPass(params.getBoolean("showCodes")));
+                    }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        terminusSchedulesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
+                    if (params.has("itemsPerSchedule") && (params.getString("itemsPerSchedule") != null) && (!params.getString("itemsPerSchedule").isEmpty()) ) {
+                        // Param: itemsPerSchedule, Type: Integer
+                        terminusSchedulesRequestBuilder.withItemsPerSchedule(integerStraightPass(params.getInt("itemsPerSchedule")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        terminusSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        terminusSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
+                    
+                    terminusSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
+                        @Override
+                        public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+                            callbackContext.error("Problem during request call | " + e.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(String result, int statusCode, Map<String, List<String>> responseHeaders) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(result);
+                                callbackContext.success(jsonObject);
+                            } catch (Exception e) {
+                                String errorMessage = "Problem during response parsing | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                                callbackContext.error(errorMessage);
+                            }
+                        }
+
+                        @Override
+                        public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {
+                        }
+
+                        @Override
+                        public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {
+                        }
+                    });
+                } catch (Exception e) {
+                    String errorMessage = "Problem during request building | " + String.valueOf(e.hashCode()) + ": " + e.getMessage();
+                    callbackContext.error(errorMessage);
+                }
+            }
+        });
+    }
+    final private void terminusSchedules(final JSONObject params, final CallbackContext callbackContext) {
+        if (this.navitiaSdk == null) {
+            callbackContext.error("NavitiaSDK is not instanciated");
+            return;
+        }
+
+        final TerminusSchedulesApi.TerminusSchedulesRequestBuilder terminusSchedulesRequestBuilder = this.navitiaSdk.terminusSchedulesApi.newTerminusSchedulesRequestBuilder();
+        cordova.getThreadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
+                        // Param: filter, Type: String
+                        terminusSchedulesRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("fromDatetime") && (params.getString("fromDatetime") != null) && (!params.getString("fromDatetime").isEmpty()) ) {
+                        // Param: fromDatetime, Type: Date
+                        terminusSchedulesRequestBuilder.withFromDatetime(stringToDateTime(params.getString("fromDatetime")));
+                    }
+                    if (params.has("untilDatetime") && (params.getString("untilDatetime") != null) && (!params.getString("untilDatetime").isEmpty()) ) {
+                        // Param: untilDatetime, Type: Date
+                        terminusSchedulesRequestBuilder.withUntilDatetime(stringToDateTime(params.getString("untilDatetime")));
+                    }
+                    if (params.has("duration") && (params.getString("duration") != null) && (!params.getString("duration").isEmpty()) ) {
+                        // Param: duration, Type: Integer
+                        terminusSchedulesRequestBuilder.withDuration(integerStraightPass(params.getInt("duration")));
+                    }
+                    if (params.has("depth") && (params.getString("depth") != null) && (!params.getString("depth").isEmpty()) ) {
+                        // Param: depth, Type: Integer
+                        terminusSchedulesRequestBuilder.withDepth(integerStraightPass(params.getInt("depth")));
+                    }
+                    if (params.has("count") && (params.getString("count") != null) && (!params.getString("count").isEmpty()) ) {
+                        // Param: count, Type: Integer
+                        terminusSchedulesRequestBuilder.withCount(integerStraightPass(params.getInt("count")));
+                    }
+                    if (params.has("startPage") && (params.getString("startPage") != null) && (!params.getString("startPage").isEmpty()) ) {
+                        // Param: startPage, Type: Integer
+                        terminusSchedulesRequestBuilder.withStartPage(integerStraightPass(params.getInt("startPage")));
+                    }
+                    if (params.has("maxDateTimes") && (params.getString("maxDateTimes") != null) && (!params.getString("maxDateTimes").isEmpty()) ) {
+                        // Param: maxDateTimes, Type: Integer
+                        terminusSchedulesRequestBuilder.withMaxDateTimes(integerStraightPass(params.getInt("maxDateTimes")));
+                    }
+                    if (params.has("forbiddenId") && (params.getString("forbiddenId") != null) && (!params.getString("forbiddenId").isEmpty()) ) {
+                        // Param: forbiddenId, Type: List
+                        terminusSchedulesRequestBuilder.withForbiddenId(jsonArrayToStringList(params.getJSONArray("forbiddenId")));
+                    }
+                    if (params.has("forbiddenUris") && (params.getString("forbiddenUris") != null) && (!params.getString("forbiddenUris").isEmpty()) ) {
+                        // Param: forbiddenUris, Type: List
+                        terminusSchedulesRequestBuilder.withForbiddenUris(jsonArrayToStringList(params.getJSONArray("forbiddenUris")));
+                    }
+                    if (params.has("calendar") && (params.getString("calendar") != null) && (!params.getString("calendar").isEmpty()) ) {
+                        // Param: calendar, Type: String
+                        terminusSchedulesRequestBuilder.withCalendar(stringStraightPass(params.getString("calendar")));
+                    }
+                    if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
+                        // Param: distance, Type: Integer
+                        terminusSchedulesRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
+                    }
+                    if (params.has("showCodes") && (params.getString("showCodes") != null) && (!params.getString("showCodes").isEmpty()) ) {
+                        // Param: showCodes, Type: Boolean
+                        terminusSchedulesRequestBuilder.withShowCodes(booleanStraightPass(params.getBoolean("showCodes")));
+                    }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        terminusSchedulesRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
+                    if (params.has("itemsPerSchedule") && (params.getString("itemsPerSchedule") != null) && (!params.getString("itemsPerSchedule").isEmpty()) ) {
+                        // Param: itemsPerSchedule, Type: Integer
+                        terminusSchedulesRequestBuilder.withItemsPerSchedule(integerStraightPass(params.getInt("itemsPerSchedule")));
+                    }
+                    if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
+                        // Param: disableGeojson, Type: Boolean
+                        terminusSchedulesRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("directionType") && (params.getString("directionType") != null) && (!params.getString("directionType").isEmpty()) ) {
+                        // Param: directionType, Type: String
+                        terminusSchedulesRequestBuilder.withDirectionType(stringStraightPass(params.getString("directionType")));
+                    }
+                    
+                    terminusSchedulesRequestBuilder.rawGet(new ApiCallback<String>() {
                         @Override
                         public void onFailure(ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
                             callbackContext.error("Problem during request call | " + e.getMessage());
@@ -23298,6 +26338,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         tripsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        tripsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -23314,9 +26358,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         tripsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        tripsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         tripsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        tripsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     tripsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -23411,6 +26463,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         tripsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        tripsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -23426,6 +26482,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         tripsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        tripsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        tripsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     tripsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -23520,6 +26584,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         tripsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        tripsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -23536,9 +26604,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         tripsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        tripsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         tripsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        tripsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     tripsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -23637,6 +26713,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         tripsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        tripsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -23652,6 +26732,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         tripsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        tripsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        tripsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     tripsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -23738,6 +26826,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         tripsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        tripsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -23754,9 +26846,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         tripsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        tripsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         tripsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        tripsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     tripsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -23847,6 +26947,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         tripsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        tripsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -23862,6 +26966,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         tripsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        tripsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        tripsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     tripsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -23952,6 +27064,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         tripsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        tripsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -23968,9 +27084,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         tripsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        tripsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         tripsRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        tripsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     tripsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24065,6 +27189,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         tripsRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        tripsRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         tripsRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24080,6 +27208,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         tripsRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        tripsRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        tripsRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     tripsRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24174,6 +27310,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24190,9 +27330,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         vehicleJourneysRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24291,6 +27439,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24306,6 +27458,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24396,6 +27556,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24412,9 +27576,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         vehicleJourneysRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24509,6 +27681,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24524,6 +27700,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24614,6 +27798,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24630,9 +27818,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         vehicleJourneysRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24727,6 +27923,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24742,6 +27942,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24828,6 +28036,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24844,9 +28056,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         vehicleJourneysRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -24937,6 +28157,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -24952,6 +28176,14 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                     if (params.has("disableGeojson") && (params.getString("disableGeojson") != null) && (!params.getString("disableGeojson").isEmpty()) ) {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
+                    }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
@@ -25034,6 +28266,10 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: odtLevel, Type: String
                         vehicleJourneysRequestBuilder.withOdtLevel(stringStraightPass(params.getString("odtLevel")));
                     }
+                    if (params.has("dataFreshness") && (params.getString("dataFreshness") != null) && (!params.getString("dataFreshness").isEmpty()) ) {
+                        // Param: dataFreshness, Type: String
+                        vehicleJourneysRequestBuilder.withDataFreshness(stringStraightPass(params.getString("dataFreshness")));
+                    }
                     if (params.has("distance") && (params.getString("distance") != null) && (!params.getString("distance").isEmpty()) ) {
                         // Param: distance, Type: Integer
                         vehicleJourneysRequestBuilder.withDistance(integerStraightPass(params.getInt("distance")));
@@ -25050,9 +28286,17 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                         // Param: disableGeojson, Type: Boolean
                         vehicleJourneysRequestBuilder.withDisableGeojson(booleanStraightPass(params.getBoolean("disableGeojson")));
                     }
+                    if (params.has("disableDisruption") && (params.getString("disableDisruption") != null) && (!params.getString("disableDisruption").isEmpty()) ) {
+                        // Param: disableDisruption, Type: Boolean
+                        vehicleJourneysRequestBuilder.withDisableDisruption(booleanStraightPass(params.getBoolean("disableDisruption")));
+                    }
                     if (params.has("filter") && (params.getString("filter") != null) && (!params.getString("filter").isEmpty()) ) {
                         // Param: filter, Type: String
                         vehicleJourneysRequestBuilder.withFilter(stringStraightPass(params.getString("filter")));
+                    }
+                    if (params.has("tags") && (params.getString("tags") != null) && (!params.getString("tags").isEmpty()) ) {
+                        // Param: tags, Type: List
+                        vehicleJourneysRequestBuilder.withTags(jsonArrayToStringList(params.getJSONArray("tags")));
                     }
                     
                     vehicleJourneysRequestBuilder.rawGet(new ApiCallback<String>() {
