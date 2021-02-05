@@ -1574,6 +1574,12 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 vehicleJourneys(params, callbackContext);
             }
         });
+        actions.put("init", new Action() {
+            @Override
+            public void doAction(JSONObject params, CallbackContext callbackContext) {
+                init(params, callbackContext);
+            }
+        });
     }
 
     @Override
@@ -1595,8 +1601,8 @@ public class CDVNavitiaSDK extends CordovaPlugin {
         }
 
         try {
-            String basePath = config.optString("basePath");
-            this.navitiaSdk = basePath.isEmpty ? 
+            String basePath = config.optString("basePath", "");
+            this.navitiaSdk = basePath.isEmpty() ? 
             new NavitiaSDK(new NavitiaConfiguration(token)) :
             new NavitiaSDK(new NavitiaConfiguration(token, basePath));
 
