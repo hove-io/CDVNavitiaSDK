@@ -23,9 +23,10 @@
             <config>
                 <source url="https://github.com/CocoaPods/Specs.git"/>
                 <source url="https://github.com/CanalTP/Podspecs"/>
+                <source url="https://github.com/CanalTP/Podspecs_snapshot"/>
             </config>
             <pods use-frameworks="true">
-                <pod name="NavitiaSDK" spec="1.4.5"/>
+                <pod name="NavitiaSDK_snapshot" spec="1.4.4-13-SNAPSHOT"/>
             </pods>
         </podspec>
 
