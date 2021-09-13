@@ -81,13 +81,15 @@ module.exports = function(ctx) {
 		// Check if a global gradle.properties exists with the artifactory credentials
 		var globalGradleArtifactoryCredentials = []
 		var globalGradlePropertiesPath = path.join(process.env.HOME, '.gradle', 'gradle.properties')
-		var globalGradleProperties = fs.readFileSync(globalGradlePropertiesPath, 'utf-8')
-		if (globalGradleProperties) {
-			globalGradleProperties.split(/\r?\n/).forEach(function(line) {
-				if (line.includes('kisio_artifactory_')) {
-					globalGradleArtifactoryCredentials.push(line)
-				}
-			});
+		if (fs.existsSync(globalGradlePropertiesPath)) {
+			var globalGradleProperties = fs.readFileSync(globalGradlePropertiesPath, 'utf-8')
+			if (globalGradleProperties) {
+				globalGradleProperties.split(/\r?\n/).forEach(function(line) {
+					if (line.includes('kisio_artifactory_')) {
+						globalGradleArtifactoryCredentials.push(line)
+					}
+				});
+			}
 		}
 		
 		// Let's consider that the global config is valid by default
