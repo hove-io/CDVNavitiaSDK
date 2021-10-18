@@ -1,40 +1,10 @@
-def artifactoryUrl = project.properties["kisio_artifactory_url"] ?: ""
-def artifactoryUsername = project.properties["kisio_artifactory_username"] ?: ""
-def artifactoryPassword = project.properties["kisio_artifactory_password"] ?: ""
-def artifactoryAndroidRepoRelease = project.properties["kisio_artifactory_android_repo_release"] ?: ""
-def artifactoryAndroidRepoSnapshot = project.properties["kisio_artifactory_android_repo_snapshot"] ?: ""
-
 repositories {
-    google()
-    jcenter()
-    mavenLocal()
+    // mavenLocal()
     maven {
-        url("https://dl.bintray.com/kisio/maven/")
-    }
-
-    if (project.hasProperty("kisio_artifactory_url")) {
-        maven {
-            url(artifactoryUrl + artifactoryAndroidRepoRelease)
-            credentials {
-                username = artifactoryUsername
-                password = artifactoryPassword
-            }
-        }
-        maven {
-            url(artifactoryUrl + artifactoryAndroidRepoSnapshot)
-            credentials {
-                username = artifactoryUsername
-                password = artifactoryPassword
-            }
-        }
+        url  "https://dl.bintray.com/navitiasdkteam/NavitiaSDK"
     }
 }
 
 dependencies {
-    implementation("org.jacoco:org.jacoco.agent:${android.jacoco.version}:runtime")
-
-    implementation("joda-time:joda-time:2.10.5")
-    implementation("com.google.code.gson:gson:2.8.6")
-
-    implementation("com.squareup.okhttp3:okhttp:4.3.1")
+    compile 'org.kisio.sdk:navitia-sdk:0.3.0'
 }
