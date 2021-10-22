@@ -3,11 +3,12 @@ import NavitiaSDK
 @objc(CDVNavitiaSDK) class CDVNavitiaSDK : CDVPlugin {
 
     func anyToDateTime(_ value: Any?) -> Date {
-        let isoFormatter = DateFormatter()
-        isoFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        isoFormatter.locale = Locale(identifier: "en_US_POSIX")
+        guard let dateString = value as? String,
+                let date = dateString.toDate(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") else {
+            return Date()
+        }
 
-        return isoFormatter.date(from: value as! String)!
+        return date
     }
 
     func anyToBool(_ value: Any?) -> Bool {
