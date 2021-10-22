@@ -11,29 +11,73 @@ import NavitiaSDK
         return date
     }
 
+    func anyToDateTime(_ value: Any?) -> Date? {
+        guard let dateString = value as? String,
+                let date = dateString.toDate(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ") else {
+            return nil
+        }
+
+        return date
+    }
+
     func anyToBool(_ value: Any?) -> Bool {
         return value as? Bool ?? false
+    }
+
+    func anyToBool(_ value: Any?) -> Bool? {
+        return value as? Bool
     }
 
     func anyToInt(_ value: Any?) -> Int {
         return value as? Int ?? 0
     }
 
+    func anyToInt(_ value: Any?) -> Int? {
+        return value as? Int
+    }
+
     func anyToFloat(_ value: Any?) -> Float {
         return value as? Float ?? 0
+    }
+
+    func anyToFloat(_ value: Any?) -> Float? {
+        return value as? Float
     }
 
     func anyToDouble(_ value: Any?) -> Double {
         return value as? Double ?? 0
     }
 
+    func anyToDouble(_ value: Any?) -> Double? {
+        return value as? Double
+    }
+
     func anyToString(_ value: Any?) -> String {
         return value as? String ?? ""
+    }
+
+    func anyToString(_ value: Any?) -> String? {
+        return value as? String
     }
 
     func arrayToEnum<T: RawRepresentable>(_ values: Any?) -> [T] {
         guard let rawValues = values as? [Any] else {
             return []
+        }
+        
+        var values: [T]  = []
+        rawValues.forEach({ rawValue in
+            if let value = anyToEnum(rawValue) as T? {
+                values.append(value)
+            }
+        })
+
+        return values
+    }
+
+    func arrayToEnum<T: RawRepresentable>(_ values: Any?) -> [T]? {
+        guard let rawValues = values as? [Any] else {
+            return nil
         }
         
         var values: [T]  = []
@@ -58,8 +102,16 @@ import NavitiaSDK
         return values as? [String] ?? []
     }
 
+    func arrayToStringDict(_ values: Any?) -> [String]? {
+        return values as? [String]
+    }
+
     func arrayToIntDict(_ values: Any?) -> [Int] {
         return values as? [Int] ?? []
+    }
+
+    func arrayToIntDict(_ values: Any?) -> [Int]? {
+        return values as? [Int]
     }
 
     @objc(init:)
