@@ -6348,6 +6348,306 @@ var request_builders = {
             }]);
         };
     },
+    CoordLonLatFreefloatingsNearbyRequestBuilder: function () {
+        this.CoordLonLatFreefloatingsNearbyRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.type = null;
+            this.distance = null;
+            this.count = null;
+            this.coord = null;
+            this.startPage = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withCoord = function (coord) {
+            this.coord = coord;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coordLonLatFreefloatingsNearby', [{
+                lat: this.lat,
+                lon: this.lon,
+                type: this.type,
+                distance: this.distance,
+                count: this.count,
+                coord: this.coord,
+                startPage: this.startPage
+            }]);
+        };
+    },
+    CoordsLonLatFreefloatingsNearbyRequestBuilder: function () {
+        this.CoordsLonLatFreefloatingsNearbyRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.type = null;
+            this.distance = null;
+            this.count = null;
+            this.coord = null;
+            this.startPage = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withCoord = function (coord) {
+            this.coord = coord;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coordsLonLatFreefloatingsNearby', [{
+                lat: this.lat,
+                lon: this.lon,
+                type: this.type,
+                distance: this.distance,
+                count: this.count,
+                coord: this.coord,
+                startPage: this.startPage
+            }]);
+        };
+    },
+    CoverageLonLatFreefloatingsNearbyRequestBuilder: function () {
+        this.CoverageLonLatFreefloatingsNearbyRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.type = null;
+            this.distance = null;
+            this.count = null;
+            this.coord = null;
+            this.startPage = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withCoord = function (coord) {
+            this.coord = coord;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatFreefloatingsNearby', [{
+                lat: this.lat,
+                lon: this.lon,
+                type: this.type,
+                distance: this.distance,
+                count: this.count,
+                coord: this.coord,
+                startPage: this.startPage
+            }]);
+        };
+    },
+    CoverageLonLatUriFreefloatingsNearbyRequestBuilder: function () {
+        this.CoverageLonLatUriFreefloatingsNearbyRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.uri = null;
+            this.type = null;
+            this.distance = null;
+            this.count = null;
+            this.coord = null;
+            this.startPage = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withCoord = function (coord) {
+            this.coord = coord;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriFreefloatingsNearby', [{
+                lat: this.lat,
+                lon: this.lon,
+                uri: this.uri,
+                type: this.type,
+                distance: this.distance,
+                count: this.count,
+                coord: this.coord,
+                startPage: this.startPage
+            }]);
+        };
+    },
+    CoverageRegionFreefloatingsNearbyRequestBuilder: function () {
+        this.CoverageRegionFreefloatingsNearbyRequestBuilder = function() {
+            this.region = null;
+            this.type = null;
+            this.distance = null;
+            this.count = null;
+            this.coord = null;
+            this.startPage = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withCoord = function (coord) {
+            this.coord = coord;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionFreefloatingsNearby', [{
+                region: this.region,
+                type: this.type,
+                distance: this.distance,
+                count: this.count,
+                coord: this.coord,
+                startPage: this.startPage
+            }]);
+        };
+    },
+    CoverageRegionUriFreefloatingsNearbyRequestBuilder: function () {
+        this.CoverageRegionUriFreefloatingsNearbyRequestBuilder = function() {
+            this.region = null;
+            this.uri = null;
+            this.type = null;
+            this.distance = null;
+            this.count = null;
+            this.coord = null;
+            this.startPage = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withType = function (type) {
+            this.type = type;
+            return this;
+        };
+        this.withDistance = function (distance) {
+            this.distance = distance;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withCoord = function (coord) {
+            this.coord = coord;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriFreefloatingsNearby', [{
+                region: this.region,
+                uri: this.uri,
+                type: this.type,
+                distance: this.distance,
+                count: this.count,
+                coord: this.coord,
+                startPage: this.startPage
+            }]);
+        };
+    },
     CoverageLonLatGeoStatusRequestBuilder: function () {
         this.CoverageLonLatGeoStatusRequestBuilder = function() {
             this.lat = null;
@@ -9333,6 +9633,7 @@ var request_builders = {
             this.maxBssDirectPathDuration = null;
             this.maxBikeDirectPathDuration = null;
             this.depth = null;
+            this.maxWaitingDuration = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -9546,6 +9847,10 @@ var request_builders = {
             this.depth = depth;
             return this;
         };
+        this.withMaxWaitingDuration = function (maxWaitingDuration) {
+            this.maxWaitingDuration = maxWaitingDuration;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatJourneys', [{
                 lat: this.lat,
@@ -9600,7 +9905,8 @@ var request_builders = {
                 maxRidesharingDirectPathDuration: this.maxRidesharingDirectPathDuration,
                 maxBssDirectPathDuration: this.maxBssDirectPathDuration,
                 maxBikeDirectPathDuration: this.maxBikeDirectPathDuration,
-                depth: this.depth
+                depth: this.depth,
+                maxWaitingDuration: this.maxWaitingDuration
             }]);
         };
     },
@@ -9658,6 +9964,7 @@ var request_builders = {
             this.maxBssDirectPathDuration = null;
             this.maxBikeDirectPathDuration = null;
             this.depth = null;
+            this.maxWaitingDuration = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -9867,6 +10174,10 @@ var request_builders = {
             this.depth = depth;
             return this;
         };
+        this.withMaxWaitingDuration = function (maxWaitingDuration) {
+            this.maxWaitingDuration = maxWaitingDuration;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionJourneys', [{
                 region: this.region,
@@ -9920,7 +10231,8 @@ var request_builders = {
                 maxRidesharingDirectPathDuration: this.maxRidesharingDirectPathDuration,
                 maxBssDirectPathDuration: this.maxBssDirectPathDuration,
                 maxBikeDirectPathDuration: this.maxBikeDirectPathDuration,
-                depth: this.depth
+                depth: this.depth,
+                maxWaitingDuration: this.maxWaitingDuration
             }]);
         };
     },
@@ -9977,6 +10289,7 @@ var request_builders = {
             this.maxBssDirectPathDuration = null;
             this.maxBikeDirectPathDuration = null;
             this.depth = null;
+            this.maxWaitingDuration = null;
         };
         this.withFrom = function (from) {
             this.from = from;
@@ -10182,6 +10495,10 @@ var request_builders = {
             this.depth = depth;
             return this;
         };
+        this.withMaxWaitingDuration = function (maxWaitingDuration) {
+            this.maxWaitingDuration = maxWaitingDuration;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'journeys', [{
                 from: this.from,
@@ -10234,7 +10551,8 @@ var request_builders = {
                 maxRidesharingDirectPathDuration: this.maxRidesharingDirectPathDuration,
                 maxBssDirectPathDuration: this.maxBssDirectPathDuration,
                 maxBikeDirectPathDuration: this.maxBikeDirectPathDuration,
-                depth: this.depth
+                depth: this.depth,
+                maxWaitingDuration: this.maxWaitingDuration
             }]);
         };
     },
@@ -11389,6 +11707,7 @@ var request_builders = {
             this.disableGeojson = null;
             this.since = null;
             this.until = null;
+            this.filterStatus = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -11426,6 +11745,10 @@ var request_builders = {
             this.until = until;
             return this;
         };
+        this.withFilterStatus = function (filterStatus) {
+            this.filterStatus = filterStatus;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatLineReports', [{
                 lat: this.lat,
@@ -11436,7 +11759,8 @@ var request_builders = {
                 forbiddenUris: this.forbiddenUris,
                 disableGeojson: this.disableGeojson,
                 since: this.since,
-                until: this.until
+                until: this.until,
+                filterStatus: this.filterStatus
             }]);
         };
     },
@@ -11452,6 +11776,7 @@ var request_builders = {
             this.disableGeojson = null;
             this.since = null;
             this.until = null;
+            this.filterStatus = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -11493,6 +11818,10 @@ var request_builders = {
             this.until = until;
             return this;
         };
+        this.withFilterStatus = function (filterStatus) {
+            this.filterStatus = filterStatus;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriLineReports', [{
                 lat: this.lat,
@@ -11504,7 +11833,8 @@ var request_builders = {
                 forbiddenUris: this.forbiddenUris,
                 disableGeojson: this.disableGeojson,
                 since: this.since,
-                until: this.until
+                until: this.until,
+                filterStatus: this.filterStatus
             }]);
         };
     },
@@ -11518,6 +11848,7 @@ var request_builders = {
             this.disableGeojson = null;
             this.since = null;
             this.until = null;
+            this.filterStatus = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -11551,6 +11882,10 @@ var request_builders = {
             this.until = until;
             return this;
         };
+        this.withFilterStatus = function (filterStatus) {
+            this.filterStatus = filterStatus;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionLineReports', [{
                 region: this.region,
@@ -11560,7 +11895,8 @@ var request_builders = {
                 forbiddenUris: this.forbiddenUris,
                 disableGeojson: this.disableGeojson,
                 since: this.since,
-                until: this.until
+                until: this.until,
+                filterStatus: this.filterStatus
             }]);
         };
     },
@@ -11575,6 +11911,7 @@ var request_builders = {
             this.disableGeojson = null;
             this.since = null;
             this.until = null;
+            this.filterStatus = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -11612,6 +11949,10 @@ var request_builders = {
             this.until = until;
             return this;
         };
+        this.withFilterStatus = function (filterStatus) {
+            this.filterStatus = filterStatus;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriLineReports', [{
                 region: this.region,
@@ -11622,7 +11963,8 @@ var request_builders = {
                 forbiddenUris: this.forbiddenUris,
                 disableGeojson: this.disableGeojson,
                 since: this.since,
-                until: this.until
+                until: this.until,
+                filterStatus: this.filterStatus
             }]);
         };
     },
@@ -16002,6 +16344,8 @@ var request_builders = {
             this.disableGeojson = null;
             this.from = null;
             this.shape = null;
+            this.shapeScope = null;
+            this.placesProximityRadius = null;
         };
         this.withQ = function (q) {
             this.q = q;
@@ -16043,6 +16387,14 @@ var request_builders = {
             this.shape = shape;
             return this;
         };
+        this.withShapeScope = function (shapeScope) {
+            this.shapeScope = shapeScope;
+            return this;
+        };
+        this.withPlacesProximityRadius = function (placesProximityRadius) {
+            this.placesProximityRadius = placesProximityRadius;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatPlaces', [{
                 q: this.q,
@@ -16054,7 +16406,9 @@ var request_builders = {
                 depth: this.depth,
                 disableGeojson: this.disableGeojson,
                 from: this.from,
-                shape: this.shape
+                shape: this.shape,
+                shapeScope: this.shapeScope,
+                placesProximityRadius: this.placesProximityRadius
             }]);
         };
     },
@@ -16069,6 +16423,8 @@ var request_builders = {
             this.disableGeojson = null;
             this.from = null;
             this.shape = null;
+            this.shapeScope = null;
+            this.placesProximityRadius = null;
         };
         this.withQ = function (q) {
             this.q = q;
@@ -16106,6 +16462,14 @@ var request_builders = {
             this.shape = shape;
             return this;
         };
+        this.withShapeScope = function (shapeScope) {
+            this.shapeScope = shapeScope;
+            return this;
+        };
+        this.withPlacesProximityRadius = function (placesProximityRadius) {
+            this.placesProximityRadius = placesProximityRadius;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionPlaces', [{
                 q: this.q,
@@ -16116,7 +16480,9 @@ var request_builders = {
                 depth: this.depth,
                 disableGeojson: this.disableGeojson,
                 from: this.from,
-                shape: this.shape
+                shape: this.shape,
+                shapeScope: this.shapeScope,
+                placesProximityRadius: this.placesProximityRadius
             }]);
         };
     },
@@ -16130,6 +16496,8 @@ var request_builders = {
             this.disableGeojson = null;
             this.from = null;
             this.shape = null;
+            this.shapeScope = null;
+            this.placesProximityRadius = null;
         };
         this.withQ = function (q) {
             this.q = q;
@@ -16163,6 +16531,14 @@ var request_builders = {
             this.shape = shape;
             return this;
         };
+        this.withShapeScope = function (shapeScope) {
+            this.shapeScope = shapeScope;
+            return this;
+        };
+        this.withPlacesProximityRadius = function (placesProximityRadius) {
+            this.placesProximityRadius = placesProximityRadius;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'places', [{
                 q: this.q,
@@ -16172,7 +16548,9 @@ var request_builders = {
                 depth: this.depth,
                 disableGeojson: this.disableGeojson,
                 from: this.from,
-                shape: this.shape
+                shape: this.shape,
+                shapeScope: this.shapeScope,
+                placesProximityRadius: this.placesProximityRadius
             }]);
         };
     },
@@ -23393,6 +23771,8 @@ var request_builders = {
             this.forbiddenUris = null;
             this.distance = null;
             this.disableGeojson = null;
+            this.since = null;
+            this.until = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -23430,6 +23810,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withSince = function (since) {
+            this.since = since;
+            return this;
+        };
+        this.withUntil = function (until) {
+            this.until = until;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatTrafficReports', [{
                 lat: this.lat,
@@ -23440,7 +23828,9 @@ var request_builders = {
                 forbiddenId: this.forbiddenId,
                 forbiddenUris: this.forbiddenUris,
                 distance: this.distance,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                since: this.since,
+                until: this.until
             }]);
         };
     },
@@ -23456,6 +23846,8 @@ var request_builders = {
             this.forbiddenUris = null;
             this.distance = null;
             this.disableGeojson = null;
+            this.since = null;
+            this.until = null;
         };
         this.withLat = function (lat) {
             this.lat = lat;
@@ -23497,6 +23889,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withSince = function (since) {
+            this.since = since;
+            return this;
+        };
+        this.withUntil = function (until) {
+            this.until = until;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriTrafficReports', [{
                 lat: this.lat,
@@ -23508,7 +23908,9 @@ var request_builders = {
                 forbiddenId: this.forbiddenId,
                 forbiddenUris: this.forbiddenUris,
                 distance: this.distance,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                since: this.since,
+                until: this.until
             }]);
         };
     },
@@ -23522,6 +23924,8 @@ var request_builders = {
             this.forbiddenUris = null;
             this.distance = null;
             this.disableGeojson = null;
+            this.since = null;
+            this.until = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -23555,6 +23959,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withSince = function (since) {
+            this.since = since;
+            return this;
+        };
+        this.withUntil = function (until) {
+            this.until = until;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionTrafficReports', [{
                 region: this.region,
@@ -23564,7 +23976,9 @@ var request_builders = {
                 forbiddenId: this.forbiddenId,
                 forbiddenUris: this.forbiddenUris,
                 distance: this.distance,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                since: this.since,
+                until: this.until
             }]);
         };
     },
@@ -23579,6 +23993,8 @@ var request_builders = {
             this.forbiddenUris = null;
             this.distance = null;
             this.disableGeojson = null;
+            this.since = null;
+            this.until = null;
         };
         this.withRegion = function (region) {
             this.region = region;
@@ -23616,6 +24032,14 @@ var request_builders = {
             this.disableGeojson = disableGeojson;
             return this;
         };
+        this.withSince = function (since) {
+            this.since = since;
+            return this;
+        };
+        this.withUntil = function (until) {
+            this.until = until;
+            return this;
+        };
         this.get = function (successCallback, errorCallback) {
             exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriTrafficReports', [{
                 region: this.region,
@@ -23626,7 +24050,9 @@ var request_builders = {
                 forbiddenId: this.forbiddenId,
                 forbiddenUris: this.forbiddenUris,
                 distance: this.distance,
-                disableGeojson: this.disableGeojson
+                disableGeojson: this.disableGeojson,
+                since: this.since,
+                until: this.until
             }]);
         };
     },
@@ -25691,6 +26117,306 @@ var request_builders = {
                 tags: this.tags
             }]);
         };
+    },
+    CoordLonLatVehiclePositionsRequestBuilder: function () {
+        this.CoordLonLatVehiclePositionsRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coordLonLatVehiclePositions', [{
+                lat: this.lat,
+                lon: this.lon,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoordsLonLatVehiclePositionsRequestBuilder: function () {
+        this.CoordsLonLatVehiclePositionsRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coordsLonLatVehiclePositions', [{
+                lat: this.lat,
+                lon: this.lon,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoverageLonLatUriVehiclePositionsRequestBuilder: function () {
+        this.CoverageLonLatUriVehiclePositionsRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.uri = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatUriVehiclePositions', [{
+                lat: this.lat,
+                lon: this.lon,
+                uri: this.uri,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoverageLonLatVehiclePositionsRequestBuilder: function () {
+        this.CoverageLonLatVehiclePositionsRequestBuilder = function() {
+            this.lat = null;
+            this.lon = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withLat = function (lat) {
+            this.lat = lat;
+            return this;
+        };
+        this.withLon = function (lon) {
+            this.lon = lon;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageLonLatVehiclePositions', [{
+                lat: this.lat,
+                lon: this.lon,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoverageRegionUriVehiclePositionsRequestBuilder: function () {
+        this.CoverageRegionUriVehiclePositionsRequestBuilder = function() {
+            this.region = null;
+            this.uri = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withUri = function (uri) {
+            this.uri = uri;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionUriVehiclePositions', [{
+                region: this.region,
+                uri: this.uri,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
+    },
+    CoverageRegionVehiclePositionsRequestBuilder: function () {
+        this.CoverageRegionVehiclePositionsRequestBuilder = function() {
+            this.region = null;
+            this.depth = null;
+            this.count = null;
+            this.filter = null;
+            this.startPage = null;
+            this.forbiddenUris = null;
+        };
+        this.withRegion = function (region) {
+            this.region = region;
+            return this;
+        };
+        this.withDepth = function (depth) {
+            this.depth = depth;
+            return this;
+        };
+        this.withCount = function (count) {
+            this.count = count;
+            return this;
+        };
+        this.withFilter = function (filter) {
+            this.filter = filter;
+            return this;
+        };
+        this.withStartPage = function (startPage) {
+            this.startPage = startPage;
+            return this;
+        };
+        this.withForbiddenUris = function (forbiddenUris) {
+            this.forbiddenUris = forbiddenUris;
+            return this;
+        };
+        this.get = function (successCallback, errorCallback) {
+            exec(successCallback, errorCallback, 'NavitiaSDK', 'coverageRegionVehiclePositions', [{
+                region: this.region,
+                depth: this.depth,
+                count: this.count,
+                filter: this.filter,
+                startPage: this.startPage,
+                forbiddenUris: this.forbiddenUris
+            }]);
+        };
     }
 };
 
@@ -25964,6 +26690,26 @@ var apis = {
         },
         coverageRegionUriEquipmentReportsRequestBuilder: function () {
             return new request_builders.CoverageRegionUriEquipmentReportsRequestBuilder();
+        }
+    },
+    freeFloatingsNearby: {
+        coordLonLatFreefloatingsNearbyRequestBuilder: function () {
+            return new request_builders.CoordLonLatFreefloatingsNearbyRequestBuilder();
+        },
+        coordsLonLatFreefloatingsNearbyRequestBuilder: function () {
+            return new request_builders.CoordsLonLatFreefloatingsNearbyRequestBuilder();
+        },
+        coverageLonLatFreefloatingsNearbyRequestBuilder: function () {
+            return new request_builders.CoverageLonLatFreefloatingsNearbyRequestBuilder();
+        },
+        coverageLonLatUriFreefloatingsNearbyRequestBuilder: function () {
+            return new request_builders.CoverageLonLatUriFreefloatingsNearbyRequestBuilder();
+        },
+        coverageRegionFreefloatingsNearbyRequestBuilder: function () {
+            return new request_builders.CoverageRegionFreefloatingsNearbyRequestBuilder();
+        },
+        coverageRegionUriFreefloatingsNearbyRequestBuilder: function () {
+            return new request_builders.CoverageRegionUriFreefloatingsNearbyRequestBuilder();
         }
     },
     geoStatus: {
@@ -26498,6 +27244,26 @@ var apis = {
         vehicleJourneysRequestBuilder: function () {
             return new request_builders.VehicleJourneysRequestBuilder();
         }
+    },
+    vehiclePositions: {
+        coordLonLatVehiclePositionsRequestBuilder: function () {
+            return new request_builders.CoordLonLatVehiclePositionsRequestBuilder();
+        },
+        coordsLonLatVehiclePositionsRequestBuilder: function () {
+            return new request_builders.CoordsLonLatVehiclePositionsRequestBuilder();
+        },
+        coverageLonLatUriVehiclePositionsRequestBuilder: function () {
+            return new request_builders.CoverageLonLatUriVehiclePositionsRequestBuilder();
+        },
+        coverageLonLatVehiclePositionsRequestBuilder: function () {
+            return new request_builders.CoverageLonLatVehiclePositionsRequestBuilder();
+        },
+        coverageRegionUriVehiclePositionsRequestBuilder: function () {
+            return new request_builders.CoverageRegionUriVehiclePositionsRequestBuilder();
+        },
+        coverageRegionVehiclePositionsRequestBuilder: function () {
+            return new request_builders.CoverageRegionVehiclePositionsRequestBuilder();
+        }
     }
 };
 
@@ -26522,6 +27288,7 @@ module.exports = {
     datasets: apis.datasets,
     disruptions: apis.disruptions,
     equipmentReports: apis.equipmentReports,
+    freeFloatingsNearby: apis.freeFloatingsNearby,
     geoStatus: apis.geoStatus,
     graphicalIsochrone: apis.graphicalIsochrone,
     heatMap: apis.heatMap,
@@ -26549,5 +27316,6 @@ module.exports = {
     terminusSchedules: apis.terminusSchedules,
     trafficReport: apis.trafficReport,
     trips: apis.trips,
-    vehicleJourneys: apis.vehicleJourneys
+    vehicleJourneys: apis.vehicleJourneys,
+    vehiclePositions: apis.vehiclePositions
 };
