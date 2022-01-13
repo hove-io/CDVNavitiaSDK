@@ -8,9 +8,6 @@ repositories {
     google()
     jcenter()
     mavenLocal()
-    maven {
-        url("https://dl.bintray.com/kisio/maven/")
-    }
 
     if (project.hasProperty("kisio_artifactory_url")) {
         maven {
