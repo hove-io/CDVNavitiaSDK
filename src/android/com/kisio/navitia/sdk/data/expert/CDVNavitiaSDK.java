@@ -12859,7 +12859,8 @@ public class CDVNavitiaSDK extends CordovaPlugin {
                 callbackContext.error(errorMessage);
               }
             } else {
-              callbackContext.error("Unexpected code " + response.code() + " | message: " + response.message());
+              //callbackContext.error("Unexpected code " + response.code() + " | message: " + response.message());
+              callbackContext.error(response.getRequest().getUrl() + " | Unexpected code " + response.code() + " | message: " + response.message());
             }
           }
         });
